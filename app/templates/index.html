@@ -29,25 +29,31 @@
 
   <br/><br/>
   <div class="row" id="main-content">
-    <div class="col-md-2 text-left">
-      <div class="thumbnail">
-        <img src="//placehold.it/200x800" />
-      </div>
-    </div><!-- /left side -->
+    <div class="row-fluid">
+      <div class="col-md-2 text-left">
+        <div class="thumbnail">
+          <img src="//placehold.it/200x640" />
+        </div>
+      </div><!-- /left side -->
 
-    <div class="col-md-8" id="main-video-container">
-      <div class="thumbnail" id="main-video">
-        <img src="//placehold.it/640x480" />
-      </div>
-      <div id="main-video-slider">
-      </div>
-    </div><!-- /main video-->
+      <div class="col-md-8" id="main-video-container">
+        <div class="thumbnail" id="main-video">
+          <img src="//placehold.it/640x480" />
+        </div>
+        <div id="main-video-slider"></div><br/><br/>
+      </div><!-- /main video-->
 
-    <div class="col-md-2">
-      <div class"tumbnail">
-        <img src="{{ url_for('static',filename='img/fake_wordcloud_480.png') }}" />
-      </div>
-    </div><!-- /right side -->
+      <div class="col-md-2">
+        <div class"tumbnail">
+          <img src="{{ url_for('static',filename='img/fake_wordcloud_480.png') }}" />
+        </div>
+      </div><!-- /right side -->
+    </div><!-- /main-content-row -->
+
+    <div class="row-fluid text-center">
+        <br/>
+        <img src="{{ url_for('static',filename='img/fake_sentiment.png') }}" style="width: 800px; height: auto;" />
+    </div> <!-- charts area -->
 
   </div> <!-- /main-content -->
 
