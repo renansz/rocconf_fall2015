@@ -1,0 +1,85 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}RocConf{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row" id="video-thumbnails">
+
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8">
+      <div class="thumbnail col-md-3">
+        <img src="//placehold.it/192x108" />
+      </div>
+      <div class="thumbnail col-md-3">
+        <img src="//placehold.it/192x108" />
+      </div>
+      <div class="thumbnail col-md-3">
+        <img src="//placehold.it/192x108" />
+      </div>
+      <div class="thumbnail col-md-3">
+        <img src="//placehold.it/192x108" />
+      </div>
+    </div>
+
+    <div class="col-md-2"></div>
+  </div><!-- /videos thumbnails-->
+
+  <br/><br/>
+  <div class="row" id="main-content">
+    <div class="col-md-2 text-left">
+      <div class="thumbnail">
+        <img src="//placehold.it/200x800" />
+      </div>
+    </div><!-- /left side -->
+
+    <div class="col-md-8" id="main-video-container">
+      <div class="thumbnail" id="main-video">
+        <img src="//placehold.it/640x480" />
+      </div>
+      <div id="main-video-slider">
+      </div>
+    </div><!-- /main video-->
+
+    <div class="col-md-2">
+      <div class"tumbnail">
+        <img src="{{ url_for('static',filename='img/fake_wordcloud_480.png') }}" />
+      </div>
+    </div><!-- /right side -->
+
+  </div> <!-- /main-content -->
+
+</div>
+
+{% endblock %}
+
+{% block head %} 
+  {{super()}}
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico')  }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css')  }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css')  }}">
+{% endblock %}
+
+{% block scripts %}
+    {{super()}}
+    <script type="text/javascript" src="{{ url_for('.static', filename='js/jquery-1.11.3.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('.static', filename='js/jquery-ui.js')}}"></script>
+
+    <script type=text/javascript>
+      function assert(condition,msg){
+        if (!condition){
+          alert(msg);
+          throw Error("Assertion failed");
+        }
+      }
+    </script>
+
+
+    <script>
+      $(document).ready(function(){
+        $("#main-video-slider").slider();
+      });
+    </script>
+{% endblock %}
