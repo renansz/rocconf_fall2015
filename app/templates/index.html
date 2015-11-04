@@ -36,14 +36,23 @@
         </div>
       </div><!-- /left side -->
 
-      <div class="col-md-8" id="main-video-container">
-        <div class="thumbnail" id="main-video">
-          <img src="//placehold.it/640x480" />
+      <div class="col-md-7 text-center" id="main-video-container">
+        <div class="thumbnail text-center" id="main-video">
+          <video id="really-cool-video" class="video-js vjs-default-skin" controls
+          preload="auto" width="640" height="480" poster="//placehold.it/640x480"
+          data-setup='{}'>
+            <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.mp4') }}" type='video/mp4'>
+            <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.webm') }}" type='video/webm'>
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a web browser
+              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+          </video>
         </div>
         <div id="main-video-slider"></div><br/><br/>
       </div><!-- /main video-->
 
-      <div class="col-md-2">
+      <div class="col-md-3">
         <div class="row">
           <canvas id="word-cloud-canvas"></canvas>
           <!--<img src="{{ url_for('static',filename='img/fake_wordcloud_480.png') }}" />-->
@@ -67,6 +76,7 @@
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico')  }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css')  }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css')  }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/video-js.min.css')  }}">
 {% endblock %}
 
 {% block scripts %}
@@ -182,4 +192,7 @@
         });
       });
     </script>
+    
+    <script src="{{ url_for('.static',filename='js/video.min.js') }}" type="text/javascript"></script>
+
 {% endblock %}
