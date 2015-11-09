@@ -3,3 +3,7 @@
     vertical-align: middle;
     float: none;
 }
+
+body {
+  padding-top: 70px;
+}

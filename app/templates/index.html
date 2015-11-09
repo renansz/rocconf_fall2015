@@ -4,7 +4,28 @@
 {% block title %}RocConf{% endblock %}
 
 {% block content %}
-<div class="container">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">RocConf</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav><!-- /top_menu -->
+  
+  <div class="container">
   <div class="row" id="video-thumbnails">
 
     <div class="col-md-2"></div>
@@ -38,7 +59,7 @@
 
       <div class="col-md-7 text-center" id="main-video-container">
         <div class="thumbnail text-center" id="main-video">
-          <video id="really-cool-video" class="video-js vjs-default-skin" controls
+          <video id="main-video-player" class="video-js vjs-default-skin" controls
           preload="auto" width="640" height="480" poster="//placehold.it/640x480"
           data-setup='{}'>
             <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.mp4') }}" type='video/mp4'>
@@ -49,7 +70,17 @@
             </p>
           </video>
         </div>
-        <div id="main-video-slider"></div><br/><br/>
+        <div class="row">
+          <div class="col-xs-2 col-md-2" id="main-video-btns">
+            <h4>
+              <a id="main-video-play-btn" href="#"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
+              <a id="main-video-pause-btn" href="#"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></a>
+            </h4>
+          </div>
+          <div class="col-xs-9 col-md-9" id="main-video-slider"></div>
+          <div class="col-xs-1 col-md-1"></div>
+        </div>
+        <br/><br/>
       </div><!-- /main video-->
 
       <div class="col-md-3">
@@ -96,103 +127,9 @@
 
 
     <script>
-      var wordlist = [['Web Technologies',26],
-                      ['HTML',20],
-                      ['<canvas>',20],
-                      ['CSS',15],
-                      ['JavaScript',15],
-                      ['Document Object Model',12],
-                      ['<audio>',12],
-                      ['<video>',12],
-                      ['Web Workers',12],
-                      ['XMLHttpRequest',12],
-                      ['SVG',12],
-                      ['JSON.parse()',9],
-                      ['Geolocation',9],
-                      ['data attribute',9],
-                      ['transform',9],
-                      ['transition',9],
-                      ['animation',9],
-                      ['setTimeout',7],
-                      ['@font-face',7],
-                      ['Typed Arrays',7],
-                      ['FileReader API',7],
-                      ['FormData',7],
-                      ['IndexedDB',7],
-                      ['getUserMedia()',7],
-                      ['postMassage()',7],
-                      ['CORS',7],
-                      ['strict mode',6],
-                      ['calc()',6],
-                      ['supports()',6],
-                      ['media queries',6],
-                      ['full screen',6],
-                      ['notification',6],
-                      ['orientation',6],
-                      ['requestAnimationFrame',6],
-                      ['border-radius',5],
-                      ['box-sizing',5],
-                      ['rgba()',5],
-                      ['text-shadow',5],
-                      ['box-shadow',5],
-                      ['flexbox',5],
-                      ['viewpoint',5]];
-
-        function click_word(word,dimension,mouse_event){
-          console.log('word ');
-          console.log(word);
-          console.log('Dimension: ');
-          console.log(dimension);
-          /*alert('word: '+ item + ' with coordinates: '+ JSON.stringify(dimension));*/
-        }
-
-        /* fix for erasing the word selection with html5 only */ 
-        var original_cloud = undefined;
-        var last_dimension = undefined;
-
-        function hover_word(word,dimension,mouse_event){
-          var c = $("#word-cloud-canvas")[0];
-          var ctx = c.getContext("2d");
-
-          if (!dimension){
-            ctx.clearRect(0,0,$("#word-cloud-canvas").width(),$("#word-cloud-canvas").height());
-            ctx.putImageData(original_cloud,0,0);
-          }else{
-            if (dimension != last_dimension){
-              ctx.clearRect(0,0,$("#word-cloud-canvas").width(),$("#word-cloud-canvas").height());
-              ctx.putImageData(original_cloud,0,0);
-            }
-            last_dimension = dimension;
-            ctx.strokeRect(dimension.x,dimension.y,dimension.w,dimension.h);
-          }
-        }
-
-        var options = {list : wordlist,
-                      gridSize: Math.round(16 * $('#word-cloud-canvas').width() / 1024),
-                      weightFactor: function (size) {
-                        return Math.pow(size, 2.3) * $('#word-cloud-canvas').width() / 1024;
-                      },
-                      fontFamily: 'Times, serif',
-                      rotateRatio: 0.1,
-                      minRotation: -Math.PI /2.0,
-                      maxRotation: -Math.PI /2.0,
-                      backgroundColor: '#fff',
-                      hover: hover_word,
-                      click: click_word};
-
-      $(document).ready(function(){
-        $("#main-video-slider").slider();
-        WordCloud($('#word-cloud-canvas')[0], options);
-
-
-        $("#word-cloud-canvas").on('wordcloudstop',function(){
-          var c = $("#word-cloud-canvas")[0];
-          var ctx = c.getContext("2d");
-          original_cloud = ctx.getImageData(0,0,$("#word-cloud-canvas").width(),$("#word-cloud-canvas").height());
-        });
-      });
     </script>
     
     <script src="{{ url_for('.static',filename='js/video.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='js/rocconf.js') }}" type="text/javascript"></script>
 
 {% endblock %}
