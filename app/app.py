@@ -6,6 +6,7 @@ from flask import request
 
 import re
 import json
+import os
 
 import pprint
 
@@ -16,6 +17,14 @@ app = Flask(__name__)
 app.secret_key = 'abc'
 Bootstrap(app)
 DEBUG = True
+
+#=======================================================
+# XXX
+#======================================================= 
+@app.route("/sessions")
+def return_sessions():
+    list = os.listdir("session_data")
+    pp.pprint(list)
 
 #=======================================================
 # Page Handler for the landing page
