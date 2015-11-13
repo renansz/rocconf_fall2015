@@ -30,20 +30,60 @@
 
     <div class="col-md-2"></div>
 
-    <div class="col-md-8">
-      <div class="thumbnail col-md-3">
-        <img src="//placehold.it/192x108" />
-      </div>
-      <div class="thumbnail col-md-3">
-        <img src="//placehold.it/192x108" />
-      </div>
-      <div class="thumbnail col-md-3">
-        <img src="//placehold.it/192x108" />
-      </div>
-      <div class="thumbnail col-md-3">
-        <img src="//placehold.it/192x108" />
-      </div>
-    </div>
+    <div class="col-md-8" id="secondary-videos-list">
+      <div class="thumbnail col-md-3" id="secondary-video-1">
+        <video id="secondary-video-player-1" class="video-js vjs-default-skin" controls
+        preload="auto" width="180" height="90" poster="//placehold.it/180x90"
+        data-setup='{}'>
+          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.mp4') }}" type='video/mp4'>
+          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.webm') }}" type='video/webm'>
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser
+            that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
+      </div><!--/secondary-video-1 -->
+
+      <div class="thumbnail col-md-3" id="secondary-video-2">
+        <video id="secondary-video-player-2" class="video-js vjs-default-skin" controls
+        preload="auto" width="180" height="90" poster="//placehold.it/180x90"
+        data-setup='{}'>
+          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.mp4') }}" type='video/mp4'>
+          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.webm') }}" type='video/webm'>
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser
+            that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
+      </div><!--/secondary-video-2 -->
+
+      <div class="thumbnail col-md-3" id="secondary-video-3">
+        <video id="secondary-video-player-3" class="video-js vjs-default-skin" controls
+        preload="auto" width="180" height="90" poster="//placehold.it/180x90"
+        data-setup='{}'>
+          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.mp4') }}" type='video/mp4'>
+          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.webm') }}" type='video/webm'>
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser
+            that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
+      </div><!--/secondary-video-3 -->
+
+      <div class="thumbnail col-md-3" id="secondary-video-4">
+        <video id="secondary-video-player-4" class="video-js vjs-default-skin" controls
+        preload="auto" width="180" height="90" poster="//placehold.it/180x90"
+        data-setup='{}'>
+          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.mp4') }}" type='video/mp4'>
+          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.webm') }}" type='video/webm'>
+          <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser
+            that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+        </video>
+      </div><!--/secondary-video-4 -->
+
+    </div><!--/secondary-videos-list -->
 
     <div class="col-md-2"></div>
   </div><!-- /videos thumbnails-->
