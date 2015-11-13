@@ -23,8 +23,9 @@ DEBUG = True
 #======================================================= 
 @app.route("/sessions")
 def return_sessions():
-    list = os.listdir("session_data")
-    pp.pprint(list)
+    print "WTF GUYS"
+    #list = os.listdir("session_data")
+    #pp.pprint(list)
 
 #=======================================================
 # Page Handler for the landing page
