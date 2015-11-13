@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 from flask import Flask, session, Response, jsonify
 from flask_bootstrap import Bootstrap
 from flask import render_template
