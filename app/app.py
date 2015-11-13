@@ -1,9 +1,8 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 from flask import Flask, session, Response, jsonify
 from flask_bootstrap import Bootstrap
 from flask import render_template
 from flask import request
-from pymongo import MongoClient
 
 import re
 import json
@@ -17,15 +16,6 @@ app = Flask(__name__)
 app.secret_key = 'abc'
 Bootstrap(app)
 DEBUG = True
-
-# Initialize the database connection
-DB_HOST = 'localhost'
-DB_PORT = 27017
-db_client = MongoClient(DB_HOST,DB_PORT)
-
-# Grab the database and all of the session keys
-#db = db_client['roc_conf']
-#session_key = db['annotations'].find().sort('dt',-1)
 
 #=======================================================
 # Page Handler for the landing page
