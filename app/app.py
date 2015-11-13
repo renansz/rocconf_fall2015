@@ -23,8 +23,14 @@ DEBUG = True
 #======================================================= 
 @app.route("/sessions")
 def return_sessions():
-    list = os.listdir("session_data")
-    pp.pprint(list)
+    list_files ={'files': os.listdir("session_data")}
+
+    #creating response object
+    response = jsonify(list_files) 
+    response.status_code = 200 
+
+    return response
+
 
 #=======================================================
 # Page Handler for the landing page
