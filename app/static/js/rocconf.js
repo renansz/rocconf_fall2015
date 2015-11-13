@@ -1,6 +1,16 @@
 
-/* video player setup */
+/* video players setup */
 var main_video = videojs('main-video-player');
+
+var sec_video_1 = videojs('sec-video-player');
+var sec_video_2 = videojs('sec-video-player');
+var sec_video_3 = videojs('sec-video-player');
+var sec_video_4 = videojs('sec-video-player');
+
+
+
+
+/* main video setup */
 main_video.autoplay(0);
 main_video.poster('static/img/video_background.png');
 //main_video.controlBar.hide()
