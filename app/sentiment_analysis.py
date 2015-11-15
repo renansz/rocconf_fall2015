@@ -1,0 +1,105 @@
+﻿# Simple sentiment classification using the NLTK toolkit
+# The below isn't a full citation yet, but just notes on where I'm getting this information from
+# Based on a series of tutorials from -> http://streamhacker.com/2010/05/10/text-classification-sentiment-analysis-naive-bayes-classifier/
+# Utilized information from -> http://text-processing.com/demo/sentiment/
+
+import json
+import pprint
+import os.path
+
+import nltk.classify.util
+from nltk.classify import NaiveBayesClassifier
+from nltk.corpus import movie_reviews
+
+#pretty printer config
+pp = pprint.PrettyPrinter(indent=2)
+
+classifier = None
+
+#=======================================================
+# Bag of words for the classifier
+#=======================================================
+def word_feats(words):
+    return dict([(word, True) for word in words])
+
+#=======================================================
+# Training a classifier off of the movie review corpus
+#=======================================================
+def setup_classifier():
+    negids = movie_reviews.fileids('neg')
+    posids = movie_reviews.fileids('pos')
+ 
+    negfeats = [(word_feats(movie_reviews.words(fileids=[f])), 'neg') for f in negids]
+    posfeats = [(word_feats(movie_reviews.words(fileids=[f])), 'pos') for f in posids]
+
+    # We'll train on the entire corpus instead of just parts of it
+    trainfeats = negfeats + posfeats
+
+    nb_classifier = NaiveBayesClassifier.train(trainfeats)
+    return nb_classifier
+
+
+#=======================================================
+# Below example shows how to train a NB classifier
+# on the NLTK and test it on the same corpus for
+# accuracy.
+#=======================================================
+def classifier_test():
+    negids = movie_reviews.fileids('neg')
+    posids = movie_reviews.fileids('pos')
+ 
+    negfeats = [(word_feats(movie_reviews.words(fileids=[f])), 'neg') for f in negids]
+    posfeats = [(word_feats(movie_reviews.words(fileids=[f])), 'pos') for f in posids]
+ 
+    negcutoff = len(negfeats)*3/4
+    poscutoff = len(posfeats)*3/4
+ 
+    trainfeats = negfeats[:negcutoff] + posfeats[:poscutoff]
+    testfeats = negfeats[negcutoff:] + posfeats[poscutoff:]
+    print 'train on %d instances, test on %d instances' % (len(trainfeats), len(testfeats))
+ 
+    classifier = NaiveBayesClassifier.train(trainfeats)
+    
+    '''
+    print 'accuracy:', nltk.classify.util.accuracy(classifier, testfeats)
+    classifier.show_most_informative_features()
+    '''
+    for i, (feats, label) in enumerate(testfeats):
+        pp.pprint(feats)
+
+#=======================================================
+# Processing a single users transcript for formatting for
+# the classifier.
+# - word-prosody.json analysis #1
+#=======================================================
+def process_user(filepath):
+
+    formatted_data = {}
+
+    with open(filepath,"r+") as the_file:
+        loaded_data = json.loads(the_file.read())
+
+        word_data = loaded_data['features']
+
+        for e in word_data:
+            if(e['confidence'] == 1):
+                formatted_data[e['word']] = True
+    
+    return formatted_data
+
+
+#=======================================================
+# Main Function
+#=======================================================
+if __name__ == "__main__":
+    basepath = os.path.dirname(__file__)
+    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_1/word-prosody.json"))
+
+    data = process_user(filepath)
+
+    #pp.pprint(data)
+
+    classifier = setup_classifier()
+    
+    results = classifier.classify(data)
+    pp.pprint(results)
