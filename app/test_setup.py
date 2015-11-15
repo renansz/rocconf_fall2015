@@ -141,7 +141,22 @@ def shift_word_prosody():
         #pp.pprint(data_to_fix)
 
 #=======================================================
+# Simple output test.
+#=======================================================
+def print_test():
+    basepath = os.path.dirname(__file__)
+    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_4/word-prosody.json"))
+
+    with open(filepath,"r+") as the_file:
+        data_to_fix = json.loads(the_file.read())
+  
+        #Use this to print out a JSON file a more readable format
+        filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_4/word-prosody-test.json"))
+        with open(filepath_2,'w') as outfile:
+            outfile.write(pp.pformat(data_to_fix['features']))
+
+#=======================================================
 # Start the web service on the local host
 #=======================================================
 if __name__ == "__main__":
-    shift_word_prosody()
+    print_test()
