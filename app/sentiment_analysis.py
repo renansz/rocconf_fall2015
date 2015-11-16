@@ -3,6 +3,9 @@
 # Based on a series of tutorials from -> http://streamhacker.com/2010/05/10/text-classification-sentiment-analysis-naive-bayes-classifier/
 # Utilized information from -> http://text-processing.com/demo/sentiment/
 
+# Now moving on to trying out the TextBlob library directory (which also bases itself off of NLTK)
+# Possibly also doing an ensemble method here, since there's also a nice web based utility I want to try out.
+
 import json
 import pprint
 import os.path
@@ -10,6 +13,9 @@ import os.path
 import nltk.classify.util
 from nltk.classify import NaiveBayesClassifier
 from nltk.corpus import movie_reviews
+
+from textblob import TextBlob
+from textblob.sentiments import NaiveBayesAnalyzer
 
 #pretty printer config
 pp = pprint.PrettyPrinter(indent=2)
@@ -69,7 +75,9 @@ def classifier_test():
 
 #=======================================================
 # Processing a single users transcript for formatting for
-# the classifier.
+# the classifier. This is more of a toy example to show
+# how we need to format for getting a featureset to 
+# analyze.
 # - word-prosody.json analysis #1
 #=======================================================
 def process_user(filepath):
@@ -83,23 +91,53 @@ def process_user(filepath):
 
         for e in word_data:
             if(e['confidence'] == 1):
-                formatted_data[e['word']] = True
+                formatted_data[e['word']] = False
     
     return formatted_data
 
+#=======================================================
+# Processing of a users frequent words for running
+# through the sentiment analysis.
+#=======================================================
+def process_user_freq(filepath):
+    formatted_data = []
+
+    with open(filepath,"r+") as the_file:
+        loaded_data = json.loads(the_file.read())
+        counts = loaded_data['counts']
+
+        for e in counts:
+            sample = e['text']
+            formatted_data.append(sample)
+
+    return formatted_data
 
 #=======================================================
 # Main Function
 #=======================================================
 if __name__ == "__main__":
     basepath = os.path.dirname(__file__)
-    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_1/word-prosody.json"))
+    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_1/word-tag-count.json"))
 
-    data = process_user(filepath)
+    data = process_user_freq(filepath)
 
     #pp.pprint(data)
-
+    '''
     classifier = setup_classifier()
     
-    results = classifier.classify(data)
-    pp.pprint(results)
+    for e in data:
+        results = classifier.classify(e)
+        print str(e) + " Yields " + results
+    '''
+
+    print "===================== Testing on the PatternAnalysis =========================="
+
+    for e in data:
+        blob = TextBlob(e)
+        print e + " Yields " + str(blob.sentiment)
+
+    print "====================== Testing on the NB Classifier ==========================="
+
+    for e in data:
+        blob = TextBlob(e, analyzer=NaiveBayesAnalyzer())
+        print e + " Yields " + str(blob.sentiment)
