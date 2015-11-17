@@ -124,15 +124,43 @@ def process_user_freq(filepath):
     return formatted_data
 
 #=======================================================
+# Perform a read of a sliding window across a users
+# words spoken.
+#=======================================================
+def sliding_window(filepath, length):
+    chunks = []
+    buffer = []
+    words = None
+
+    with open(filepath,"r+") as the_file:
+        loaded_data = json.loads(the_file.read())
+        words = loaded_data['word']
+
+    # Each time we add in a word to the buffer, we want to check the last 'length' of words
+    for e in words:
+        if(e['speech'] != 'sp'):
+            buffer.append(e['speech'])
+
+            chunk = buffer[-length:]
+            chunk_string = ""
+            for k in chunk:
+                chunk_string += " " + k
+            chunks.append({"text":chunk_string, "time": e['endTime']})
+
+    return chunks
+
+#=======================================================
 # Main Function
 #=======================================================
 if __name__ == "__main__":
     basepath = os.path.dirname(__file__)
-    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_1/word-tag-count.json"))
+    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_2/formatted-alignment.json"))
 
-    data = process_user_freq(filepath)
+    #data = process_user_freq(filepath)
 
-    #pp.pprint(data)
+    data = sliding_window(filepath, 3)
+
+    pp.pprint(data)
     '''
     classifier = setup_classifier()
     
@@ -141,6 +169,7 @@ if __name__ == "__main__":
         print str(e) + " Yields " + results
     '''
 
+    '''
     print "===================== Testing on the PatternAnalysis =========================="
 
     for e in data:
@@ -152,3 +181,4 @@ if __name__ == "__main__":
     for e in data:
         blob = TextBlob(e, analyzer=NaiveBayesAnalyzer())
         print e + " Yields " + str(blob.sentiment)
+    '''
