@@ -1,27 +1,51 @@
-
-/* video players setup */
+/* video players variables */
 var main_video = videojs('main-video-player');
+var main_audio = videojs('main-video-audio');
 
-var sec_video_1 = videojs('sec-video-player');
-var sec_video_2 = videojs('sec-video-player');
-var sec_video_3 = videojs('sec-video-player');
-var sec_video_4 = videojs('sec-video-player');
-
+var sec_video_1 = videojs('secondary-video-player-1');
+var sec_video_2 = videojs('secondary-video-player-2');
+var sec_video_3 = videojs('secondary-video-player-3');
+var sec_video_4 = videojs('secondary-video-player-4');
 
 
 
 /* main video setup */
 main_video.autoplay(0);
+main_video.load();
 main_video.poster('static/img/video_background.png');
 //main_video.controlBar.hide()
 //main_video.bigPlayButton.hide();
+
+
+/* secondary video setup */
+sec_video_1.load();
+sec_video_2.load();
+sec_video_3.load();
+sec_video_4.load();
+
+sec_video_1.autoplay(0);
+sec_video_2.autoplay(0);
+sec_video_3.autoplay(0);
+sec_video_4.autoplay(0);
+
+sec_video_1.poster('static/img/video_background.png');
+sec_video_2.poster('static/img/video_background.png');
+sec_video_3.poster('static/img/video_background.png');
+sec_video_4.poster('static/img/video_background.png');
+
+
+/* hiding main audio div */
+main_audio.hide();
 
 main_video.on('timeupdate',function(){
   /* called every time playback time is changed */
   
 });
 
-main_video.on('play',function(){
+
+
+/* slider setup when video is loaded */
+main_video.on('loadeddata',function(){
   /* called every time playback is fired up */
   console.log("video length: "+ main_video.duration());
   console.log("video timeleft: "+ main_video.remainingTime());
@@ -37,22 +61,42 @@ main_video.on('play',function(){
 /* general functions */
 $(document).ready(function(){
 
+
   // create slider instance
   $("#main-video-slider").slider();
 
   /* create handlers on the slider */
   $("#main-video-slider").on("slidechange",function(){
     console.log("new time: "+$("#main-video-slider").slider("value"));
+    /* changing the slider will reflect on all the videos */
     main_video.currentTime($("#main-video-slider").slider("value"));
+    main_audio.currentTime($("#main-video-slider").slider("value"));
+
+    sec_video_1.currentTime($("#main-video-slider").slider("value"));
+    sec_video_2.currentTime($("#main-video-slider").slider("value"));
+    sec_video_3.currentTime($("#main-video-slider").slider("value"));
+    sec_video_4.currentTime($("#main-video-slider").slider("value"));
   });
 
  /* slider and buttons handles */
   $('#main-video-play-btn').click(function(){
+    sec_video_1.play();
+    sec_video_2.play();
+    sec_video_3.play();
+    sec_video_4.play();
+
     main_video.play();
+    main_audio.play();
   });
 
   $('#main-video-pause-btn').click(function(){
     main_video.pause();
+    main_audio.pause();
+
+    sec_video_1.pause();
+    sec_video_2.pause();
+    sec_video_3.pause();
+    sec_video_4.pause();
   });
 
   

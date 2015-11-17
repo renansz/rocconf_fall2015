@@ -32,11 +32,10 @@
 
     <div class="col-md-8" id="secondary-videos-list">
       <div class="thumbnail col-md-3" id="secondary-video-1">
-        <video id="secondary-video-player-1 secondary-video" class="video-js vjs-default-skin" controls
+        <video id="secondary-video-player-1" class="video-js vjs-default-skin secondary-video"
         preload="auto" width="180" height="90" poster="//placehold.it/180x90"
         data-setup='{}'>
-          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.mp4') }}" type='video/mp4'>
-          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.webm') }}" type='video/webm'>
+          <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser
             that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -45,11 +44,10 @@
       </div><!--/secondary-video-1 -->
 
       <div class="thumbnail col-md-3" id="secondary-video-2">
-        <video id="secondary-video-player-2 secondary-video" class="video-js vjs-default-skin" controls
+        <video id="secondary-video-player-2" class="video-js vjs-default-skin secondary-video"
         preload="auto" width="180" height="90" poster="//placehold.it/180x90"
         data-setup='{}'>
-          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.mp4') }}" type='video/mp4'>
-          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.webm') }}" type='video/webm'>
+          <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser
             that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -58,11 +56,10 @@
       </div><!--/secondary-video-2 -->
 
       <div class="thumbnail col-md-3" id="secondary-video-3">
-        <video id="secondary-video-player-3 secondary-video" class="video-js vjs-default-skin" controls
+        <video id="secondary-video-player-3" class="video-js vjs-default-skin secondary-video"
         preload="auto" width="180" height="90" poster="//placehold.it/180x90"
         data-setup='{}'>
-          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.mp4') }}" type='video/mp4'>
-          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.webm') }}" type='video/webm'>
+          <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser
             that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -71,11 +68,10 @@
       </div><!--/secondary-video-3 -->
 
       <div class="thumbnail col-md-3" id="secondary-video-4">
-        <video id="secondary-video-player-4 secondary-video" class="video-js vjs-default-skin" controls
+        <video id="secondary-video-player-4" class="video-js vjs-default-skin secondary-video"
         preload="auto" width="180" height="90" poster="//placehold.it/180x90"
         data-setup='{}'>
-          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.mp4') }}" type='video/mp4'>
-          <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.webm') }}" type='video/webm'>
+          <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
           <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser
             that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -102,13 +98,20 @@
           <video id="main-video-player" class="video-js vjs-default-skin" controls
           preload="auto" width="640" height="480" poster="//placehold.it/640x480"
           data-setup='{}'>
-            <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.mp4') }}" type='video/mp4'>
-            <source src="{{ url_for('.static',filename='video/A_Conference_Call_in_Real_Life.webm') }}" type='video/webm'>
+            <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
+            <source src="{{ url_for('.static',filename='video/user_1/audio.wav') }}" type='audio/wav'/>
             <p class="vjs-no-js">
               To view this video please enable JavaScript, and consider upgrading to a web browser
               that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
             </p>
           </video>
+          <audio id="main-video-audio">
+            <source src="{{ url_for('.static',filename='video/user_1/audio.wav') }}" type='audio/wav'/>
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a web browser
+              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+          </audio>
         </div>
         <div class="row">
           <div class="col-xs-2 col-md-2" id="main-video-btns">
