@@ -5,6 +5,17 @@
 
 # Now moving on to trying out the TextBlob library directory (which also bases itself off of NLTK)
 # Possibly also doing an ensemble method here, since there's also a nice web based utility I want to try out.
+# NLTK not so great here, but TextBlog really nice with two types of sentiment analysis.
+
+# Formatting To Use:
+# - For the users word tag count, currently -> {"text":"ABOUT","count":1}  so change to {"text":"ABOUT","count":1,"polarity": calculated}
+# - For the overall sessions, we'll aggregate over all users on the call, then update with the polarity measurement.
+# 
+# Formatting on the Sentiment over time for the conversation.
+# - formatted-alignment yields elements like {"endTime": 98.7761904762, "speech": "sp", "startTime": 97.9181405896} in the "words" index.
+# - So the idea here is to parse this with a 3 word window (and also possibly a 5 word window) to get at:
+# - {"polarity": VALUE, "time": VALUE } where "time" is the end of the current window.
+# - and if necessary can break this out into a 'polarity per second' so {"time": second, "polarity": value }
 
 import json
 import pprint
