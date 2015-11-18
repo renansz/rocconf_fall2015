@@ -75,13 +75,10 @@ if __name__ == "__main__":
     basepath = os.path.dirname(__file__)
     filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_3/formatted-alignment.json"))
 
-    #data = process_user_freq(filepath)
+    data = process_user_freq(filepath)
 
-    data = sliding_window(filepath, 5)
+    #data = sliding_window(filepath, 5)
     
-    for e in data:
-        blob = TextBlob(e['text'])
-        print e['text'] + " Yields " + str(blob.sentiment)
 
     #pp.pprint(data)
   
