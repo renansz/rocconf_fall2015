@@ -110,6 +110,7 @@ if __name__ == "__main__":
     #-------------------------------------------------------------------------------------------------------------
     # Getting Sentiment for the word counts for the entire session and write to file
     #-------------------------------------------------------------------------------------------------------------
+    '''
     basepath = os.path.dirname(__file__)
     filepath_1 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_1/word-tag-count.json"))
     filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_2/word-tag-count.json"))
@@ -139,8 +140,41 @@ if __name__ == "__main__":
 
     with open(filepath_final,'w') as final_file:
         final_file.write(pp.pformat(data_to_write))
+    '''
 
     #-------------------------------------------------------------------------------------------------------------
     # Obtaining a graph of sentiment for each users and depositing that into their directory
     #-------------------------------------------------------------------------------------------------------------
+    basepath = os.path.dirname(__file__)
+    filepath_1 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_4/formatted-alignment.json"))
+
+    data = sliding_window(filepath_1,3)
+
+    list_data = []
+    for e in data:
+        blob = TextBlob(e['text'])
+        sentiment = blob.sentiment
+
+        dict = {"time":e['time'], "sentiment": sentiment[0]}
+        list_data.append(dict)
+
+    data_to_write = {"time_data":list_data}
+
+    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_4/sentiment-by-time.json"))
+
+    with open(filepath_final,'w') as final_file:
+        final_file.write(pp.pformat(data_to_write))
+
+    #-------------------------------------------------------------------------------------------------------------
+    # Output of the time spent positive, negative, and neutral for the 'at a glance' graph
+    #-------------------------------------------------------------------------------------------------------------
+    '''
+    filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_1/average-features.json"))
+
+    with open(filepath_2) as avg_file:
+        file_info = json.loads(avg_file.read())
+        feature_data = file_info['features']
+        session_length = feature_data[0]['totalDuration_Milliseconds'] / 1000
+    '''
+
 
