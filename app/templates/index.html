@@ -41,6 +41,10 @@
             that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
           </p>
         </video>
+        <div class="row text-center">
+            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/piechart.png') }}" />
+            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
+        </div>
       </div><!--/secondary-video-1 -->
 
       <div class="thumbnail col-md-3" id="secondary-video-2">
@@ -53,6 +57,10 @@
             that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
           </p>
         </video>
+        <div class="row text-center">
+            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/piechart.png') }}" />
+            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
+        </div>
       </div><!--/secondary-video-2 -->
 
       <div class="thumbnail col-md-3" id="secondary-video-3">
@@ -65,6 +73,10 @@
             that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
           </p>
         </video>
+        <div class="row text-center">
+            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/piechart.png') }}" />
+            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
+        </div>
       </div><!--/secondary-video-3 -->
 
       <div class="thumbnail col-md-3" id="secondary-video-4">
@@ -77,6 +89,10 @@
             that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
           </p>
         </video>
+        <div class="row text-center">
+            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/piechart.png') }}" />
+            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
+        </div>
       </div><!--/secondary-video-4 -->
 
     </div><!--/secondary-videos-list -->
@@ -159,7 +175,6 @@
       <!-- right alignment -->
       <div class="col-md-2 col-xs-2"></div>
     </div><!-- /charts area -->
-
   </div> <!-- /main-content -->
 
 </div>
@@ -173,17 +188,17 @@
 
 
 {% block styles %} 
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/video-js.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/material.min.css') }}">
 {% endblock styles %}
 
 {% block scripts %}
-    <script type="text/javascript" src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('.static', filename='js/jquery-1.11.3.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('.static', filename='js/jquery-ui.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('.static', filename='js/wordcloud2.js')}}"></script>
 
     <script type=text/javascript>
