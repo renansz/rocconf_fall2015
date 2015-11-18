@@ -84,60 +84,81 @@
     <div class="col-md-2"></div>
   </div><!-- /videos thumbnails-->
 
-  <br/><br/>
   <div class="row" id="main-content">
-    <div class="row-fluid">
-      <div class="col-md-2 text-left">
-        <div class="thumbnail">
-          <img src="//placehold.it/200x640" />
-        </div>
+    <!-- main content row -->
+    <div class="row-fluid" id="main-content-container">
+
+      <!-- left side space -->
+      <div class="col-md-2 col-xs-2 text-center" id="buttons-container">
+          <a href="#" class="btn btn-primary btn-raised">Button1</a><br/>
+          <a href="#" class="btn btn-primary btn-raised">Button2</a><br/>
+          <a href="#" class="btn btn-primary btn-raised">Button3</a><br/>
+          <a href="#" class="btn btn-primary btn-raised">Button4</a><br/>
+          <a href="#" class="btn btn-primary btn-raised">Button5</a><br/>
+        <!--<div class="thumbnail">
+          <img src="//placehold.it/200x480" />
+        </div>-->
       </div><!-- /left side -->
 
-      <div class="col-md-7 text-center" id="main-video-container">
-        <div class="thumbnail text-center" id="main-video">
-          <video id="main-video-player" class="video-js vjs-default-skin" controls
-          preload="auto" width="640" height="480" poster="//placehold.it/640x480"
-          data-setup='{}'>
-            <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
-            <source src="{{ url_for('.static',filename='video/user_1/audio.wav') }}" type='audio/wav'/>
-            <p class="vjs-no-js">
-              To view this video please enable JavaScript, and consider upgrading to a web browser
-              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-            </p>
-          </video>
-          <audio id="main-video-audio">
-            <source src="{{ url_for('.static',filename='video/user_1/audio.wav') }}" type='audio/wav'/>
-            <p class="vjs-no-js">
-              To view this video please enable JavaScript, and consider upgrading to a web browser
-              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-            </p>
-          </audio>
-        </div>
+      <div class="col-md-8 text-center" id="main-video-container">
         <div class="row">
-          <div class="col-xs-2 col-md-2" id="main-video-btns">
-            <h4>
-              <a id="main-video-play-btn" href="#"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
-              <a id="main-video-pause-btn" href="#"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></a>
-            </h4>
+          <div class="thumbnail text-center" id="main-video">
+            <video id="main-video-player" class="video-js vjs-default-skin video-custom-center"
+            preload="auto" width="480" height="360" poster="//placehold.it/640x480"
+            data-setup='{}'>
+              <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
+              <source src="{{ url_for('.static',filename='video/user_1/audio.wav') }}" type='audio/wav'/>
+              <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser
+                that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+              </p>
+            </video>
+            <audio id="main-video-audio">
+              <source src="{{ url_for('.static',filename='video/user_1/audio.wav') }}" type='audio/wav'/>
+              <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser
+                that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+              </p>
+            </audio>
           </div>
-          <div class="col-xs-9 col-md-9" id="main-video-slider"></div>
-          <div class="col-xs-1 col-md-1"></div>
+          <div class="row" id="slider-placeholder">
+            <div class="col-xs-2 col-md-2" id="main-video-btns">
+              <h4>
+                <a id="main-video-play-btn" href="#"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
+                <a id="main-video-pause-btn" href="#"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></a>
+              </h4>
+            </div>
+            <div class="col-xs-9 col-md-9" id="main-video-slider"></div>
+            <div class="col-xs-1 col-md-1 text-left" style="margin-left: 0px; padding-left: 0px;">
+              <strong><h4 id="video-time">0:00</h4></strong>
+            </div>
+          </div>
         </div>
-        <br/><br/>
       </div><!-- /main video-->
 
-      <div class="col-md-3">
-        <div class="row">
-          <canvas id="word-cloud-canvas"></canvas>
-          <!--<img src="{{ url_for('static',filename='img/fake_wordcloud_480.png') }}" />-->
-        </div>
+      <!-- right side space -->
+      <div class="col-md-2 col-xs-3 vcenter" id="wordcloud-placeholder">
+        <canvas id="wordcloud-canvas"></canvas>
+        <!--<img src="{{ url_for('static',filename='img/fake_wordcloud_480.png') }}" />-->
       </div><!-- /right side -->
+
     </div><!-- /main-content-row -->
 
-    <div class="row-fluid text-center">
-        <br/>
-        <img src="{{ url_for('static',filename='img/fake_sentiment.png') }}" style="width: 800px; height: auto;" />
-    </div> <!-- charts area -->
+    <!-- charts area -->
+    <div clas="row-fluid">
+      <!-- left alignment -->
+      <div class="col-md-2 col-xs-2"></div>
+
+        <!-- chart -->
+        <div class="col-md-8 col-xs-8 text-center">
+          <br/>
+          <!--<img src="{{ url_for('static',filename='img/fake_sentiment.png') }}" style="width: 800px; height: auto;" />-->
+          <div class="row" id="chart-area"></div>
+        </div> <!-- /chart -->
+
+      <!-- right alignment -->
+      <div class="col-md-2 col-xs-2"></div>
+    </div><!-- /charts area -->
 
   </div> <!-- /main-content -->
 
@@ -147,10 +168,11 @@
 
 {% block head %} 
   {{super()}}
-  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico')  }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css')  }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css')  }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/video-js.min.css')  }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/video-js.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/material.min.css') }}">
 {% endblock %}
 
 {% block scripts %}
@@ -169,10 +191,12 @@
     </script>
 
 
-    <script>
-    </script>
-    
     <script src="{{ url_for('.static',filename='js/video.min.js') }}" type="text/javascript"></script>
     <script src="{{ url_for('.static',filename='js/rocconf.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='js/rocconf_wordcloud.js') }}" type="text/javascript"></script>
+    <script src="https://www.google.com/jsapi?autoload={'modules': [{'name':'visualization',
+                                                        'version':'1',
+                                                        'packages':['corechart'] }]}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='js/rocconf_charts.js') }}" type="text/javascript"></script>
 
 {% endblock %}

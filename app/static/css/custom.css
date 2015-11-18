@@ -4,6 +4,13 @@
     float: none;
 }
 
+
 body {
   padding-top: 70px;
 }
+
+.video-custom-center{
+  margin:0px auto;
+}
+
+

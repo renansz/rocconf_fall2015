@@ -8,6 +8,10 @@ var sec_video_3 = videojs('secondary-video-player-3');
 var sec_video_4 = videojs('secondary-video-player-4');
 
 
+/* video global variables */
+var video_duration = 0;
+var slider_pos = 0;
+var current_time = 0;
 
 /* main video setup */
 main_video.autoplay(0);
@@ -18,15 +22,15 @@ main_video.poster('static/img/video_background.png');
 
 
 /* secondary video setup */
-sec_video_1.load();
-sec_video_2.load();
-sec_video_3.load();
-sec_video_4.load();
-
 sec_video_1.autoplay(0);
 sec_video_2.autoplay(0);
 sec_video_3.autoplay(0);
 sec_video_4.autoplay(0);
+
+sec_video_1.load();
+sec_video_2.load();
+sec_video_3.load();
+sec_video_4.load();
 
 sec_video_1.poster('static/img/video_background.png');
 sec_video_2.poster('static/img/video_background.png');
@@ -37,49 +41,21 @@ sec_video_4.poster('static/img/video_background.png');
 /* hiding main audio div */
 main_audio.hide();
 
-main_video.on('timeupdate',function(){
-  /* called every time playback time is changed */
-  
-});
-
 
 
 /* slider setup when video is loaded */
 main_video.on('loadeddata',function(){
   /* called every time playback is fired up */
-  console.log("video length: "+ main_video.duration());
-  console.log("video timeleft: "+ main_video.remainingTime());
+  //DEBUG console.log("video length: "+ main_video.duration());
+  //DEBUG console.log("video timeleft: "+ main_video.remainingTime());
 
-  /* setup slider values */
-  $("#main-video-slider").slider("option","max",main_video.duration());
-  $("#main-video-slider").slider("option","min",0);
+  video_duration = main_video.duration();
 });
 
 
 
-
-/* general functions */
-$(document).ready(function(){
-
-
-  // create slider instance
-  $("#main-video-slider").slider();
-
-  /* create handlers on the slider */
-  $("#main-video-slider").on("slidechange",function(){
-    console.log("new time: "+$("#main-video-slider").slider("value"));
-    /* changing the slider will reflect on all the videos */
-    main_video.currentTime($("#main-video-slider").slider("value"));
-    main_audio.currentTime($("#main-video-slider").slider("value"));
-
-    sec_video_1.currentTime($("#main-video-slider").slider("value"));
-    sec_video_2.currentTime($("#main-video-slider").slider("value"));
-    sec_video_3.currentTime($("#main-video-slider").slider("value"));
-    sec_video_4.currentTime($("#main-video-slider").slider("value"));
-  });
-
- /* slider and buttons handles */
-  $('#main-video-play-btn').click(function(){
+/* video helper functions */
+function play_videos(){
     sec_video_1.play();
     sec_video_2.play();
     sec_video_3.play();
@@ -87,110 +63,130 @@ $(document).ready(function(){
 
     main_video.play();
     main_audio.play();
-  });
+}
 
-  $('#main-video-pause-btn').click(function(){
-    main_video.pause();
-    main_audio.pause();
 
+function pause_videos(){
     sec_video_1.pause();
     sec_video_2.pause();
     sec_video_3.pause();
     sec_video_4.pause();
-  });
 
-  
+    main_video.pause();
+    main_audio.pause();
+}
 
-  /* wordcloud scripts */
-  var wordlist = [['Web Technologies',26],
-                ['HTML',20],
-                ['<canvas>',20],
-                ['CSS',15],
-                ['JavaScript',15],
-                ['Document Object Model',12],
-                ['<audio>',12],
-                ['<video>',12],
-                ['Web Workers',12],
-                ['XMLHttpRequest',12],
-                ['SVG',12],
-                ['JSON.parse()',9],
-                ['Geolocation',9],
-                ['data attribute',9],
-                ['transform',9],
-                ['transition',9],
-                ['animation',9],
-                ['setTimeout',7],
-                ['@font-face',7],
-                ['Typed Arrays',7],
-                ['FileReader API',7],
-                ['FormData',7],
-                ['IndexedDB',7],
-                ['getUserMedia()',7],
-                ['postMassage()',7],
-                ['CORS',7],
-                ['strict mode',6],
-                ['calc()',6],
-                ['supports()',6],
-                ['media queries',6],
-                ['full screen',6],
-                ['notification',6],
-                ['orientation',6],
-                ['requestAnimationFrame',6],
-                ['border-radius',5],
-                ['box-sizing',5],
-                ['rgba()',5],
-                ['text-shadow',5],
-                ['box-shadow',5],
-                ['flexbox',5],
-                ['viewpoint',5]];
 
-  function click_word(word,dimension,mouse_event){
-    console.log('word ');
-    console.log(word);
-    console.log('Dimension: ');
-    console.log(dimension);
-    /*alert('word: '+ item + ' with coordinates: '+ JSON.stringify(dimension));*/
+function update_videos_times(new_time){
+    main_video.currentTime(new_time);
+    main_audio.currentTime(new_time);
+
+    sec_video_1.currentTime(new_time);
+    sec_video_2.currentTime(new_time);
+    sec_video_3.currentTime(new_time);
+    sec_video_4.currentTime(new_time);
+}
+
+
+function update_playback_time(new_time){
+  var time_left = video_duration - new_time;
+  var formatted_time = "";
+  var minutes = Math.floor(time_left / 60);
+  var seconds = Math.round(time_left % 60)
+
+  if (seconds == 60){
+    minutes++;
+    seconds = 0;
   }
 
-  /* fix for erasing the word selection with html5 only */ 
-  var original_cloud = undefined;
-  var last_dimension = undefined;
-
-  function hover_word(word,dimension,mouse_event){
-    var c = $("#word-cloud-canvas")[0];
-    var ctx = c.getContext("2d");
-
-    if (!dimension){
-      ctx.clearRect(0,0,$("#word-cloud-canvas").width(),$("#word-cloud-canvas").height());
-      ctx.putImageData(original_cloud,0,0);
-    }else{
-      if (dimension != last_dimension){
-        ctx.clearRect(0,0,$("#word-cloud-canvas").width(),$("#word-cloud-canvas").height());
-        ctx.putImageData(original_cloud,0,0);
-      }
-      last_dimension = dimension;
-      ctx.strokeRect(dimension.x,dimension.y,dimension.w,dimension.h);
-    }
+  /* add minutes */
+  if (minutes < 10){
+    formatted_time += ''+0+''+minutes
+  }else{
+    formatted_time += ''+minutes
   }
 
-  var options = {list : wordlist,
-                gridSize: Math.round(16 * $('#word-cloud-canvas').width() / 1024),
-                weightFactor: function (size) {
-                  return Math.pow(size, 2.3) * $('#word-cloud-canvas').width() / 1024;
-                },
-                fontFamily: 'Times, serif',
-                rotateRatio: 0.1,
-                minRotation: -Math.PI /2.0,
-                maxRotation: -Math.PI /2.0,
-                backgroundColor: '#fff',
-                hover: hover_word,
-                click: click_word};
+  /* add seconds */
+  if (seconds < 10){
+    formatted_time += ':' + 0 + '' + seconds
+  }else{
+    formatted_time += ':' + seconds
+  }
 
-  WordCloud($('#word-cloud-canvas')[0], options);
+  /* update the text itself */
+  document.getElementById('video-time').innerHTML = formatted_time;
+}
 
-  $("#word-cloud-canvas").on('wordcloudstop',function(){
-    var c = $("#word-cloud-canvas")[0];
-    var ctx = c.getContext("2d");
-    original_cloud = ctx.getImageData(0,0,$("#word-cloud-canvas").width(),$("#word-cloud-canvas").height());
+
+
+
+/* general functions + main execution scripts */
+$(document).ready(function(){
+
+  /* canvas vertical alignment */
+  $("#main-content-container").height($('#main-video-container').height());
+  $("#wordcloud-placeholder").css({'height':$('#main-video-container').height(),
+                                   'line-height':$('#main-video-container').height()+'px'});
+
+
+  /* buttons setup */
+  $('#buttons-container').height($('#main-video-player').height());
+  $("#buttons-container").css({'height':$('#main-video-player').height(),
+                               'line-height':$('#main-video-player').height()/5+'px'});
+
+
+
+  // create slider instance
+  $("#main-video-slider").slider();
+
+  $("#main-video-slider").ready(function(){
+    $("#main-video-slider").position({
+      my:'center',
+      at:'center',
+      of:'#slider-placeholder'
+    });
   });
+
+
+  /* setup slider values */
+  //DEBUG console.log('hit here and the video duration is: '+video_duration);
+  $("#main-video-slider").slider("option","max",video_duration);
+  $("#main-video-slider").slider("option","min",0);
+  update_playback_time(0);
+
+
+  /* create handlers on the slider for users manually changing the slider */
+  $("#main-video-slider").on("slide",function(event,ui){
+    //DEBUG console.log("new time: "+ ui.value);
+
+    /* changing the slider will reflect on all the videos */
+    update_videos_times(ui.value);
+
+    /* update the time left info */
+    update_playback_time(ui.value);
+  });
+
+
+  /* slider and buttons handles */
+  $('#main-video-play-btn').click(function(){
+    play_videos();
+  });
+
+  $('#main-video-pause-btn').click(function(){
+    pause_videos();
+  });
+
+
+  /* slider updater on video time update */
+  main_video.on('timeupdate',function(){
+    current_time = main_video.currentTime();
+    /* called every time playback time is changed -- updates slider's values*/
+    $("#main-video-slider").slider('option','value',current_time);
+
+    /* update playback time */
+    update_playback_time(current_time);
+  });
+
+
+
 });
