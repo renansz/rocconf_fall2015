@@ -165,16 +165,6 @@ if __name__ == "__main__":
     with open(filepath_final,'w') as final_file:
         final_file.write(pp.pformat(data_to_write))
 
-    #-------------------------------------------------------------------------------------------------------------
-    # Output of the time spent positive, negative, and neutral for the 'at a glance' graph
-    #-------------------------------------------------------------------------------------------------------------
-    '''
-    filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_1/average-features.json"))
 
-    with open(filepath_2) as avg_file:
-        file_info = json.loads(avg_file.read())
-        feature_data = file_info['features']
-        session_length = feature_data[0]['totalDuration_Milliseconds'] / 1000
-    '''
 
 
