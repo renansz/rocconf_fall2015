@@ -125,8 +125,8 @@ $(document).ready(function(){
 
   /* canvas vertical alignment */
   $("#main-content-container").height($('#main-video-container').height());
-  $("#wordcloud-placeholder").css({'height':$('#main-video-container').height(),
-                                   'line-height':$('#main-video-container').height()+'px'});
+  $("#wordcloud-placeholder").css({'height':$('#main-video-container').height()});
+//                                   'line-height':$('#main-video-container').height()+'px'});
 
 
   /* buttons setup */
@@ -176,7 +176,6 @@ $(document).ready(function(){
     pause_videos();
   });
 
-
   /* slider updater on video time update */
   main_video.on('timeupdate',function(){
     current_time = main_video.currentTime();
@@ -187,6 +186,17 @@ $(document).ready(function(){
     update_playback_time(current_time);
   });
 
+  /* formatting secodanry video panels */
+  var secondary_videos_width = $('#secondary-video-1').width();
+  $('.secondary-video-div').width(secondary_videos_width-10);
+  $('.secondary-video-div').css('margin-left','4px');
+  $('.secondary-video-div').css('margin-right','4px');
+  $('.secondary-video-div').css('margin-right','4px');
 
+
+  /* user changing buttons */
+  $('.change-user').click(function(){
+    
+  });
 
 });

@@ -4,7 +4,7 @@
 {% block title %}RocConf{% endblock title %}
 
 {% block content %}
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar primary navbar-fixed-top" id="top-nav-bar">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -31,68 +31,88 @@
     <div class="col-md-2"></div>
 
     <div class="col-md-8" id="secondary-videos-list">
-      <div class="thumbnail col-md-3" id="secondary-video-1">
-        <video id="secondary-video-player-1" class="video-js vjs-default-skin secondary-video"
-        preload="auto" width="180" height="90" poster="//placehold.it/180x90"
-        data-setup='{}'>
-          <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser
-            that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-          </p>
-        </video>
-        <div class="row text-center">
-            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/piechart.png') }}" />
-            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
+      <div class="panel panel-primary col-md-3 secondary-video-div" id="secondary-video-1">
+        <div class="panel-heading">
+          <h3 class="panel-title">Participant 2</h3>
         </div>
+        <div class="panel-body"><!-- /panel-body -->
+          <video id="secondary-video-player-1" class="video-js vjs-default-skin secondary-video"
+          preload="auto" width="150" height="70" poster="//placehold.it/180x90"
+          data-setup='{}'>
+            <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a web browser
+              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+          </video>
+          <div class="row text-center" style="height:60px; padding-top: 5px;">
+              <img height="50px" width="50px" src="{{ url_for('.static', filename='img/piechart.png') }}" />
+              <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
+          </div>
+        </div><!-- panel-body -->
       </div><!--/secondary-video-1 -->
 
-      <div class="thumbnail col-md-3" id="secondary-video-2">
-        <video id="secondary-video-player-2" class="video-js vjs-default-skin secondary-video"
-        preload="auto" width="180" height="90" poster="//placehold.it/180x90"
-        data-setup='{}'>
-          <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser
-            that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-          </p>
-        </video>
-        <div class="row text-center">
-            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/piechart.png') }}" />
-            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
+      <div class="panel panel-primary col-md-3 secondary-video-div" id="secondary-video-2">
+        <div class="panel-heading">
+          <h3 class="panel-title">Participant 3</h3>
         </div>
+        <div class="panel-body"><!-- /panel-body -->
+          <video id="secondary-video-player-2" class="video-js vjs-default-skin secondary-video"
+          preload="auto" width="150" height="70" poster="//placehold.it/180x90"
+          data-setup='{}'>
+            <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a web browser
+              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+          </video>
+          <div class="row text-center" style="height:60px; padding-top: 5px;">
+              <img height="50px" width="50px" src="{{ url_for('.static', filename='img/piechart.png') }}" />
+              <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
+          </div>
+        </div><!-- panel-body -->
       </div><!--/secondary-video-2 -->
 
-      <div class="thumbnail col-md-3" id="secondary-video-3">
-        <video id="secondary-video-player-3" class="video-js vjs-default-skin secondary-video"
-        preload="auto" width="180" height="90" poster="//placehold.it/180x90"
-        data-setup='{}'>
-          <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
-          <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser
-            that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-          </p>
-        </video>
-        <div class="row text-center">
-            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/piechart.png') }}" />
-            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
+      <div class="panel panel-primary col-md-3 secondary-video-div" id="secondary-video-3">
+        <div class="panel-heading">
+          <h3 class="panel-title">Participant 4</h3>
         </div>
+        <div class="panel-body"><!-- /panel-body -->
+          <video id="secondary-video-player-3" class="video-js vjs-default-skin secondary-video"
+          preload="auto" width="150" height="70" poster="//placehold.it/180x90"
+          data-setup='{}'>
+            <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a web browser
+              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+          </video>
+          <div class="row text-center" style="height:60px; padding-top: 5px;">
+              <img height="50px" width="50px" src="{{ url_for('.static', filename='img/piechart.png') }}" />
+              <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
+          </div>
+        </div><!-- panel-body -->
       </div><!--/secondary-video-3 -->
 
-      <div class="thumbnail col-md-3" id="secondary-video-4">
-        <video id="secondary-video-player-4" class="video-js vjs-default-skin secondary-video"
-        preload="auto" width="180" height="90" poster="//placehold.it/180x90"
-        data-setup='{}'>
+      <div class="panel panel-primary col-md-3 secondary-video-div" id="secondary-video-4">
+        <div class="panel-heading" panel-blue-grey>
+          <h3 class="panel-title">Participant 5</h3>
+        </div>
+        <div class="panel-body"><!-- /panel-body -->
+          <video id="secondary-video-player-4" class="video-js vjs-default-skin secondary-video"
+          preload="auto" width="150" height="70" poster="//placehold.it/180x90"
+          data-setup='{}'>
           <source src="{{ url_for('.static',filename='video/user_1/video.webm') }}" type='video/webm'>
           <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a web browser
-            that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+              To view this video please enable JavaScript, and consider upgrading to a web browser
+              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
           </p>
-        </video>
-        <div class="row text-center">
-            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/piechart.png') }}" />
-            <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
-        </div>
+          </video>
+          <div class="row text-center" style="height:60px; padding-top: 5px;">
+              <img height="50px" width="50px" src="{{ url_for('.static', filename='img/piechart.png') }}" />
+              <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
+          </div>
+        </div><!-- panel-body -->
       </div><!--/secondary-video-4 -->
 
     </div><!--/secondary-videos-list -->
@@ -106,19 +126,30 @@
 
       <!-- left side space -->
       <div class="col-md-2 col-xs-2 text-center" id="buttons-container">
-          <a href="#" class="btn btn-primary btn-raised">Button1</a><br/>
-          <a href="#" class="btn btn-primary btn-raised">Button2</a><br/>
-          <a href="#" class="btn btn-primary btn-raised">Button3</a><br/>
-          <a href="#" class="btn btn-primary btn-raised">Button4</a><br/>
-          <a href="#" class="btn btn-primary btn-raised">Button5</a><br/>
+          <!-- TODO: it is necessary to keep track of which user it is using the id or user property, not sure yet -->
+          <div class="row text-left change-user" id="change-user-1" user=1>
+            <a href="#" class="btn btn-material-blue-grey btn-raised disabled text-left"><span>User 1&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
+          </div>
+          <div class="row text-left change-user" id="change-user-2" user=2>
+            <a href="#" class="btn btn-material-blue-grey btn-raised text-left"><span>User 2&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
+          </div>
+          <div class="row text-left change-user" id="change-user-3" user=3>
+            <a href="#" class="btn btn-material-blue-grey btn-raised text-left"><span>User 3&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
+          </div>
+          <div class="row text-left change-user" id="change-user-4" user=4>
+            <a href="#" class="btn btn-material-blue-grey btn-raised text-left"><span>User 4&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
+          </div>
+          <div class="row text-left change-user" id="change-user-5" user=5>
+            <a href="#" class="btn btn-material-blue-grey btn-raised text-left"><span>User 5&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
+          </div>
         <!--<div class="thumbnail">
           <img src="//placehold.it/200x480" />
         </div>-->
       </div><!-- /left side -->
 
-      <div class="col-md-8 text-center" id="main-video-container">
+      <div class="col-md-8 text-center clear-background shadow-z-1" id="main-video-container">
         <div class="row">
-          <div class="thumbnail text-center" id="main-video">
+          <div class="text-center clear-background" id="main-video">
             <video id="main-video-player" class="video-js vjs-default-skin video-custom-center"
             preload="auto" width="480" height="360" poster="//placehold.it/640x480"
             data-setup='{}'>
@@ -155,7 +186,8 @@
       <!-- right side space -->
       <div class="col-md-2 col-xs-3 vcenter" id="wordcloud-placeholder">
         <canvas id="wordcloud-canvas"></canvas>
-        <!--<img src="{{ url_for('static',filename='img/fake_wordcloud_480.png') }}" />-->
+        <!--<img src="{{ url_for('.static',filename='img/fake_wordcloud_480.png') }}" />-->
+        <img src="{{ url_for('.static',filename='img/participation_graph.png') }}" />
       </div><!-- /right side -->
 
     </div><!-- /main-content-row -->
@@ -169,7 +201,7 @@
         <div class="col-md-8 col-xs-8 text-center">
           <br/>
           <!--<img src="{{ url_for('static',filename='img/fake_sentiment.png') }}" style="width: 800px; height: auto;" />-->
-          <div class="row" id="chart-area"></div>
+          <div class="row clear-background" id="chart-area"></div>
         </div> <!-- /chart -->
 
       <!-- right alignment -->
@@ -193,6 +225,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/video-js.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/material.min.css') }}">
+  <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/material-fullpalette.min.css') }}">-->
 {% endblock styles %}
 
 {% block scripts %}

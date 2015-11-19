@@ -7,10 +7,31 @@
 
 body {
   padding-top: 70px;
+  background-color: #eeeeee;
 }
 
 .video-custom-center{
   margin:0px auto;
 }
 
+#top-nav-bar{
+  background-color: #000;
+}
+
+.secondary-video{
+  background-color: #fafafa;
+}
+
+.clear-background{
+  background-color: #fbfbfb;
+}
+
+#main-video{
+  padding-top: 10px;
+}
+
+.panel-body{
+  padding-left: 0px;
+  padding-right: 2px;
+}
 
