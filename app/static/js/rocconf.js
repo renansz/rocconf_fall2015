@@ -199,4 +199,46 @@ $(document).ready(function(){
     
   });
 
+
+
+  /***************** Chart area ********************/
+  $('.bottom-side').height($('#chart-area').height());
+
+
+  /*************** Change User Buttons *************/
+  var changing_video_main = undefined;
+  var changing_video_sec = undefined;
+  var main_video_width = undefined;
+  var main_video_height = undefined;
+  var sec_video_width = undefined;
+  var sec_video_height = undefined;
+
+  $('.change-user').click(function(e){
+
+    if(!$(this).children().hasClass('disabled')){
+      // getting the dimensions first
+      main_video_width =  $('#main-video-player').width();
+      main_video_height = $('#main-video-player').height();
+      sec_video_width = $('#secondary-video-player-1').width();
+      sec_video_height = $('#secondary-video-player-1').height();
+
+
+      // detaching the elements
+      changing_video_main = $('#main-video-player').detach();
+      changing_video_sec = $('#secondary-video-player-1').detach()
+
+      // attaching back
+      changing_video_sec.prependTo($("#main-video"));
+      changing_video_main.prependTo($("#secondary-player-panel-1"));
+
+      // resizing
+      $('#main-video-player').width(sec_video_width);
+      $('#main-video-player').height(sec_video_height);
+      $('#secondary-video-player-1').width(main_video_width);
+      $('#secondary-video-player-1').height(main_video_height);
+
+    }
+
+  });
+
 });

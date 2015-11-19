@@ -35,3 +35,8 @@ body {
   padding-right: 2px;
 }
 
+
+#chart-area {
+  height: 400px;
+  width: 100%;
+}
