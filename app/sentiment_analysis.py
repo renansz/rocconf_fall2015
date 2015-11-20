@@ -110,18 +110,15 @@ if __name__ == "__main__":
     #-------------------------------------------------------------------------------------------------------------
     # Getting Sentiment for the word counts for the entire session and write to file
     #-------------------------------------------------------------------------------------------------------------
-    '''
     basepath = os.path.dirname(__file__)
-    filepath_1 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_1/word-tag-count.json"))
-    filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_2/word-tag-count.json"))
-    filepath_3 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_3/word-tag-count.json"))
-    filepath_4 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_4/word-tag-count.json"))
+    filepath_1 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_1/word-tag-count.json"))
+    filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_2/word-tag-count.json"))
+    filepath_3 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_3/word-tag-count.json"))
 
     session_counts = []
     session_counts.append(process_user_freq(filepath_1))
     session_counts.append(process_user_freq(filepath_2))
     session_counts.append(process_user_freq(filepath_3))
-    session_counts.append(process_user_freq(filepath_4))
    
     processed_counts = aggregate_freq_words(session_counts)
 
@@ -136,17 +133,17 @@ if __name__ == "__main__":
 
     data_to_write = {"counts": list_data}
 
-    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/sentiment_counts.json"))
+    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/sentiment_counts.json"))
 
     with open(filepath_final,'w') as final_file:
         final_file.write(pp.pformat(data_to_write))
-    '''
 
     #-------------------------------------------------------------------------------------------------------------
     # Obtaining a graph of sentiment for each users and depositing that into their directory
     #-------------------------------------------------------------------------------------------------------------
+    '''
     basepath = os.path.dirname(__file__)
-    filepath_1 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_4/formatted-alignment.json"))
+    filepath_1 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_3/formatted-alignment.json"))
 
     data = sliding_window(filepath_1,3)
 
@@ -160,10 +157,11 @@ if __name__ == "__main__":
 
     data_to_write = {"time_data":list_data}
 
-    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_4/sentiment-by-time.json"))
+    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_3/sentiment-by-time.json"))
 
     with open(filepath_final,'w') as final_file:
         final_file.write(pp.pformat(data_to_write))
+    '''
 
 
 
