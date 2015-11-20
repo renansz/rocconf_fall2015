@@ -31,15 +31,17 @@
     <div class="col-md-2"></div>
 
     <div class="col-md-8" id="secondary-videos-list">
-      <div class="panel panel-primary col-md-3 secondary-video-div" id="secondary-video-1">
+
+      <!-- secondary-video-panel-2 -->
+      <div class="panel panel-primary col-md-3 secondary-video-div" id="video-2">
         <div class="panel-heading">
           <h3 class="panel-title">User 2</h3>
         </div>
-        <div class="panel-body" id="secondary-player-panel-1"><!-- /panel-body -->
-          <video id="secondary-video-player-1" class="video-js vjs-default-skin secondary-video"
-          preload="auto" width="150" height="70" poster="//placehold.it/180x90"
+        <div class="panel-body" id="video-player-panel-2"><!-- /panel-body -->
+          <video id="video-player-2" class="video-js vjs-default-skin secondary-video"
+          preload="auto" width="150" height="70" user=2 poster="//placehold.it/180x90"
           data-setup='{}'>
-            <source src="{{ url_for('.static',filename='video/multi_test_1/user_2/video.webm') }}" type='video/webm'>
+            <source src="{{ url_for('.static',filename='video/multi_test_2/user_2/video.webm') }}" type='video/webm'>
             <p class="vjs-no-js">
               To view this video please enable JavaScript, and consider upgrading to a web browser
               that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -50,17 +52,18 @@
               <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
           </div>
         </div><!-- panel-body -->
-      </div><!--/secondary-video-1 -->
+      </div><!--/secondary-video-panel-2 -->
 
-      <div class="panel panel-primary col-md-3 secondary-video-div" id="secondary-video-2">
+      <!-- secondary-video-panel-3 -->
+      <div class="panel panel-primary col-md-3 secondary-video-div" id="video-3">
         <div class="panel-heading">
           <h3 class="panel-title">User 3</h3>
         </div>
-        <div class="panel-body" id="secondary-player-panel-2"><!-- /panel-body -->
-          <video id="secondary-video-player-2" class="video-js vjs-default-skin secondary-video"
-          preload="auto" width="150" height="70" poster="//placehold.it/180x90"
+        <div class="panel-body" id="video-player-panel-3"><!-- /panel-body -->
+          <video id="video-player-3" class="video-js vjs-default-skin secondary-video"
+          preload="auto" width="150" height="70" user=3 poster="//placehold.it/180x90"
           data-setup='{}'>
-            <source src="{{ url_for('.static',filename='video/multi_test_1/user_1/video.webm') }}" type='video/webm'>
+            <source src="{{ url_for('.static',filename='video/multi_test_2/user_3/video.webm') }}" type='video/webm'>
             <p class="vjs-no-js">
               To view this video please enable JavaScript, and consider upgrading to a web browser
               that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -71,17 +74,18 @@
               <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
           </div>
         </div><!-- panel-body -->
-      </div><!--/secondary-video-2 -->
+      </div><!--/secondary-video-panel-3 -->
 
-      <div class="panel panel-primary col-md-3 secondary-video-div" id="secondary-video-3">
+      <!-- secondary-video-panel-4 -->
+      <div class="panel panel-primary col-md-3 secondary-video-div" id="video-4">
         <div class="panel-heading">
           <h3 class="panel-title">User 4</h3>
         </div>
-        <div class="panel-body" id="secondary-player-panel-3"><!-- /panel-body -->
-          <video id="secondary-video-player-3" class="video-js vjs-default-skin secondary-video"
-          preload="auto" width="150" height="70" poster="//placehold.it/180x90"
+        <div class="panel-body" id="video-player-panel-4"><!-- /panel-body -->
+          <video id="video-player-4" class="video-js vjs-default-skin secondary-video"
+          preload="auto" width="150" height="70" user=4 poster="//placehold.it/180x90"
           data-setup='{}'>
-          <!--<source src="{{ url_for('.static',filename='video/multi_test_1/user_2/video.webm') }}" type='video/webm'>-->
+          <!--<source src="{{ url_for('.static',filename='video/multi_test_2/user_2/video.webm') }}" type='video/webm'>-->
             <p class="vjs-no-js">
               To view this video please enable JavaScript, and consider upgrading to a web browser
               that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -92,17 +96,18 @@
               <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
           </div>
         </div><!-- panel-body -->
-      </div><!--/secondary-video-3 -->
+      </div><!--/secondary-video-panel-4 -->
 
-      <div class="panel panel-primary col-md-3 secondary-video-div" id="secondary-video-4">
+      <!-- secondary-video-panel-5 -->
+      <div class="panel panel-primary col-md-3 secondary-video-div" id="video-5">
         <div class="panel-heading" panel-blue-grey>
-          <h3 class="panel-title">Participant 5</h3>
+          <h3 class="panel-title">User 5</h3>
         </div>
-        <div class="panel-body" id="secondary-player-panel-4"><!-- /panel-body -->
-          <video id="secondary-video-player-4" class="video-js vjs-default-skin secondary-video"
-          preload="auto" width="150" height="70" poster="//placehold.it/180x90"
+        <div class="panel-body" id="video-player-panel-5"><!-- /panel-body -->
+          <video id="video-player-5" class="video-js vjs-default-skin secondary-video"
+          preload="auto" width="150" height="70" user=5 poster="//placehold.it/180x90"
           data-setup='{}'>
-          <!--<source src="{{ url_for('.static',filename='video/multi_test_1/user_3/video.webm') }}" type='video/webm'>-->
+          <!--<source src="{{ url_for('.static',filename='video/multi_test_2/user_3/video.webm') }}" type='video/webm'>-->
           <p class="vjs-no-js">
               To view this video please enable JavaScript, and consider upgrading to a web browser
               that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -113,7 +118,7 @@
               <img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />
           </div>
         </div><!-- panel-body -->
-      </div><!--/secondary-video-4 -->
+      </div><!--/secondary-video-panel-5 -->
 
     </div><!--/secondary-videos-list -->
 
@@ -127,19 +132,19 @@
       <!-- left side space -->
       <div class="col-md-2 col-xs-2 text-center" id="buttons-container">
           <!-- TODO: it is necessary to keep track of which user it is using the id or user property, not sure yet -->
-          <div class="row text-left change-user" id="change-user-1" user=1>
+          <div class="row text-left change-user" id="change-user-1" change_user=1>
             <a href="#" class="btn btn-material-blue-grey btn-raised disabled text-left"><span>User 1&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
           </div>
-          <div class="row text-left change-user" id="change-user-2" user=2>
+          <div class="row text-left change-user" id="change-user-2" change_user=2>
             <a href="#" class="btn btn-material-blue-grey btn-raised text-left"><span>User 2&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
           </div>
-          <div class="row text-left change-user" id="change-user-3" user=3>
+          <div class="row text-left change-user" id="change-user-3" change_user=3>
             <a href="#" class="btn btn-material-blue-grey btn-raised text-left"><span>User 3&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
           </div>
-          <div class="row text-left change-user" id="change-user-4" user=4>
+          <div class="row text-left change-user" id="change-user-4" change_user=4>
             <a href="#" class="btn btn-material-blue-grey btn-raised disabled text-left"><span>User 4&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
           </div>
-          <div class="row text-left change-user" id="change-user-5" user=5>
+          <div class="row text-left change-user" id="change-user-5" change_user=5>
             <a href="#" class="btn btn-material-blue-grey btn-raised disabled text-left"><span>User 5&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
           </div>
         <!--<div class="thumbnail">
@@ -149,18 +154,18 @@
 
       <div class="col-md-8 text-center clear-background shadow-z-1" id="main-video-container">
         <div class="row">
-          <div class="text-center clear-background" id="main-video">
-            <video id="main-video-player" class="video-js vjs-default-skin video-custom-center"
-            preload="auto" width="480" height="360" poster="//placehold.it/640x480"
+          <div class="text-center clear-background" id="video-player-panel-1">
+            <video id="video-player-1" class="video-js vjs-default-skin video-custom-center"
+            preload="auto" width="480" height="360" user=1 poster="//placehold.it/640x480"
             data-setup='{}'>
-              <source src="{{ url_for('.static',filename='video/multi_test_1/user_3/video.webm') }}" type='video/webm'>
+              <source src="{{ url_for('.static',filename='video/multi_test_2/user_1/video.webm') }}" type='video/webm'>
               <p class="vjs-no-js">
                 To view this video please enable JavaScript, and consider upgrading to a web browser
                 that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
               </p>
             </video>
             <audio id="main-video-audio">
-              <source src="{{ url_for('.static',filename='video/multi_test_1/multi_audio_1.wav') }}" type='audio/wav'/>
+              <source src="{{ url_for('.static',filename='video/multi_test_2/multi_audio_1.wav') }}" type='audio/wav'/>
               <p class="vjs-no-js">
                 To view this video please enable JavaScript, and consider upgrading to a web browser
                 that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>

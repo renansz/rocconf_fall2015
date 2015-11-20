@@ -1,11 +1,11 @@
 /* video players variables */
-var main_video = videojs('main-video-player');
+var main_video = videojs('video-player-1');
 var main_audio = videojs('main-video-audio');
 
-var sec_video_1 = videojs('secondary-video-player-1');
-var sec_video_2 = videojs('secondary-video-player-2');
-var sec_video_3 = videojs('secondary-video-player-3');
-var sec_video_4 = videojs('secondary-video-player-4');
+var sec_video_2 = videojs('video-player-2');
+var sec_video_3 = videojs('video-player-3');
+var sec_video_4 = videojs('video-player-4');
+var sec_video_5 = videojs('video-player-5');
 
 
 /* video global variables */
@@ -22,20 +22,20 @@ main_video.poster('static/img/video_background.png');
 
 
 /* secondary video setup */
-sec_video_1.autoplay(0);
 sec_video_2.autoplay(0);
 sec_video_3.autoplay(0);
 sec_video_4.autoplay(0);
+sec_video_5.autoplay(0);
 
-sec_video_1.load();
 sec_video_2.load();
 sec_video_3.load();
 sec_video_4.load();
+sec_video_5.load();
 
-sec_video_1.poster('static/img/video_background.png');
 sec_video_2.poster('static/img/video_background.png');
 sec_video_3.poster('static/img/video_background.png');
 sec_video_4.poster('static/img/video_background.png');
+sec_video_5.poster('static/img/video_background.png');
 
 
 /* hiding main audio div */
@@ -56,10 +56,10 @@ main_video.on('loadeddata',function(){
 
 /* video helper functions */
 function play_videos(){
-    sec_video_1.play();
     sec_video_2.play();
     sec_video_3.play();
     sec_video_4.play();
+    sec_video_5.play();
 
     main_video.play();
     main_audio.play();
@@ -67,10 +67,10 @@ function play_videos(){
 
 
 function pause_videos(){
-    sec_video_1.pause();
     sec_video_2.pause();
     sec_video_3.pause();
     sec_video_4.pause();
+    sec_video_5.pause();
 
     main_video.pause();
     main_audio.pause();
@@ -81,10 +81,10 @@ function update_videos_times(new_time){
     main_video.currentTime(new_time);
     main_audio.currentTime(new_time);
 
-    sec_video_1.currentTime(new_time);
     sec_video_2.currentTime(new_time);
     sec_video_3.currentTime(new_time);
     sec_video_4.currentTime(new_time);
+    sec_video_5.currentTime(new_time);
 }
 
 
@@ -130,9 +130,9 @@ $(document).ready(function(){
 
 
   /* buttons setup */
-  $('#buttons-container').height($('#main-video-player').height());
-  $("#buttons-container").css({'height':$('#main-video-player').height(),
-                               'line-height':$('#main-video-player').height()/5+'px'});
+  $('#buttons-container').height($('#video-player-panel-1').height());
+  $("#buttons-container").css({'height':$('#video-player-panel-1').height(),
+                               'line-height':$('#video-player-panel-1').height()/5+'px'});
 
 
 
@@ -187,18 +187,11 @@ $(document).ready(function(){
   });
 
   /* formatting secodanry video panels */
-  var secondary_videos_width = $('#secondary-video-1').width();
+  var secondary_videos_width = $('#video-2').width();
   $('.secondary-video-div').width(secondary_videos_width-10);
   $('.secondary-video-div').css('margin-left','4px');
   $('.secondary-video-div').css('margin-right','4px');
   $('.secondary-video-div').css('margin-right','4px');
-
-
-  /* user changing buttons */
-  $('.change-user').click(function(){
-    
-  });
-
 
 
   /***************** Chart area ********************/
@@ -212,33 +205,76 @@ $(document).ready(function(){
   var main_video_height = undefined;
   var sec_video_width = undefined;
   var sec_video_height = undefined;
+  var sec_panel = undefined;
+  var main_user = undefined;
+  var sec_user = undefined;
+
+  var main_player = undefined;
+  var sec_player = undefined;
 
   $('.change-user').click(function(e){
 
-    if(!$(this).children().hasClass('disabled')){
-      // getting the dimensions first
-      main_video_width =  $('#main-video-player').width();
-      main_video_height = $('#main-video-player').height();
-      sec_video_width = $('#secondary-video-player-1').width();
-      sec_video_height = $('#secondary-video-player-1').height();
-
-
-      // detaching the elements
-      changing_video_main = $('#main-video-player').detach();
-      changing_video_sec = $('#secondary-video-player-1').detach()
-
-      // attaching back
-      changing_video_sec.prependTo($("#main-video"));
-      changing_video_main.prependTo($("#secondary-player-panel-1"));
-
-      // resizing
-      $('#main-video-player').width(sec_video_width);
-      $('#main-video-player').height(sec_video_height);
-      $('#secondary-video-player-1').width(main_video_width);
-      $('#secondary-video-player-1').height(main_video_height);
-
+    // get the new user number that will be in the main player
+    if ($(this).attr('change_user')){
+      sec_user = $(this).attr('change_user');
+    }else{
+      sec_user = $(this).attr('user');
     }
 
-  });
+    // get panel numbers *** main video is always panel 1
+    // jquery trick to get the panel
+    sec_panel = $('div[user='+sec_user+']').parent();
 
+    // get the user numbers (which user video is there)
+    main_user = $('.video-custom-center').attr('user');
+
+
+    main_player = $('div[user=' + main_user + ']');
+    sec_player = $('div[user=' + sec_user + ']');
+
+    //alert('main panel: '+main_panel_number+'\nsec panel: '+sec_panel_number);
+
+    // for now, stop playing the videos before changes
+    pause_videos();
+
+
+    if(!$(this).children().hasClass('disabled')){
+      // getting the dimensions first
+      main_video_width  = main_player.width();
+      main_video_height = main_player.height();
+      sec_video_width   = sec_player.width();
+      sec_video_height  = sec_player.height();
+
+      //alert('main panel width: '+ main_video_width +' height: '+ main_video_height +'\nsec panel height: '+ sec_video_height+' width: ' + sec_video_width);
+
+      // detaching the elements
+      changing_video_main = main_player.detach();
+      changing_video_sec  = sec_player.detach();
+
+      // attaching back
+      changing_video_sec.prependTo($('#video-player-panel-1')); // main panel 
+      changing_video_main.prependTo(sec_panel);
+
+      // resizing
+      main_player.width(sec_video_width);
+      main_player.height(sec_video_height);
+      sec_player.width(main_video_width);
+      sec_player.height(main_video_height);
+
+      // fixing classes on main-video
+      main_player.toggleClass('secondary-video');
+      main_player.toggleClass('video-custom-center');
+
+      // fixing classes on sec-video
+      sec_player.toggleClass('secondary-video');
+      sec_player.toggleClass('video-custom-center');
+
+      // change user attribute values on the video element
+      sec_player.attr('user',main_user);
+      main_player.attr('user',sec_user);
+
+      // Finally, start playing the videos again
+      play_videos();
+    }
+  });
 });
