@@ -19,7 +19,8 @@ Bootstrap(app)
 DEBUG = True
 
 #=======================================================
-# XXX
+# AJAX Handler for getting a list of sessions
+# stored on this server.
 #======================================================= 
 @app.route("/sessions")
 def return_sessions():
@@ -28,6 +29,42 @@ def return_sessions():
 
     #creating response object
     response = jsonify(list_files) 
+    response.status_code = 200 
+
+    return response
+
+#=======================================================
+# AJAX Handler for getting sentiment data
+#======================================================= 
+@app.route("/sentiment", methods=['GET'])
+def return_sentiment():
+
+    directory = request.args.get('session')
+
+    basepath = os.path.dirname(__file__)
+    users = os.listdir("session_data/" + directory)
+
+    time_data = {}
+
+    for e in users:
+        try:
+            filepath = os.path.abspath(os.path.join(basepath, "session_data/" + directory + "/" + e + "/sentiment-by-time.json"))
+            with open(filepath,"r+") as the_file:
+                loaded_data = json.loads(the_file.read())
+                time_data[e] = loaded_data['time_data']
+        except Exception as exception:
+            print exception
+    
+    filepath = os.path.abspath(os.path.join(basepath, "session_data/" + directory + "/sentiment_counts.json"))
+    with open(filepath,"r+") as the_file:
+        loaded_data = json.loads(the_file.read())
+
+    data = {}
+    data['counts'] = loaded_data['counts']
+    data['time'] = time_data
+
+    #creating response object
+    response = jsonify(data) 
     response.status_code = 200 
 
     return response
