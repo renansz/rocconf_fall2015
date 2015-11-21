@@ -98,7 +98,7 @@ def shift_formatted_alignment():
 
         filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_4/formatted-alignment-test.json"))
         with open(filepath_2,'w') as outfile:
-            json.dump(data_to_write, outfile)
+            json.dumps(data_to_write, outfile)
   
         #Use this to print out a JSON file a more readable format
         #pp.pprint(data_to_fix)
@@ -156,7 +156,56 @@ def print_test():
             outfile.write(pp.pformat(data_to_fix['features']))
 
 #=======================================================
-# Start the web service on the local host
+# Time Check Helper
+#=======================================================
+def time_range(value):
+    user1_timing = [(11.1,14),(14.3,33),(50,72.5),(95,110),(114.5,115),(119,120)]
+    user2_timing = [(2,11),(14.1,14.3),(43,43.3),(45,50),(81,94),(110,114),(115.5,120)]
+    user3_timing = [(33.5,45),(74.5,81),(94,94.5),(119.5,120)]    
+
+    for e in user3_timing:
+        if (value >= e[0] and value <= e[1]):
+            return True
+
+#=======================================================
+# Cleaning up unnecessary overlaps from a session.
+# - Only really need to use this in testing, cleans
+#   up information captured from another persons
+#   microphone.
+#=======================================================
+def formatted_alignment_cleaner():
+    basepath = os.path.dirname(__file__)
+    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_3/formatted-alignment.json"))
+
+    with open(filepath,"r+") as the_file:
+        data_to_fix = json.loads(the_file.read())
+
+        original_words = data_to_fix['word']
+        phonetics_data = data_to_fix['phone']
+
+        words_data = []
+        data_to_write = {}
+
+        for e in original_words:
+            if(e['speech'] != "sp"):
+                if( time_range(e['endTime'] )):
+                    words_data.append(e)
+                else:                    
+                    words_data.append({'endTime': e['endTime'],
+                                      'speech': "sp",
+                                      'startTime': e['startTime']})
+            
+        data_to_write['endTime'] = data_to_fix['endTime']
+        data_to_write['startTime'] = data_to_fix['startTime']
+        data_to_write['phone'] = phonetics_data
+        data_to_write['word'] = words_data
+
+        filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_3/formatted-alignment-test.json"))
+        with open(filepath_2,'w') as outfile:
+            json.dump(data_to_write, outfile)
+
+#=======================================================
+# Main Caller
 #=======================================================
 if __name__ == "__main__":
-    print_test()
+    formatted_alignment_cleaner()
