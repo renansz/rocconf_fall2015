@@ -33,7 +33,7 @@
     <div class="col-md-8" id="secondary-videos-list">
 
       <!-- secondary-video-panel-2 -->
-      <div class="panel panel-primary col-md-3 secondary-video-div" id="video-2">
+      <div class="panel panel-material-blue-grey col-md-3 secondary-video-div" id="video-2">
         <div class="panel-heading">
           <h3 class="panel-title">User 2</h3>
         </div>
@@ -55,7 +55,7 @@
       </div><!--/secondary-video-panel-2 -->
 
       <!-- secondary-video-panel-3 -->
-      <div class="panel panel-primary col-md-3 secondary-video-div" id="video-3">
+      <div class="panel panel-material-blue-grey col-md-3 secondary-video-div" id="video-3">
         <div class="panel-heading">
           <h3 class="panel-title">User 3</h3>
         </div>
@@ -77,7 +77,7 @@
       </div><!--/secondary-video-panel-3 -->
 
       <!-- secondary-video-panel-4 -->
-      <div class="panel panel-primary col-md-3 secondary-video-div" id="video-4">
+      <div class="panel panel-material-blue-grey col-md-3 secondary-video-div" id="video-4">
         <div class="panel-heading">
           <h3 class="panel-title">User 4</h3>
         </div>
@@ -99,7 +99,7 @@
       </div><!--/secondary-video-panel-4 -->
 
       <!-- secondary-video-panel-5 -->
-      <div class="panel panel-primary col-md-3 secondary-video-div" id="video-5">
+      <div class="panel panel-material-blue-grey col-md-3 secondary-video-div" id="video-5">
         <div class="panel-heading" panel-blue-grey>
           <h3 class="panel-title">User 5</h3>
         </div>
@@ -189,9 +189,16 @@
 
       <!-- right side space -->
       <div class="col-md-2 col-xs-3 vcenter" id="wordcloud-placeholder">
-        <canvas id="wordcloud-canvas"></canvas>
-        <!--<img src="{{ url_for('.static',filename='img/fake_wordcloud_480.png') }}" />-->
-        <img src="{{ url_for('.static',filename='img/participation_graph.png') }}" />
+          <div class="panel panel-material-blue-grey">
+              <div class="panel-heading">
+                  <h3 class="panel-title" align="center">Group Metrics</h3>
+              </div>
+              <div class="panel-body">
+                  <canvas id="wordcloud-canvas"></canvas>
+                  <!--<img src="{{ url_for('.static',filename='img/fake_wordcloud_480.png') }}" />-->
+                  <img src="{{ url_for('.static',filename='img/participation_graph.png') }}" />
+              </div>
+          </div>
       </div><!-- /right side -->
 
     </div><!-- /main-content-row -->
