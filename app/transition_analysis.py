@@ -38,10 +38,10 @@ def transition_matrix(number_user,list):
         for j in range(0, len(list)-1):
             if(list[j][1]==i):
                 temp.append(list[j+1][1]-list[j][1]+i)
-    
+        
         for index in temp:
             if(index!=i):
-                out[i-1][index-1]=np.sum(index/index)
+                out[i-1][index-1]=out[i-1][index-1]+1
         temp=[]
     return out
 
@@ -51,12 +51,19 @@ def transition_matrix(number_user,list):
 if __name__=='__main__':
     
     list=[]
-    for i in range(1,5):
-        list=read_list('/Users/yuewang/Desktop/rocconf_fall2015/app/session_data/multi_test_3/user_'+ str(i) +'/word-prosody.json',i,list)
+    for i in range(1,4):
+        list=read_list('/Users/yuewang/Desktop/rocconf_fall2015/app/session_data/multi_test_2/user_'+ str(i) +'/word-prosody.json',i,list)
     list=sorted(list)
     pp.pprint(list)
-    matrix=transition_matrix(4,list)
+    matrix=transition_matrix(3,list)
     pp.pprint(matrix)
+
+
+
+
+
+
+
 
 
 
