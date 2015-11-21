@@ -18,9 +18,85 @@ app.secret_key = 'abc'
 Bootstrap(app)
 DEBUG = True
 
+basepath = os.path.dirname(__file__)
+
+#-------------------------------------------------------
+# Loading Sentiment Time Series
+#-------------------------------------------------------
+def load_sentiment_time(session):
+    data = {}
+
+    users = os.listdir("session_data/" + session)
+
+    for e in users:
+        try:
+            filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/sentiment-by-time.json"))
+            with open(filepath,"r+") as the_file:
+                loaded_data = json.loads(the_file.read())
+                data[e] = loaded_data['time_data']
+        except Exception as err:
+            print err
+
+    return data
+
+#-------------------------------------------------------
+# Loading Sentiment Counts
+#-------------------------------------------------------
+def load_sentiment_counts(session):
+    data = {}
+
+    try:
+        filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/sentiment_counts.json"))
+        with open(filepath,"r+") as the_file:
+            loaded_data = json.loads(the_file.read())
+            data = loaded_data['counts']
+    except Exception as err:
+        print err
+
+    return data
+
+#-------------------------------------------------------
+# Loading Time on the Floor
+#-------------------------------------------------------
+def load_percentages(session):
+    data = {}
+
+    users = os.listdir("session_data/" + session)
+
+    length = 0
+
+    for e in users:
+        try:
+            filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/average-features.json"))
+            with open(filepath,"r+") as the_file:
+                loaded_data = json.loads(the_file.read())
+                features = loaded_data['features'][0]
+
+                p_speaking = round((features['totalVoicedTime_Milliseconds'] / features['totalDuration_Milliseconds']) * 100, 2)
+
+                data[e] = [{"x":1, "speak": p_speaking, "rem": 100 - p_speaking }]
+
+                length = length + 1
+        except Exception as err:
+            print err
+
+    data['length'] = length
+
+    return data
+
+#-------------------------------------------------------
+# Load Pariticipation Matrix
+#-------------------------------------------------------
+def load_matrix():
+    data = {}
+
+    return data
+
+
 #=======================================================
 # AJAX Handler for getting a list of sessions
-# stored on this server.
+# stored on this server. 
+#   - Good for a load menu
 #======================================================= 
 @app.route("/sessions")
 def return_sessions():
@@ -34,37 +110,22 @@ def return_sessions():
     return response
 
 #=======================================================
-# AJAX Handler for getting sentiment data
+# AJAX Handler for serving data on a session to the
+# website. 
+#   - Once a session is selected ask for data here!
 #======================================================= 
-@app.route("/sentiment", methods=['GET'])
+@app.route("/load_data", methods=['GET'])
 def return_sentiment():
 
     directory = request.args.get('session')
-
-    basepath = os.path.dirname(__file__)
-    users = os.listdir("session_data/" + directory)
-
-    time_data = {}
-
-    for e in users:
-        try:
-            filepath = os.path.abspath(os.path.join(basepath, "session_data/" + directory + "/" + e + "/sentiment-by-time.json"))
-            with open(filepath,"r+") as the_file:
-                loaded_data = json.loads(the_file.read())
-                time_data[e] = loaded_data['time_data']
-        except Exception as exception:
-            print exception
     
-    filepath = os.path.abspath(os.path.join(basepath, "session_data/" + directory + "/sentiment_counts.json"))
-    with open(filepath,"r+") as the_file:
-        loaded_data = json.loads(the_file.read())
-
-    data = {}
-    data['counts'] = loaded_data['counts']
-    data['time'] = time_data
-
+    session_data = {}
+    session_data['sentiment_time'] = load_sentiment_time(directory)
+    session_data['sentiment_counts'] = load_sentiment_counts(directory)
+    session_data['p_percentages'] = load_percentages(directory)
+    
     #creating response object
-    response = jsonify(data) 
+    response = jsonify(session_data) 
     response.status_code = 200 
 
     return response

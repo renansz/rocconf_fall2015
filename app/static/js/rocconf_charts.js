@@ -1,10 +1,4 @@
 
-// Globals to store count information retrieved from the server
-var sentiment_counts;
-var sentiment_time_data;
-var p_transition_matrix;
-var p_percentages;
-
 $(document).ready(function () {
     $('#myTabs a[href="#profile"]').tab('show'); // Select tab by name
     $('#myTabs a:first').tab('show'); // Select first tab
@@ -16,36 +10,51 @@ $(document).ready(function () {
         $(this).tab('show')
     });
 
-    // Call to get the sentiment data from the server
-    $.ajax({
-        url: '/sentiment',
-        data: { 'session': 'multi_test_2' },
-        type: 'GET',
-        success: function (response)
-        {
-            sentiment_time_data = response.time;
-            sentiment_counts = response.counts;
+    load_session_data("multi_test_2")
 
-            set_sentiment_graph(sentiment_time_data['user_2']);
+});
+
+//==============================================================
+// AJAX call to load in our chart data for a session
+//==============================================================
+
+// Variables for storing information about a session
+var sentiment_counts;
+var sentiment_time_data;
+var p_transition_matrix;
+var p_percentages;
+
+function load_session_data(session)
+{
+    $.ajax({
+        url: '/load_data',
+        data: { 'session': session },
+        type: 'GET',
+        success: function (response) {
+            sentiment_time_data = response.sentiment_time;
+            sentiment_counts = response.sentiment_counts;
+            p_percentages = response.p_percentages;
+
+            init_session();
         },
         error: function (error) {
             console.log(error);
         }
     });
+}
 
-    //TODO - NEED THE ACTUAL DATA HERE TO LOAD
-    var test_participation_data = [{
-        "x": 1,
-        "y1": 66,
-        "y2": 34
-    }];
+//==============================================================
+// Initialize a Session after Loading
+//==============================================================
+function init_session()
+{
+    //Initialize the session - we assume 'user 1' is front and center
+    set_sentiment_graph(sentiment_time_data['user_1']);
 
-    set_participation_chart(test_participation_data, "panel_2");
-    set_participation_chart(test_participation_data, "panel_3");
-    //set_participation_chart(test_participation_data, "panel_4");
-    //set_participation_chart(test_participation_data, "panel_5");
-
-});
+    for (var i = 2; i <= p_percentages.length; i++) {
+        set_participation_chart(p_percentages['user_' + i], "panel_" + i);
+    }
+}
 
 //==============================================================
 // Setup the sentiment graph
@@ -113,11 +122,11 @@ function set_participation_chart(data, location)
 
     // Graph of time spent speaking
     graph = new AmCharts.AmGraph();
-    graph.valueField = "y1";
+    graph.valueField = "speak";
     graph.type = "column";
     graph.labelsEnabled = true;
-    graph.labelText = data[0]["y1"] + "%";
-    graph.labelPosition = "middle";
+    graph.labelText = data[0]["speak"] + "%";
+    graph.labelPosition = "bottom";
     graph.fillAlphas = 0.6;
     graph.fillColors = "#637bb6";
     graph.gradientOrientation = "horizontal";
@@ -127,7 +136,7 @@ function set_participation_chart(data, location)
 
     // Graph of time not spent speaking
     var graph2 = new AmCharts.AmGraph();
-    graph2.valueField = "y2";
+    graph2.valueField = "rem";
     graph2.type = "column";
     graph2.fillAlphas = 0.2;
     graph2.fillColors = "#000000";
