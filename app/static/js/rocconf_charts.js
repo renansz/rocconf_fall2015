@@ -52,12 +52,15 @@ function load_session_data(session)
 //==============================================================
 function init_session()
 {
+    var size = undefined;
+
     //Initialize the session - we assume 'user 1' is front and center
     set_smile_chart();    
 
-    for (var i = 2; i <= avg_features.length; i++) {
-        set_participation_chart(avg_features['user_' + i], "subpanel_" + i + "_left");
-        set_rate_chart(avg_features['user_' + i], "subpanel_" + i + "_right");
+    for (var i = 1; i <= avg_features.length; i++) {
+        i == 1? size = 180 : size = 80;
+        set_participation_chart(avg_features['user_' + i], "subpanel_" + i + "_left",size);
+        set_rate_chart(avg_features['user_' + i], "subpanel_" + i + "_right",size);
     }
 
     // Disabling unused users navigation buttons
@@ -66,6 +69,7 @@ function init_session()
         document.getElementById("change-user-" + j + "-button").className += " disabled";
     }
 
+    // Setting up the word cloud information
     word_cloud_data = [];
 
     for (element in sentiment_counts)
@@ -260,12 +264,12 @@ function set_sentiment_chart()
 //==============================================================
 // Time on the Floor Microchart - For user at Location
 //==============================================================
-function set_participation_chart(data, location)
+function set_participation_chart(data, el, size)
 {
-    var pie = new d3pie(location, {
+    var pie = new d3pie(el, {
         "size": {
-            "canvasHeight": 60,
-            "canvasWidth": 60,
+            "canvasHeight": size,
+            "canvasWidth": size,
             "pieOuterRadius": "88%"
         },
         "data": {
@@ -311,17 +315,18 @@ function set_participation_chart(data, location)
 //==============================================================
 // Speaking Rate Microchart - For user at Location
 //==============================================================
-var needle;
 
-function set_rate_chart(data, location)
+function set_rate_chart(data, el, size)
 {
-    percent = data[0]['rate'] / 150;
+    var needle;
 
     var barWidth, chart, chartInset, degToRad, repaintGauge,
     height, margin, numSections, padRad, percToDeg, percToRad,
     percent, radius, sectionIndx, svg, totalPercent, width;
 
     //percent = position;
+    percent = data[0]['rate'] / 150;
+
     numSections = 1;
     sectionPerc = 1 / numSections / 2;
     padRad = 0.025;
@@ -330,7 +335,7 @@ function set_rate_chart(data, location)
     // Orientation of gauge:
     totalPercent = 0.75;
 
-    el = d3.select('#' + location);
+    el = d3.select('#' + el);
 
     margin = {
         top: 0,
@@ -339,7 +344,8 @@ function set_rate_chart(data, location)
         left: 2
     };
 
-    width = el[0][0].offsetWidth - margin.left - margin.right;
+    //width = el[0][0].offsetWidth - margin.left - margin.right;
+    width = size;
     height = width;
     //DEBUG alert('height: '+height+'width: '+width);
     radius = Math.min(width, height) / 2;
@@ -460,6 +466,8 @@ function set_rate_chart(data, location)
 
     needle.moveTo(percent);
 }
+
+
 
 /******************************************************************************
  * Directed graph
