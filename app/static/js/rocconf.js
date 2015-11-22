@@ -125,7 +125,7 @@ $(document).ready(function(){
 
   /* canvas vertical alignment */
   $("#main-content-container").height($('#main-video-container').height());
-  $("#wordcloud-placeholder").css({'height':$('#main-video-container').height()});
+  $("#").css({'height':$('#main-video-containerwordcloud-placeholder').height()});
 //                                   'line-height':$('#main-video-container').height()+'px'});
 
 

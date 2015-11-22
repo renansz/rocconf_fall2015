@@ -185,14 +185,14 @@ function set_rate_chart(data, location)
     el = d3.select('#' + location);
 
     margin = {
-        top: 1,
-        right: 1,
-        bottom: 1,
-        left: 1
+        top: 0,
+        right: 2,
+        bottom: 0,
+        left: 2
     };
 
     width = el[0][0].offsetWidth - margin.left - margin.right;
-    height = width / 1.2;
+    height = width;
     //DEBUG alert('height: '+height+'width: '+width);
     radius = Math.min(width, height) / 2;
     barWidth = 40 * width / 300;
@@ -213,7 +213,7 @@ function set_rate_chart(data, location)
     };
 
     // Create SVG element
-    svg = el.append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom);
+    svg = el.append('svg').attr('width', width + margin.left + margin.right).attr('height', height/2 + margin.top + margin.bottom);
 
     // Add layer for the panel
     chart = svg.append('g').attr('transform', "translate(" + ((width + margin.left) / 2) + ", " + ((height + margin.top) / 2) + ")");

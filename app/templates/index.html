@@ -183,8 +183,9 @@
                 <a id="main-video-pause-btn" href="#"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></a>
               </h4>
             </div>
-            <div class="col-xs-9 col-md-9" id="main-video-slider"></div>
-            <div class="col-xs-1 col-md-1 text-left" style="margin-left: 0px; padding-left: 0px;">
+            <div class="col-xs-9 col-md-9" id="main-video-slider">
+            </div>
+            <div class="col-xs-1 col-md-1 text-left" style="margin-left: 0px; padding-left: 0px; left: -25px;">
               <strong><h4 id="video-time">0:00</h4></strong>
             </div>
           </div>
@@ -198,11 +199,16 @@
                   <h3 class="panel-title" align="center">Group Metrics</h3>
               </div>
               <div class="panel-body" id="wordcloud-panel">
-                  <h4><strong>Most ferquent words</strong></h4>
-                  <canvas id="wordcloud-canvas"></canvas>
+                  <div>
+                    <h5><strong>Most ferquent words</strong></h5>
+                    <canvas id="wordcloud-canvas"></canvas>
+                  </div>
                   <!--<img src="{{ url_for('.static',filename='img/fake_wordcloud_480.png') }}" />-->
-                  <h4><strong>Speaker Transitions</strong></h4>
-                  <img src="{{ url_for('.static',filename='img/participation_graph.png') }}" />
+                  <div><br/></div>
+                  <div>
+                    <h5><strong>Speaker Transitions</strong></h5>
+                    <img src="{{ url_for('.static',filename='img/participation_graph.png') }}" />
+                  </div>
               </div>
           </div>
       </div><!-- /right side -->
@@ -213,13 +219,41 @@
 
     <!-- charts area -->
     <div clas="row-fluid" id="bottom-part">
-      <div class="col-xs-2 col-md-2" class="bottom-side"></div><!-- left side -->
-        <!-- chart -->
-        <div class="col-md-8 col-xs-8 text-center shadow-z-1">
-          <div class="" id="chart-area"></div>
-        </div> <!-- /chart -->
+      <!-- left side -->
+      <div class="col-xs-3 col-md-3" class="bottom-side"></div>
+      <!-- left side -->
 
-      <div class="col-xs-2 col-md-2" class="bottom-side"></div><!-- right side -->
+        <!-- chart container -->
+        <div class="col-md-6 col-xs-6 text-center shadow-z-1">
+
+
+          <!-- navigation bar -->
+          <div class="navbar navbar-default" id="charts-navigation">
+            <div class="container-fluid">
+              <div class="navbar-collapse collapse navbar-responsive-collapse">
+              <ul class="nav navbar-nav">
+                  <li class="active" id="load_sentiment_graph"><a href="javascript:void(0)">Sentiment</a></li>
+                  <li id="load_smile_graph"><a href="javascript:void(0)">Smile</a></li>
+                  <li id="load_loudness_graph"><a href="javascript:void(0)">Loudness</a></li>
+              </ul>
+              </div>
+            </div>
+          </div>
+          <!-- /navigation bar -->
+
+
+
+          <!-- charts area -->
+          <div class="" id="chart-area"></div>
+          <!-- /charts area -->
+
+        </div>
+        <!-- /chart container -->
+
+
+      <!-- right side -->
+      <div class="col-xs-3 col-md-3" class="bottom-side"></div>
+      <!-- right side -->
     </div><!-- /charts area -->
   </div> <!-- /main-content -->
 

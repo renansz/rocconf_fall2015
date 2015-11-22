@@ -41,6 +41,9 @@ body {
   width: 100%;
 }
 
+#charts-navigation{
+  background-color: #607D8B;
+}
 
 /* wordcloud */
 #wordcloud-canvas{
