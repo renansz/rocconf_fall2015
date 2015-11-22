@@ -21,6 +21,56 @@ DEBUG = True
 basepath = os.path.dirname(__file__)
 
 #-------------------------------------------------------
+# Load Audio Video Feature Data
+#   - Both Smile and Loudness are in the same
+#     very large file so to optimize we'll get them
+#     at the same time.
+#   - Second optimization here is to only load
+#     this in 250ms (quarter seconds)
+#     intervals (it is in 10ms base)
+#-------------------------------------------------------
+def load_av_data(session):
+    data = {}
+
+    users = os.listdir("session_data/" + session)
+    users = [user for user in users if 'user' in user]
+
+    smile_data = {}
+    loudness_data = {}
+
+    for e in users:
+        user_smile_data = []
+        user_loudness_data = []
+        try:            
+            filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/audio-video-features.json"))
+            with open(filepath,"r+") as the_file:
+                loaded_data = json.loads(the_file.read())
+                data_to_process = loaded_data['features']
+
+                for j in data_to_process:
+                    if (j['time_millisec'] % 250 == 0):
+                        user_smile_data.append({"time": j['time_millisec'] / 1000, "intensity": j['smile_cubicSpline']})
+                        user_loudness_data.append({"time": j['time_millisec'] / 1000, "intensity": j['soundIntensity_DB']})
+            smile_data[e] = user_smile_data
+            loudness_data[e] = user_loudness_data
+        except Exception as err:
+            print 'error in load_sentiment_time'
+            print err
+
+    data['smile'] = smile_data
+    data['loudness'] = loudness_data
+
+    return data
+
+#-------------------------------------------------------
+# Load Rapport Time Series
+#-------------------------------------------------------
+def load_rapport_time(session):
+    data = {}
+
+    return data
+
+#-------------------------------------------------------
 # Loading Sentiment Time Series
 #-------------------------------------------------------
 def load_sentiment_time(session):
@@ -59,9 +109,9 @@ def load_sentiment_counts(session):
     return data
 
 #-------------------------------------------------------
-# Loading Time on the Floor
+# Loading Average Features
 #-------------------------------------------------------
-def load_percentages(session):
+def load_avg_features(session):
     data = {}
 
     users = os.listdir("session_data/" + session)
@@ -78,7 +128,7 @@ def load_percentages(session):
 
                 p_speaking = round((features['totalVoicedTime_Milliseconds'] / features['totalDuration_Milliseconds']) * 100, 2)
 
-                data[e] = [{"x":1, "speak": p_speaking, "rem": 100 - p_speaking }]
+                data[e] = [{"speak": p_speaking, "rem": 100 - p_speaking, "rate": features['speakingRate_WPM']}]
 
                 length = length + 1
         except Exception as err:
@@ -127,7 +177,11 @@ def return_sentiment():
     session_data = {}
     session_data['sentiment_time'] = load_sentiment_time(directory)
     session_data['sentiment_counts'] = load_sentiment_counts(directory)
-    session_data['p_percentages'] = load_percentages(directory)
+    session_data['avg_features'] = load_avg_features(directory)
+
+    av_data = load_av_data(directory)
+    session_data['smile_time'] = av_data['smile']
+    session_data['loudness_time'] = av_data['loudness']
     
     #creating response object
     response = jsonify(session_data) 
