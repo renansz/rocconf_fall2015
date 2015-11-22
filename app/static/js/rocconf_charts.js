@@ -59,6 +59,12 @@ function init_session()
         set_participation_chart(avg_features['user_' + i], "subpanel_" + i + "_left");
         set_rate_chart(avg_features['user_' + i], "subpanel_" + i + "_right");
     }
+
+    // Disabling unused users navigation buttons
+    for (var j = avg_features.length + 1; j <= 5; j++)
+    {
+        document.getElementById("change-user-" + j + "-button").className += " disabled";
+    }
 }
 
 //==============================================================
