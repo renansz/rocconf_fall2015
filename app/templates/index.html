@@ -38,7 +38,7 @@
           <h3 class="panel-title">User 2</h3>
         </div>
         <div class="panel-body" id="video-player-panel-2"><!-- /panel-body -->
-          <video id="video-player-2" class="video-js vjs-default-skin secondary-video"
+          <video id="video-player-2" class="video-js vjs-default-skin secondary-video change-user"
           preload="auto" width="150" height="70" user=2 poster="//placehold.it/180x90"
           data-setup='{}'>
             <source src="{{ url_for('.static',filename='video/multi_test_2/user_2/video.webm') }}" type='video/webm'>
@@ -48,7 +48,8 @@
             </p>
           </video>
           <div class="row text-center" style="height:60px; padding-top: 5px;">
-              <div class="text-center" id="panel_2" style="height: 60px; width: 98%; margin-left:3px;"></div>
+              <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_2_left" style="padding-left: 5px; padding-right:0px;"></div>
+              <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_2_right" style="padding-left: 0px;"></div>
               <!--<img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />-->
           </div>
         </div><!-- panel-body -->
@@ -60,7 +61,7 @@
           <h3 class="panel-title">User 3</h3>
         </div>
         <div class="panel-body" id="video-player-panel-3"><!-- /panel-body -->
-          <video id="video-player-3" class="video-js vjs-default-skin secondary-video"
+          <video id="video-player-3" class="video-js vjs-default-skin secondary-video change-user"
           preload="auto" width="150" height="70" user=3 poster="//placehold.it/180x90"
           data-setup='{}'>
             <source src="{{ url_for('.static',filename='video/multi_test_2/user_3/video.webm') }}" type='video/webm'>
@@ -70,7 +71,8 @@
             </p>
           </video>
           <div class="row text-center" style="height:60px; padding-top: 5px;">
-              <div class="" id="panel_3" style="height: 60px; width: 98%; margin-left:3px;"></div>
+              <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_3_left" style="padding-left: 5px; padding-right:0px;"></div>
+              <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_3_right" style="padding-left: 0px;"></div>
               <!--<img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />-->
           </div>
         </div><!-- panel-body -->
@@ -82,7 +84,7 @@
           <h3 class="panel-title">User 4</h3>
         </div>
         <div class="panel-body" id="video-player-panel-4"><!-- /panel-body -->
-          <video id="video-player-4" class="video-js vjs-default-skin secondary-video"
+          <video id="video-player-4" class="video-js vjs-default-skin secondary-video change-user"
           preload="auto" width="150" height="70" user=4 poster="//placehold.it/180x90"
           data-setup='{}'>
           <!--<source src="{{ url_for('.static',filename='video/multi_test_2/user_2/video.webm') }}" type='video/webm'>-->
@@ -92,7 +94,8 @@
             </p>
           </video>
           <div class="row text-center" style="height:60px; padding-top: 5px;">
-              <div class="" id="panel_4" style="height: 60px; width: 98%; margin-left:3px;"></div>
+              <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_4_left" style="padding-left: 5px; padding-right:0px;"></div>
+              <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_4_right" style="padding-left: 0px;"></div>
               <!--<img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" />-->
           </div>
         </div><!-- panel-body -->
@@ -104,7 +107,7 @@
           <h3 class="panel-title">User 5</h3>
         </div>
         <div class="panel-body" id="video-player-panel-5"><!-- /panel-body -->
-          <video id="video-player-5" class="video-js vjs-default-skin secondary-video"
+          <video id="video-player-5" class="video-js vjs-default-skin secondary-video change-user"
           preload="auto" width="150" height="70" user=5 poster="//placehold.it/180x90"
           data-setup='{}'>
           <!--<source src="{{ url_for('.static',filename='video/multi_test_2/user_3/video.webm') }}" type='video/webm'>-->
@@ -114,7 +117,8 @@
           </p>
           </video>
           <div class="row text-center" style="height:60px; padding-top: 5px;">
-              <div class="" id="panel_5" style="height: 60px; width: 98%; margin-left:3px;"></div>
+              <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_5_left" style="padding-left: 5px; padding-right:0px;"></div>
+              <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_5_right" style="padding-left: 0px;"></div>
               <!--<img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" /> -->
           </div>
         </div><!-- panel-body -->
@@ -155,7 +159,7 @@
       <div class="col-md-8 text-center clear-background shadow-z-1" id="main-video-container">
         <div class="row">
           <div class="text-center clear-background" id="video-player-panel-1">
-            <video id="video-player-1" class="video-js vjs-default-skin video-custom-center"
+            <video id="video-player-1" class="video-js vjs-default-skin video-custom-center change-user"
             preload="auto" width="480" height="360" user=1 poster="//placehold.it/640x480"
             data-setup='{}'>
               <source src="{{ url_for('.static',filename='video/multi_test_2/user_1/video.webm') }}" type='video/webm'>
@@ -259,6 +263,10 @@
     <script src="{{ url_for('.static',filename='amcharts/serial.js') }}" type="text/javascript"></script>
     <script src="{{ url_for('.static',filename='amcharts/pie.js') }}" type="text/javascript"></script>
     <script src="{{ url_for('.static',filename='amcharts/themes/patterns.js') }}" type="text/javascript"></script>
+
+    <script src="{{ url_for('.static',filename='js/d3.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='js/d3pie.min.js') }}" type="text/javascript"></script>
+
     <script src="{{ url_for('.static',filename='js/rocconf_charts.js') }}" type="text/javascript"></script>
 
 {% endblock scripts %}

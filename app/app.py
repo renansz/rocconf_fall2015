@@ -27,6 +27,7 @@ def load_sentiment_time(session):
     data = {}
 
     users = os.listdir("session_data/" + session)
+    users = [user for user in users if 'user' in user]
 
     for e in users:
         try:
@@ -35,6 +36,7 @@ def load_sentiment_time(session):
                 loaded_data = json.loads(the_file.read())
                 data[e] = loaded_data['time_data']
         except Exception as err:
+            print 'error in load_sentiment_time'
             print err
 
     return data
@@ -51,6 +53,7 @@ def load_sentiment_counts(session):
             loaded_data = json.loads(the_file.read())
             data = loaded_data['counts']
     except Exception as err:
+        print 'error in load_sentiment_counts'
         print err
 
     return data
@@ -62,6 +65,7 @@ def load_percentages(session):
     data = {}
 
     users = os.listdir("session_data/" + session)
+    users = [user for user in users if 'user' in user]
 
     length = 0
 
@@ -78,6 +82,7 @@ def load_percentages(session):
 
                 length = length + 1
         except Exception as err:
+            print 'error in load_percentages'
             print err
 
     data['length'] = length
