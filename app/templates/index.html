@@ -127,7 +127,7 @@
               <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_5_right" style="padding-left: 0px;"></div>
               <!--<img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" /> -->
           </div>
-          <div class="row text-center change-user" id="change-user-4" change_user=4>
+          <div class="row text-center change-user" id="change-user-5" change_user=5>
             <a href="#" class="btn btn-material-blue-grey btn-raised text-center" id="change-user-5-button"><i class="mdi-action-autorenew"></i></a>
           </div>
         </div><!-- panel-body -->
@@ -255,9 +255,9 @@
             <div class="container-fluid">
               <div class="navbar-collapse collapse navbar-responsive-collapse">
               <ul class="nav navbar-nav">
-                  <li class="active" id="load_sentiment_graph"><a href="javascript:void(0)">Sentiment</a></li>
-                  <li id="load_smile_graph"><a href="javascript:void(0)">Smile</a></li>
-                  <li id="load_loudness_graph"><a href="javascript:void(0)">Loudness</a></li>
+                  <li id="load_smile_graph"><a href="javascript:set_smile_chart();">Smile</a></li>
+                  <li id="load_loudness_graph"><a href="javascript:set_loudness_chart();">Loudness</a></li>
+                  <li id="load_sentiment_graph"><a href="javascript:set_sentiment_chart();">Sentiment</a></li>                  
               </ul>
               </div>
             </div>
@@ -267,7 +267,7 @@
 
 
           <!-- charts area -->
-          <div class="" id="chart-area"></div>
+          <div class="" id="chart-area" style="height:20em;"></div>
           <!-- /charts area -->
 
         </div>

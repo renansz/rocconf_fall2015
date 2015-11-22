@@ -55,7 +55,7 @@ function init_session()
     var size = undefined;
 
     //Initialize the session - we assume 'user 1' is front and center
-    set_sentiment_graph(sentiment_time_data['user_1']);
+    set_smile_chart();    
 
     for (var i = 1; i <= avg_features.length; i++) {
         i == 1? size = 180 : size = 80;
@@ -72,10 +72,128 @@ function init_session()
 }
 
 //==============================================================
+// Setup the Smile Frequency Graph
+//==============================================================
+function set_smile_chart()
+{
+    user = "user_" + $('.video-custom-center').attr('user');
+
+    data = smile_time_data[user];
+
+    document.getElementById("load_smile_graph").className = "active";
+    document.getElementById("load_loudness_graph").className = "";
+    document.getElementById("load_sentiment_graph").className = "";
+
+    var chart;
+    var graph;
+
+    chart = new AmCharts.AmSerialChart();
+    chart.dataProvider = data;
+    chart.categoryField = "time";
+
+    // X Axis
+    var categoryAxis = chart.categoryAxis;
+    categoryAxis.minPeriod = "ss";
+    categoryAxis.dashLength = 3;
+    categoryAxis.minorGridEnabled = false;
+    categoryAxis.minorGridAlpha = 0.1;
+    categoryAxis.labelsEnabled = true;
+
+    // Y Axis
+    var valueAxis = new AmCharts.ValueAxis();
+    valueAxis.axisAlpha = 1;
+    valueAxis.inside = true;
+    valueAxis.dashLength = 3;
+    valueAxis.maximum = 100;
+    chart.addValueAxis(valueAxis);
+
+    graph = new AmCharts.AmGraph();
+    graph.type = "smoothedLine"; // this line makes the graph smoothed line.
+    graph.lineColor = "#637bb6"; 
+
+    graph.lineThickness = 2;
+    graph.valueField = "intensity";
+    chart.addGraph(graph);
+
+    var chartCursor = new AmCharts.ChartCursor();
+    chartCursor.cursorAlpha = 0;
+    chartCursor.cursorPosition = "mouse";
+    chartCursor.categoryBalloonDateFormat = "fff";
+    chart.addChartCursor(chartCursor);
+
+    chart.creditsPosition = "bottom-right";
+
+    chart.write("chart-area");
+}
+
+//==============================================================
+// Setup Loudness Intensity Graph
+//==============================================================
+function set_loudness_chart()
+{
+    user = "user_" + $('.video-custom-center').attr('user');
+
+    data = loudness_time_data[user];
+
+    document.getElementById("load_smile_graph").className = "";
+    document.getElementById("load_loudness_graph").className = "active";
+    document.getElementById("load_sentiment_graph").className = "";
+
+    var chart;
+    var graph;
+
+    chart = new AmCharts.AmSerialChart();
+    chart.dataProvider = data;
+    chart.categoryField = "time";
+
+    // X Axis
+    var categoryAxis = chart.categoryAxis;
+    categoryAxis.minPeriod = "ss";
+    categoryAxis.dashLength = 3;
+    categoryAxis.minorGridEnabled = false;
+    categoryAxis.minorGridAlpha = 0.1;
+    categoryAxis.labelsEnabled = true;
+
+    // Y Axis
+    var valueAxis = new AmCharts.ValueAxis();
+    valueAxis.axisAlpha = 1;
+    valueAxis.inside = true;
+    valueAxis.dashLength = 3;
+    valueAxis.maximum = 100;
+    chart.addValueAxis(valueAxis);
+
+    graph = new AmCharts.AmGraph();
+    graph.type = "smoothedLine"; // this line makes the graph smoothed line.
+    graph.lineColor = "#637bb6";
+
+    graph.lineThickness = 2;
+    graph.valueField = "intensity";
+    chart.addGraph(graph);
+
+    var chartCursor = new AmCharts.ChartCursor();
+    chartCursor.cursorAlpha = 0;
+    chartCursor.cursorPosition = "mouse";
+    chartCursor.categoryBalloonDateFormat = "fff";
+    chart.addChartCursor(chartCursor);
+
+    chart.creditsPosition = "bottom-right";
+
+    chart.write("chart-area");
+}
+
+//==============================================================
 // Setup the sentiment graph
 //==============================================================
-function set_sentiment_graph(data)
+function set_sentiment_chart()
 {
+    user = "user_" + $('.video-custom-center').attr('user');
+
+    data = sentiment_time_data[user];
+
+    document.getElementById("load_smile_graph").className = "";
+    document.getElementById("load_loudness_graph").className = "";
+    document.getElementById("load_sentiment_graph").className = "active";
+
     var chart;
     var graph;
 
