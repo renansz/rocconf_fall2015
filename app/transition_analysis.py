@@ -26,9 +26,39 @@ def read_list(filepath,number_user,list):
     loaded_data=json.loads(file.read())
 
     for time_stamp in loaded_data['features']:
-        if time_stamp['pitch_Hz']>0:
-            list.append((time_stamp['start_time_secs'],number_user))
+        if(time_stamp['word'] !='sp'):
+            list.append((time_stamp['start_time_secs'], number_user))
     return list
+
+#smooth method
+def smooth_list(list,iteration):
+    temp=[]
+    out=[]
+    for items in list:
+        temp.append(items[1])
+    for i in range(iteration,len(temp)-iteration):
+        if(temp[i-iteration]==temp[i+iteration]):
+            temp[i]=temp[i-iteration]
+    temp[0]=temp[1]
+    temp[len(temp)-1]=temp[len(temp)-2]
+    for j in range(0,len(list)):
+        out.append((list[j][0],temp[j]))
+    return out
+
+#iterate smooth method
+def smooth_call(list):
+    
+    while 1:
+        list=smooth_list(list,1)
+        list=smooth_list(list,2)
+
+        temp=smooth_list(list,1)
+        temp=smooth_list(temp,1)
+
+        if(temp==list):
+            break
+        list=temp
+    return temp
 
 #calculate transition matrix
 def transition_matrix(number_user,list):
@@ -50,13 +80,30 @@ def transition_matrix(number_user,list):
 
 if __name__=='__main__':
     
+#    read in file
     list=[]
     for i in range(1,4):
         list=read_list('/Users/yuewang/Desktop/rocconf_fall2015/app/session_data/multi_test_2/user_'+ str(i) +'/word-prosody.json',i,list)
-    list=sorted(list)
+#    smooth data to remove noise 
+    list=smooth_call(sorted(list))
     pp.pprint(list)
+#    calculate transition matrix
     matrix=transition_matrix(3,list)
     pp.pprint(matrix)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
