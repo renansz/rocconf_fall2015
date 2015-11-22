@@ -1,4 +1,8 @@
 $(document).ready(function(){
+
+  /* setting wordcloud dimensions */
+  $("#wordcloud-canvas").width(250);
+
   /* wordcloud scripts */
   var wordlist = [['Web Technologies',26],
                 ['HTML',20],
@@ -87,7 +91,7 @@ $(document).ready(function(){
                 rotateRatio: 0.1,
                 minRotation: -Math.PI /2.0,
                 maxRotation: -Math.PI /2.0,
-                backgroundColor: '#eeeeee',
+                backgroundColor: '#ffffff',
                 hover: hover_word,
                 click: click_word};
 

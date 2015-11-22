@@ -191,7 +191,6 @@ $(document).ready(function(){
   $('.secondary-video-div').width(secondary_videos_width-10);
   $('.secondary-video-div').css('margin-left','4px');
   $('.secondary-video-div').css('margin-right','4px');
-  $('.secondary-video-div').css('margin-right','4px');
 
 
   /***************** Chart area ********************/

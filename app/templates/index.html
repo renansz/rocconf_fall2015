@@ -134,7 +134,7 @@
     <div class="row-fluid" id="main-content-container">
 
       <!-- left side space -->
-      <div class="col-md-2 col-xs-2 text-center" id="buttons-container">
+      <div class="col-md-3 col-xs-3 text-center" id="buttons-container">
           <!-- TODO: it is necessary to keep track of which user it is using the id or user property, not sure yet -->
           <div class="row text-left change-user" id="change-user-1" change_user=1>
             <a href="#" class="btn btn-material-blue-grey btn-raised disabled text-left"><span>User 1&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
@@ -156,7 +156,7 @@
         </div>-->
       </div><!-- /left side -->
 
-      <div class="col-md-8 text-center clear-background shadow-z-1" id="main-video-container">
+      <div class="col-md-6 text-center clear-background shadow-z-1" id="main-video-container">
         <div class="row">
           <div class="text-center clear-background" id="video-player-panel-1">
             <video id="video-player-1" class="video-js vjs-default-skin video-custom-center change-user"
@@ -192,14 +192,16 @@
       </div><!-- /main video-->
 
       <!-- right side space -->
-      <div class="col-md-2 col-xs-3 vcenter" id="wordcloud-placeholder">
+      <div class="col-md-3 col-xs-3 vcenter" id="wordcloud-placeholder">
           <div class="panel panel-material-blue-grey">
               <div class="panel-heading">
                   <h3 class="panel-title" align="center">Group Metrics</h3>
               </div>
-              <div class="panel-body">
+              <div class="panel-body" id="wordcloud-panel">
+                  <h4><strong>Most ferquent words</strong></h4>
                   <canvas id="wordcloud-canvas"></canvas>
                   <!--<img src="{{ url_for('.static',filename='img/fake_wordcloud_480.png') }}" />-->
+                  <h4><strong>Speaker Transitions</strong></h4>
                   <img src="{{ url_for('.static',filename='img/participation_graph.png') }}" />
               </div>
           </div>
