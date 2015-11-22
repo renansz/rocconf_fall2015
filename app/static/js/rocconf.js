@@ -123,18 +123,18 @@ function update_playback_time(new_time){
 /* general functions + main execution scripts */
 $(document).ready(function(){
 
-  /* canvas vertical alignment */
+  /* canvas vertical alignment 
   $("#main-content-container").height($('#main-video-container').height());
-  $("#").css({'height':$('#main-video-containerwordcloud-placeholder').height()});
+  $("#main-video-container").css({'height':$('#wordcloud-placeholder').height()});
 //                                   'line-height':$('#main-video-container').height()+'px'});
+*/
 
-
-  /* buttons setup */
-  $('#buttons-container').height($('#video-player-panel-1').height());
-  $("#buttons-container").css({'height':$('#video-player-panel-1').height(),
-                               'line-height':$('#video-player-panel-1').height()/5+'px'});
-
-
+  /* making all the middle panels have the same vertical length */
+  $("#wordcloud-canvas").on('wordcloudstop',function(){
+    $("#left-panel-info").height($('#wordcloud-placeholder').height());
+    $("#left-panel-info").css({'height':$('#wordcloud-placeholder').height()});
+    $('#wordcloud-panel').height($('#left-panel-info').height());
+  });
 
   // create slider instance
   $("#main-video-slider").slider();

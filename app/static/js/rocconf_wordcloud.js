@@ -101,5 +101,6 @@ $(document).ready(function(){
     var c = $("#wordcloud-canvas")[0];
     var ctx = c.getContext("2d");
     original_cloud = ctx.getImageData(0,0,$("#wordcloud-canvas").width(),$("#wordcloud-canvas").height());
+
   });
 });

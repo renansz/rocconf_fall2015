@@ -81,3 +81,8 @@ svg {
   font: 10px sans-serif;
 }
 
+/* basic info panel */
+#session-basic-info{
+  padding-left: 10%;
+  padding-right: 10%;
+}

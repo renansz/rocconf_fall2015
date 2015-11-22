@@ -109,7 +109,7 @@
 
       <!-- secondary-video-panel-5 -->
       <div class="panel panel-material-blue-grey col-md-3 secondary-video-div" id="video-5">
-        <div class="panel-heading" panel-blue-grey>
+        <div class="panel-heading panel-blue-grey">
           <h3 class="panel-title text-center"><b>User 5</b></h3>
         </div>
         <div class="panel-body" id="video-player-panel-5"><!-- /panel-body -->
@@ -143,30 +143,38 @@
     <div class="row-fluid" id="main-content-container">
 
       <!-- left side space -->
-      <div class="col-md-3 col-xs-3 text-center" id="buttons-container">
-          <!-- TODO: it is necessary to keep track of which user it is using the id or user property, not sure yet -->
-          <div class="row text-left change-user" id="change-user-1" change_user=1>
-            <a href="#" class="btn btn-material-blue-grey btn-raised disabled text-left"><span>User 1&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
+      <div class="col-md-3 col-xs-3 text-left" id="left-panel-container">
+        <!-- left side panel -->
+        <div class="panel panel-material-blue-grey" id="left-panel-info">
+          <div class="panel-heading panel-blue-grey">
+            <h3 class="panel-title text-center"><b>Interaction Info</b></h3>
           </div>
-          <div class="row text-left change-user" id="change-user-2" change_user=2>
-            <a href="#" class="btn btn-material-blue-grey btn-raised text-left"><span>User 2&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
-          </div>
-          <div class="row text-left change-user" id="change-user-3" change_user=3>
-            <a href="#" class="btn btn-material-blue-grey btn-raised text-left"><span>User 3&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
-          </div>
-          <div class="row text-left change-user" id="change-user-4" change_user=4>
-            <a href="#" class="btn btn-material-blue-grey btn-raised disabled text-left"><span>User 4&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
-          </div>
-          <div class="row text-left change-user" id="change-user-5" change_user=5>
-            <a href="#" class="btn btn-material-blue-grey btn-raised disabled text-left"><span>User 5&nbsp &nbsp &nbsp</span><i class="mdi-action-autorenew"></i></a><br/>
-          </div>
+          <div class="panel-body" id="session-basic-info">
+            <div class="row">
+              <h4><strong>User participation</strong></h4>
+              <p>User 1 spoke <strong>5</strong>times</p>
+              <p>User 2 spoke <strong>6</strong>times</p>
+              <p>User 3 spoke <strong>2</strong>times</p>
+            </div>
+            <div class="row">
+              <h4><strong>Rapport</strong></h4>
+              <p>Two users smiled X times</p>
+              <p>Three users smiled X times</p>
+              <p><i>at the same time</i></p>
+            </div>
+          </div><!-- /panel-body -->
+        </div>
+        <!-- /left side panel -->
+
         <!--<div class="thumbnail">
           <img src="//placehold.it/200x480" />
         </div>-->
       </div><!-- /left side -->
 
+      <!-- main video space -->
       <div class="col-md-6 text-center clear-background shadow-z-1" id="main-video-container">
         <div class="row">
+          <!-- main-video-panel -->
           <div class="text-center clear-background" id="video-player-panel-1">
             <video id="video-player-1" class="video-js vjs-default-skin video-custom-center change-user"
             preload="auto" width="480" height="360" user=1 poster="//placehold.it/640x480"
@@ -184,7 +192,13 @@
                 that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
               </p>
             </audio>
+          </div><!-- /main-video-panel-->
+          <div class="row" id="main-video-charts">
+            <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_1_left" style="padding-left: 5px; padding-right:0px;"><h5><b>Participation Rate</b></h5></div>
+            <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_1_right" style="padding-left: 0px;"><b><h5>Speaking Rate</b></h5></div>
           </div>
+
+          <!-- slider -->
           <div class="row" id="slider-placeholder">
             <div class="col-xs-2 col-md-2" id="main-video-btns">
               <h4>
@@ -197,15 +211,15 @@
             <div class="col-xs-1 col-md-1 text-left" style="margin-left: 0px; padding-left: 0px; left: -25px;">
               <strong><h4 id="video-time">0:00</h4></strong>
             </div>
-          </div>
+          </div><!-- /slider -->
         </div>
-      </div><!-- /main video-->
+      </div><!-- /main-video-container-->
 
       <!-- right side space -->
       <div class="col-md-3 col-xs-3 vcenter" id="wordcloud-placeholder">
-          <div class="panel panel-material-blue-grey">
+          <div class="panel panel-material-blue-grey" id="wordcloud-panel">
               <div class="panel-heading">
-                  <h3 class="panel-title" align="center">Group Metrics</h3>
+                  <h3 class="panel-title" align="center"><strong>Group Metrics</strong></h3>
               </div>
               <div class="panel-body" id="wordcloud-panel">
                   <div>
