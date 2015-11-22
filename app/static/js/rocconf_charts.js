@@ -197,7 +197,6 @@ function set_rate_chart(data, location)
     radius = Math.min(width, height) / 2;
     barWidth = 40 * width / 300;
 
-
     /*
       Utility methods 
     */
