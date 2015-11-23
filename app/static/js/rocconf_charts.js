@@ -56,12 +56,14 @@ function init_session()
     var size = undefined;
 
     //Initialize the session - we assume 'user 1' is front and center
-    set_smile_chart();    
+    set_smile_chart();
 
     for (var i = 1; i <= avg_features.length; i++) {
         i == 1? size = 140 : size = 80;
         set_participation_chart(avg_features['user_' + i], "subpanel_" + i + "_left",size);
-        set_rate_chart(avg_features['user_' + i], "subpanel_" + i + "_right",size);
+        /* temp fix for demo */
+        if (i!= 1)
+          set_rate_chart(avg_features['user_' + i], "subpanel_" + i + "_right",size);
     }
 
     // Disabling unused users navigation buttons
