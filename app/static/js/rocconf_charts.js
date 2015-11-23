@@ -55,23 +55,23 @@ function init_session()
 
     var size = undefined;
 
-    //Initialize the session - we assume 'user 1' is front and center
     set_smile_chart();
 
-    for (var i = 1; i <= avg_features.length; i++) {
-        i == 1? size = 140 : size = 80;
-        set_participation_chart(avg_features['user_' + i], "subpanel_" + i + "_left",size);
-        /* temp fix for demo */
-        if (i!= 1)
-          set_rate_chart(avg_features['user_' + i], "subpanel_" + i + "_right",size);
-    }
-
-    // Disabling unused users navigation buttons
-    /*
-    for (var j = avg_features.length + 1; j <= 5; j++)
+    for (var i = 1; i <= avg_features.length; i++)
     {
-        document.getElementById("change-user-" + j + "-button").className += " disabled";
-    }*/
+        user_loc = $('#video-player-' + i).attr('user');
+
+        if (user_loc == 1)
+        {
+            set_participation_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_left", 140)
+            set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
+        }
+        else
+        {
+            set_participation_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_left", 80)
+            set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
+        }
+    }
 
     // Setting up the word cloud information
     word_cloud_data = [];
@@ -100,11 +100,48 @@ function init_session()
 }
 
 //==============================================================
+// Initialize a Session after Loading
+//==============================================================
+function update_session() {
+
+    var size = undefined;
+
+    set_smile_chart();
+
+    for (var i = 1; i <= avg_features.length; i++) {
+        user_loc = $('#video-player-' + i).attr('user');
+
+        if (user_loc == 1) {
+            set_participation_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_left", 140)
+            set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
+        }
+        else {
+            set_participation_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_left", 80)
+            set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
+        }
+    }
+}
+
+//==============================================================
 // Setup the Smile Frequency Graph
 //==============================================================
 function set_smile_chart()
 {
-    user = "user_" + $('.vjs-tech').attr('user');
+
+    //Which user is in slot #1?
+    user_num = 0;
+
+    for (var i = 1; i <= avg_features.length; i++)
+    {
+        user_loc = $('#video-player-' + i).attr('user');
+        if(user_loc == 1)
+        {
+            user_num = i;
+            break;
+        }
+    }
+    
+    user = "user_" + user_num;
 
     data = smile_time_data[user];
 
@@ -159,7 +196,18 @@ function set_smile_chart()
 //==============================================================
 function set_loudness_chart()
 {
-    user = "user_" + $('.vjs-tech').attr('user');
+    //Which user is in slot #1?
+    user_num = 0;
+
+    for (var i = 1; i <= avg_features.length; i++) {
+        user_loc = $('#video-player-' + i).attr('user');
+        if (user_loc == 1) {
+            user_num = i;
+            break;
+        }
+    }
+
+    user = "user_" + user_num;
 
     data = loudness_time_data[user];
 
@@ -214,8 +262,18 @@ function set_loudness_chart()
 //==============================================================
 function set_sentiment_chart()
 {
-    user = "user_" + $('.vjs-tech').attr('user');
+    //Which user is in slot #1?
+    user_num = 0;
 
+    for (var i = 1; i <= avg_features.length; i++) {
+        user_loc = $('#video-player-' + i).attr('user');
+        if (user_loc == 1) {
+            user_num = i;
+            break;
+        }
+    }
+
+    user = "user_" + user_num;
     data = sentiment_time_data[user];
 
     document.getElementById("load_smile_graph").className = "";
@@ -270,6 +328,12 @@ function set_sentiment_chart()
 //==============================================================
 function set_participation_chart(data, el, size)
 {
+    //first clear the element
+    if (el == 'subpanel_1_left')
+        $('#' + el).html('<h5><strong>Participation Rate</strong></h5>');
+    else
+        $('#' + el).empty();
+
     var pie = new d3pie(el, {
         "size": {
             "canvasHeight": size,
@@ -322,6 +386,11 @@ function set_participation_chart(data, el, size)
 
 function set_rate_chart(data, el, size)
 {
+    if (el == 'subpanel_1_right')
+        $('#' + el).html('<h5><strong>Speaking Rate</strong></h5>');
+    else
+        $('#' + el).empty();
+
     var needle;
 
     var barWidth, chart, chartInset, degToRad, repaintGauge,

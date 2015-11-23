@@ -296,5 +296,7 @@ $(document).ready(function(){
       // Finally, start playing the videos again
       play_videos();
     }
+
+    update_session();
   });
 });
