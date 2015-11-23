@@ -58,7 +58,7 @@ function init_session()
     set_smile_chart();    
 
     for (var i = 1; i <= avg_features.length; i++) {
-        i == 1? size = 180 : size = 80;
+        i == 1? size = 140 : size = 80;
         set_participation_chart(avg_features['user_' + i], "subpanel_" + i + "_left",size);
         set_rate_chart(avg_features['user_' + i], "subpanel_" + i + "_right",size);
     }

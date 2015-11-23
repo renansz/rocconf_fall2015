@@ -45,6 +45,7 @@ body {
   background-color: #607D8B;
 }
 
+
 /* wordcloud */
 #wordcloud-canvas{
   width: 250px;
@@ -85,4 +86,10 @@ svg {
 #session-basic-info{
   padding-left: 10%;
   padding-right: 10%;
+}
+
+
+/* main video charts */
+#main-video-charts{
+  
 }
