@@ -24,18 +24,18 @@ main_video.poster('static/img/video_background.png');
 /* secondary video setup */
 sec_video_2.autoplay(0);
 sec_video_3.autoplay(0);
-sec_video_4.autoplay(0);
-sec_video_5.autoplay(0);
+//sec_video_4.autoplay(0);
+//sec_video_5.autoplay(0);
 
 sec_video_2.load();
 sec_video_3.load();
-sec_video_4.load();
-sec_video_5.load();
+//sec_video_4.load();
+//sec_video_5.load();
 
 sec_video_2.poster('static/img/video_background.png');
 sec_video_3.poster('static/img/video_background.png');
-sec_video_4.poster('static/img/video_background.png');
-sec_video_5.poster('static/img/video_background.png');
+//sec_video_4.poster('static/img/video_background.png');
+//sec_video_5.poster('static/img/video_background.png');
 
 
 /* hiding main audio div */
@@ -43,14 +43,7 @@ main_audio.hide();
 
 
 
-/* slider setup when video is loaded */
-main_video.on('loadeddata',function(){
-  /* called every time playback is fired up */
-  //DEBUG console.log("video length: "+ main_video.duration());
-  //DEBUG console.log("video timeleft: "+ main_video.remainingTime());
 
-  video_duration = main_video.duration();
-});
 
 
 
@@ -58,8 +51,8 @@ main_video.on('loadeddata',function(){
 function play_videos(){
     sec_video_2.play();
     sec_video_3.play();
-    sec_video_4.play();
-    sec_video_5.play();
+//   sec_video_4.play();
+//   sec_video_5.play();
 
     main_video.play();
     main_audio.play();
@@ -69,8 +62,8 @@ function play_videos(){
 function pause_videos(){
     sec_video_2.pause();
     sec_video_3.pause();
-    sec_video_4.pause();
-    sec_video_5.pause();
+//    sec_video_4.pause();
+//    sec_video_5.pause();
 
     main_video.pause();
     main_audio.pause();
@@ -83,8 +76,8 @@ function update_videos_times(new_time){
 
     sec_video_2.currentTime(new_time);
     sec_video_3.currentTime(new_time);
-    sec_video_4.currentTime(new_time);
-    sec_video_5.currentTime(new_time);
+//    sec_video_4.currentTime(new_time);
+//    sec_video_5.currentTime(new_time);
 }
 
 
@@ -118,23 +111,9 @@ function update_playback_time(new_time){
 }
 
 
-
-
-/* general functions + main execution scripts */
-$(document).ready(function(){
-
-  /* canvas vertical alignment 
-  $("#main-content-container").height($('#main-video-container').height());
-  $("#main-video-container").css({'height':$('#wordcloud-placeholder').height()});
-//                                   'line-height':$('#main-video-container').height()+'px'});
-*/
-
-  /* making all the middle panels have the same vertical length */
-  $("#wordcloud-canvas").on('wordcloudstop',function(){
-    $("#left-panel-info").height($('#wordcloud-placeholder').height());
-    $("#left-panel-info").css({'height':$('#wordcloud-placeholder').height()});
-    $('#wordcloud-panel').height($('#left-panel-info').height());
-  });
+/* slider setup when video is loaded */
+main_video.one('loadeddata',function(){
+  /* called every time the main video is loaded*/
 
   // create slider instance
   $("#main-video-slider").slider();
@@ -146,13 +125,37 @@ $(document).ready(function(){
       of:'#slider-placeholder'
     });
   });
+  //DEBUG console.log("video length: "+ main_video.duration());
+  //DEBUG console.log("video timeleft: "+ main_video.remainingTime());
+  video_duration = main_video.duration();
 
-
-  /* setup slider values */
+  /* setup slider min-max values */
   //DEBUG console.log('hit here and the video duration is: '+video_duration);
+  //DEBUG console.log(video_duration);
   $("#main-video-slider").slider("option","max",video_duration);
   $("#main-video-slider").slider("option","min",0);
   update_playback_time(0);
+
+});
+
+
+
+/* general functions + main execution scripts */
+$(document).ready(function(){
+
+  /* canvas vertical alignment 
+  $("#main-content-container").height($('#main-video-container').height());
+  $("#main-video-container").css({'height':$('#wordcloud-placeholder').height()});
+//                                   'line-height':$('#main-video-container').height()+'px'});
+*/
+
+  /* making all the middle panels have the same vertical length 
+  $("#wordcloud-canvas").on('wordcloudstop',function(){
+    $("#left-panel-info").height($('#wordcloud-placeholder').height());
+    $("#left-panel-info").css({'height':$('#wordcloud-placeholder').height()});
+    $('#wordcloud-panel').height($('#left-panel-info').height());
+  });*/
+
 
 
   /* create handlers on the slider for users manually changing the slider */
@@ -162,8 +165,6 @@ $(document).ready(function(){
     /* changing the slider will reflect on all the videos */
     update_videos_times(ui.value);
 
-    /* update the time left info */
-    update_playback_time(ui.value);
   });
 
 
@@ -176,22 +177,33 @@ $(document).ready(function(){
     pause_videos();
   });
 
+
   /* slider updater on video time update */
   main_video.on('timeupdate',function(){
     current_time = main_video.currentTime();
     /* called every time playback time is changed -- updates slider's values*/
-    $("#main-video-slider").slider('option','value',current_time);
-
+    console.log("current time"+ main_video.currentTime());
+    $("#main-video-slider").slider("option","value",current_time);
     /* update playback time */
     update_playback_time(current_time);
   });
 
-  /* formatting secodanry video panels */
+
+
+
+  /* formatting secondary video panels */
   var secondary_videos_width = $('#video-2').width();
   $('.secondary-video-div').width(secondary_videos_width-10);
   $('.secondary-video-div').css('margin-left','4px');
   $('.secondary-video-div').css('margin-right','4px');
+  /* temporary fix for making all the panels have the same height*/
+  $('.secondary-video-div>.panel-body>.row').height(85);
 
+
+
+  /* more height fixes for demo day */
+  $('#wordlcoud-panel').height(592);
+  $('#left-panel-info').height(592);
 
   /***************** Chart area ********************/
   $('.bottom-side').height($('#chart-area').height());

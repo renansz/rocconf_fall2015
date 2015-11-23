@@ -53,12 +53,24 @@ body {
 #wordcloud-panel{
   padding-left:5px;
   padding-right:5px;
+  height: 592px;
 }
 
 /* secondary boxes */
+.secondary-video-div>.panel-body{
+  padding-bottom: 0px;
+}
+
+
+
+
 
 /* gauge chart */
 /* TODO -- fix here */
+
+/***************** TEMP FIX **********************/
+
+
 .chart-gauge
 {
   width: 400px;

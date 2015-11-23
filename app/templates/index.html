@@ -29,7 +29,7 @@
   <div class="row" id="video-thumbnails">
 
     <!-- logo -->
-    <div class="col-md-1"><img src="//placehold.it/150x150" /></div>
+    <div class="col-md-1"><img src="{{ url_for('.static',filename='img/temp_logo.png') }}" height='100px' width='100px' /></div>
     <!-- /logo -->
 
     <div class="col-md-1"></div>
@@ -157,7 +157,7 @@
             <div class="row text-left">
                 <h4><strong>User Participation</strong></h4>
                 <p>User 1 spoke <strong>5</strong> times.</p>
-                <p>User 2 spoke <strong>6</strong> times.<i class="glyphicon glyphicon-star"></i></p>
+                <p>User 2 spoke <strong>6</strong> times.<i>[Most active]</i></p>
                 <p>User 3 spoke <strong>2</strong> times.</p>
             </div>
             <div class="row text-left">
@@ -199,7 +199,7 @@
           </div><!-- /main-video-panel-->
           <div class="row" id="main-video-charts">
             <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_1_left" style="padding-left: 5px; padding-right:0px;"><h5><b>Participation Rate</b></h5></div>
-            <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_1_right" style="padding-left: 0px;"><b><h5>Speaking Rate</b></h5></div>
+            <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_1_right" style="padding-left: 0px;"><b><h5>Speaking Rate</b></h5><img src="{{ url_for('.static',filename='img/fake_gauge.png') }}" /></div>
           </div>
 
           <!-- slider -->
