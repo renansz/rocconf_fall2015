@@ -69,6 +69,30 @@ function init_session()
         document.getElementById("change-user-" + j + "-button").className += " disabled";
     }
 
+    // Setting up the word cloud information
+    word_cloud_data = [];
+
+    for (element in sentiment_counts)
+    {
+        word_cloud_data[element] = [sentiment_counts[element]['text'],sentiment_counts[element]['counts']];
+    }
+
+    sorted_data = word_cloud_data.sort(function Comparator(a, b) {
+                                        if (a[1] > b[1]) return -1;
+                                        if (a[1] < b[1]) return 1;
+                                        return 0;
+                                    });
+
+    final_cloud = [];
+
+    for (element in sorted_data)
+    {
+        final_cloud[element] = [sorted_data[element][0], sorted_data[element][1]];
+        if (element > 8)
+            break;
+    }
+
+    setup_word_cloud(final_cloud);
 }
 
 //==============================================================
@@ -76,7 +100,7 @@ function init_session()
 //==============================================================
 function set_smile_chart()
 {
-    user = "user_" + $('.video-custom-center').attr('user');
+    user = "user_" + $('.vjs-tech').attr('user');
 
     data = smile_time_data[user];
 
@@ -131,7 +155,7 @@ function set_smile_chart()
 //==============================================================
 function set_loudness_chart()
 {
-    user = "user_" + $('.video-custom-center').attr('user');
+    user = "user_" + $('.vjs-tech').attr('user');
 
     data = loudness_time_data[user];
 
@@ -186,7 +210,7 @@ function set_loudness_chart()
 //==============================================================
 function set_sentiment_chart()
 {
-    user = "user_" + $('.video-custom-center').attr('user');
+    user = "user_" + $('.vjs-tech').attr('user');
 
     data = sentiment_time_data[user];
 

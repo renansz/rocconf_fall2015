@@ -150,17 +150,17 @@
             <h3 class="panel-title text-center"><b>Interaction Info</b></h3>
           </div>
           <div class="panel-body" id="session-basic-info">
-            <div class="row">
-              <h4><strong>User participation</strong></h4>
-              <p>User 1 spoke <strong>5</strong>times</p>
-              <p>User 2 spoke <strong>6</strong>times</p>
-              <p>User 3 spoke <strong>2</strong>times</p>
+            <div class="row text-center">
+                <h4><strong>User Participation</strong></h4>
+                <p>User 1 spoke <strong>5</strong> times.</p>
+                <p style="color:green;"><i class="glyphicon glyphicon-star"></i>User 2 spoke <strong>6</strong> times.</p>
+                <p style="color:red;">User 3 spoke <strong>2</strong> times.</p>
             </div>
-            <div class="row">
-              <h4><strong>Rapport</strong></h4>
-              <p>Two users smiled X times</p>
-              <p>Three users smiled X times</p>
-              <p><i>at the same time</i></p>
+            <div class="row text-center">
+                <h4><strong>Rapport</strong></h4>
+                <p>Two users smiled X times</p>
+                <p>Three users smiled X times</p>
+                <p><i>at the same time</i></p>
             </div>
           </div><!-- /panel-body -->
         </div>
@@ -219,17 +219,17 @@
       <div class="col-md-3 col-xs-3 vcenter" id="wordcloud-placeholder">
           <div class="panel panel-material-blue-grey" id="wordcloud-panel">
               <div class="panel-heading">
-                  <h3 class="panel-title" align="center"><strong>Group Metrics</strong></h3>
+                  <h3 class="panel-title" align="center"><strong>Group Visualizations</strong></h3>
               </div>
               <div class="panel-body" id="wordcloud-panel">
-                  <div>
-                    <h5><strong>Most ferquent words</strong></h5>
+                  <div class="text-center">
+                    <h4><strong>Most Frequent Words</strong></h4>
                     <canvas id="wordcloud-canvas"></canvas>
                   </div>
                   <!--<img src="{{ url_for('.static',filename='img/fake_wordcloud_480.png') }}" />-->
                   <div><br/></div>
-                  <div>
-                    <h5><strong>Speaker Transitions</strong></h5>
+                  <div class="text-center">
+                    <h4><strong>Speaker Transitions</strong></h4>
                     <img src="{{ url_for('.static',filename='img/participation_graph.png') }}" />
                   </div>
               </div>
@@ -251,7 +251,7 @@
 
 
           <!-- navigation bar -->
-          <div class="navbar navbar-default" id="charts-navigation">
+          <div class="navbar navbar-default" id="charts-navigation" style="margin-top:2em;">
             <div class="container-fluid">
               <div class="navbar-collapse collapse navbar-responsive-collapse">
               <ul class="nav navbar-nav">
