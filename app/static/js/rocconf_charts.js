@@ -100,7 +100,7 @@ function init_session()
 //==============================================================
 function set_smile_chart()
 {
-    user = "user_" + $('.video-custom-center').attr('user');
+    user = "user_" + $('.vjs-tech').attr('user');
 
     data = smile_time_data[user];
 
@@ -155,7 +155,7 @@ function set_smile_chart()
 //==============================================================
 function set_loudness_chart()
 {
-    user = "user_" + $('.video-custom-center').attr('user');
+    user = "user_" + $('.vjs-tech').attr('user');
 
     data = loudness_time_data[user];
 
@@ -210,7 +210,7 @@ function set_loudness_chart()
 //==============================================================
 function set_sentiment_chart()
 {
-    user = "user_" + $('.video-custom-center').attr('user');
+    user = "user_" + $('.vjs-tech').attr('user');
 
     data = sentiment_time_data[user];
 
