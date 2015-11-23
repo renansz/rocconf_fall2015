@@ -3,6 +3,10 @@ import json
 from pprint import pprint
 
 dictionary = []
+transition = []
+user1counter = 0
+user2counter = 0
+user3counter = 0
 
 def addto_sorted_list(filepath,user):
 	with open(filepath,"r+") as the_file:
@@ -14,8 +18,16 @@ def addto_sorted_list(filepath,user):
 			if (item["speech"] != "sp"):
 				newtuple = (item["startTime"], user)
 				dictionary.append(newtuple)
-	
 
+def add_first_person(inuser):
+	global user1counter,user2counter,user3counter
+	if(inuser=="user1"):
+		user1counter += 1
+	elif(inuser == "user2"):
+		user2counter += 1
+	elif(inuser == "user3"):
+		user3counter += 1	
+	
 if __name__ == "__main__":
 	basepath = os.path.dirname(__file__)
 	filepath_1 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_1/formatted-alignment.json"))
@@ -33,14 +45,13 @@ if __name__ == "__main__":
 
 	checker=""
 	counter = 0
-	user1counter = 0
-	user2counter = 0
-	user3counter = 0
 	for item in sorteddictionary:
 		if(counter == 0):
 			checker = item[1]
-
+			add_first_person(item[1])
+			transition.append((checker, 0))
 		elif(item[1] != checker):
+			transition.append((item[1],item[0]))
 			if(checker == "user1"):
 				user1counter += 1
 			elif(checker == "user2"):
@@ -52,7 +63,9 @@ if __name__ == "__main__":
 	print user1counter
 	print user2counter
 	print user3counter
-
+	for item in transition:
+		print item
+	json.dumps(transition)
 
 	# print json.dumps(sorteddictionary)
 
