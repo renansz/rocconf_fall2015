@@ -2,53 +2,34 @@ import os
 import json
 from pprint import pprint
 
+dictionary = []
+
+def addto_sorted_list(filepath,user):
+	with open(filepath,"r+") as the_file:
+		loaded_data = json.loads(the_file.read())
+		times = loaded_data['startTime']
+		totaltime=0
+		for item in loaded_data["word"]:
+			totaltime+=item["endTime"]-item["startTime"]
+			if (item["speech"] != "sp"):
+				newtuple = (item["startTime"], user)
+				dictionary.append(newtuple)
+	
+
 if __name__ == "__main__":
 	basepath = os.path.dirname(__file__)
 	filepath_1 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_1/formatted-alignment.json"))
 	filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_2/formatted-alignment.json"))
 	filepath_3 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_3/formatted-alignment.json"))
 	# filepath_4 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_1/user_4/formatted-alignment.json"))
-	
-	chunks = []
-	buffer = []
-	words = None
-	dictionary = []
-		
-	with open(filepath_2,"r+") as the_file:
-		loaded_data = json.loads(the_file.read())
-		times = loaded_data['startTime']
-		totaltime=0
-		for item in loaded_data["phone"]:
-			totaltime+=item["endTime"]-item["startTime"]
-			if (item["speech"] != "sp"):
-				newtuple = (item["startTime"], "user2")
-				dictionary.append(newtuple)
 
+	addto_sorted_list(filepath_1,"user1")
+	addto_sorted_list(filepath_2,"user2")
+	addto_sorted_list(filepath_3,"user3")
 	
-	with open(filepath_3,"r+") as the_file:
-		loaded_data = json.loads(the_file.read())
-		times = loaded_data['startTime']
-		totaltime=0
-		for item in loaded_data["phone"]:
-			totaltime+=item["endTime"]-item["startTime"]
-			if (item["speech"] != "sp"):
-				newtuple = (item["startTime"], "user3")
-				dictionary.append(newtuple)
-	
-	with open(filepath_1,"r+") as the_file:
-		loaded_data = json.loads(the_file.read())
-		times = loaded_data['startTime']
-		totaltime=0
-		for item in loaded_data["phone"]:
-			totaltime+=item["endTime"]-item["startTime"]
-			if (item["speech"] != "sp"):
-				newtuple = (item["startTime"], "user1")
-				dictionary.append(newtuple)
-
 	sorteddictionary = sorted(dictionary, key = lambda x: x[0])
 	json.dumps(sorteddictionary)
-	# print sorteddictionary
-	# print
+
 
 	checker=""
 	counter = 0
@@ -75,8 +56,3 @@ if __name__ == "__main__":
 
 	# print json.dumps(sorteddictionary)
 
-	# with open(filepath_1,"r+") as the_file:
-		# loaded_data = json.loads(the_file.read())
-		# words = [item['startTime'] for item in loaded_data]
-		# for word in words:
-			# print word
