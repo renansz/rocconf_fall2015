@@ -52,6 +52,7 @@ function load_session_data(session)
 //==============================================================
 function init_session()
 {
+
     var size = undefined;
 
     //Initialize the session - we assume 'user 1' is front and center
