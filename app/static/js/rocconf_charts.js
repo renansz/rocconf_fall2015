@@ -64,10 +64,11 @@ function init_session()
     }
 
     // Disabling unused users navigation buttons
+    /*
     for (var j = avg_features.length + 1; j <= 5; j++)
     {
         document.getElementById("change-user-" + j + "-button").className += " disabled";
-    }
+    }*/
 
     // Setting up the word cloud information
     word_cloud_data = [];
@@ -367,7 +368,7 @@ function set_rate_chart(data, el, size)
     };
 
     // Create SVG element
-    svg = el.append('svg').attr('width', width + margin.left + margin.right).attr('height', height/2 + margin.top + margin.bottom);
+    svg = el.append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom);
 
     // Add layer for the panel
     chart = svg.append('g').attr('transform', "translate(" + ((width + margin.left) / 2) + ", " + ((height + margin.top) / 2) + ")");
