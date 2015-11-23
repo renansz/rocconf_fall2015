@@ -43,10 +43,6 @@ main_audio.hide();
 
 
 
-
-
-
-
 /* video helper functions */
 function play_videos(){
     sec_video_2.play();
@@ -134,7 +130,7 @@ main_video.one('loadeddata',function(){
   //DEBUG console.log(video_duration);
   $("#main-video-slider").slider("option","max",video_duration);
   $("#main-video-slider").slider("option","min",0);
-  update_playback_time(0);
+  $("#main-video-slider").slider("option","step",1);
 
 });
 
@@ -162,8 +158,18 @@ $(document).ready(function(){
   $("#main-video-slider").on("slide",function(event,ui){
     //DEBUG console.log("new time: "+ ui.value);
 
+    var paused = main_video.paused();
+
+    pause_videos();
+
     /* changing the slider will reflect on all the videos */
     update_videos_times(ui.value);
+    update_playback_time(ui.value);
+
+    /* if it was not paused,needs to hit play again */
+    if (!paused){
+      play_videos();
+    }
 
   });
 
@@ -180,12 +186,15 @@ $(document).ready(function(){
 
   /* slider updater on video time update */
   main_video.on('timeupdate',function(){
-    current_time = main_video.currentTime();
-    /* called every time playback time is changed -- updates slider's values*/
-    console.log("current time"+ main_video.currentTime());
-    $("#main-video-slider").slider("option","value",current_time);
-    /* update playback time */
-    update_playback_time(current_time);
+    if (main_video.currentTime() >= 1){
+      current_time = main_video.currentTime();
+
+      /* called every time playback time is changed -- updates slider's values*/
+      //console.log("current time"+ main_video.currentTime());
+      $("#main-video-slider").slider("option","value",current_time);
+      /* update playback time */
+      update_playback_time(current_time);
+    }
   });
 
 
