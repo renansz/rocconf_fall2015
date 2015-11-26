@@ -47,7 +47,7 @@ def process_user_freq(filepath):
                  "because","any","these","give","most",
                  "is","are","was","does","been","where","why",
                  "am","being","thing","really","something","however",
-                 "said","got","such","it's","don't","that's",
+                 "said","got","such","it's","don't","that's","I","You",
                  "what's","did","too","gotten"]
 
     with open(filepath,"r+") as the_file:
