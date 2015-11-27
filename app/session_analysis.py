@@ -80,6 +80,8 @@ def addto_sorted_list(filepath, user):
 # showing transitions during the call.
 #=======================================================
 def generate_participation_matrix(session):
+    print "Generating participation matrix..."
+
     list=[]
 
     users = os.listdir("session_data/" + session)
@@ -93,10 +95,18 @@ def generate_participation_matrix(session):
         list = read_list_formattedalignment(filepath, i, list)
         i = i + 1
 
-    matrix=iterate_matrix(sorted(list),3)
+    matrix = iterate_matrix(sorted(list),len(users))
 
-    #TODO - Write out matrix to JSON
-    pp.pprint(matrix)
+    data_to_write = {}
+
+    data_to_write['matrix'] = matrix.tolist()
+
+    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/p_matrix.json"))
+
+    with open(filepath_final,'w') as final_file:
+        final_file.write(json.dumps(data_to_write))
+
+    print "Participation matrix generated..."
 
 def read_matrix(filepath):
 
@@ -122,16 +132,16 @@ def read_list_formattedalignment(filepath,number_user,list):
 
 
 #smooth method
-def smooth_list(list,iteration):
+def smooth_list(list, iteration):
     temp=[]
     out=[]
     for items in list:
         temp.append(items[1])
-    for i in range(iteration,len(temp)-iteration):
-        if(temp[i-iteration]==temp[i+iteration]):
-            temp[i]=temp[i-iteration]
-    temp[0]=temp[1]
-    temp[len(temp)-1]=temp[len(temp)-2]
+    for i in range(iteration, len(temp) - iteration):
+        if(temp[i-iteration] == temp[i+iteration]):
+            temp[i] = temp[i-iteration]
+    temp[0] = temp[1]
+    temp[len(temp)-1] = temp[len(temp)-2]
     for j in range(0,len(list)):
         out.append((list[j][0],temp[j]))
     return out
@@ -211,17 +221,18 @@ def generate_sentiment_time(session):
     users = [user for user in users if 'user' in user]
 
     for e in users:
+        print "Generating sentiment by time for " + e + "..."
         basepath = os.path.dirname(__file__)
         filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/formatted-alignment.json"))
 
-        data = sliding_window(filepath_1,3)
+        data = sliding_window(filepath,3)
 
         list_data = []
-        for e in data:
-            blob = TextBlob(e['text'])
+        for j in data:
+            blob = TextBlob(j['text'])
             sentiment = blob.sentiment
 
-            dict = {"time":e['time'], "sentiment": sentiment[0]}
+            dict = {"time":j['time'], "sentiment": sentiment[0]}
             list_data.append(dict)
 
         data_to_write = {"time_data":list_data}
@@ -230,6 +241,7 @@ def generate_sentiment_time(session):
 
         with open(filepath_final,'w') as final_file:
             final_file.write(json.dumps(data_to_write))
+        print "Sentiment by time for " + e + " generated..."
 
 def sliding_window(filepath, length):
     chunks = []
@@ -266,6 +278,7 @@ def generate_sentiment_lists():
 # for the entire session.
 #=======================================================
 def generate_word_counts(session):
+    print "Generating word counts..."
     session_counts = []
 
     users = os.listdir("session_data/" + session)
@@ -286,10 +299,12 @@ def generate_word_counts(session):
 
     data_to_write = {"counts": list_data}
 
-    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/sentiment_counts.json"))
+    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/session_word_counts.json"))
 
     with open(filepath_final,'w') as final_file:
         final_file.write(json.dumps(data_to_write))
+
+    print "Word counts generated..."
 
 def process_user_freq(filepath):
     formatted_data = []
@@ -401,6 +416,6 @@ def smile_count(user_number, session):
 if __name__ == "__main__":
     session_name = "multi_test_2"
 
-    #generate_participation_rates(session_name)
     #generate_participation_matrix(session_name)
-    #generate_smile_counts(session_name) TO DO - Not sure how well this one is working yet
+    #generate_sentiment_time(session_name)
+    #generate_word_counts(session_name)
