@@ -13,6 +13,7 @@ import os
 import json
 import pprint
 import numpy as np
+import matplotlib.pyplot as plt
 
 #pretty printer config
 pp = pprint.PrettyPrinter(indent=2)
@@ -57,6 +58,7 @@ def generate_participation_rates(session):
     #COUNTS GOOD - TODO - Generate Length of Speaking from the transition data!
     # - Can get total time spoken by each user, and length of each speaking 'block'.
     # - Format output for possible gannt chart too.
+    # - OUTPUT - To JSON
     pp.pprint(counter_dict)
 
 def addto_sorted_list(filepath, user):
@@ -91,6 +93,8 @@ def generate_participation_matrix(session):
         i = i + 1
 
     matrix=iterate_matrix(sorted(list),3)
+
+    #TODO - Write out matrix to JSON
     pp.pprint(matrix)
 
 def read_matrix(filepath):
@@ -221,8 +225,63 @@ def generate_word_counts():
 #=======================================================
 # Function to generate the coincident smile counts
 #=======================================================
-def generate_smile_counts():
-    data = {}
+def generate_smile_counts(session):
+    result = smile_count(3,session)
+    time=[]
+    for i in np.arange(1,len(result)+1,1):
+        time.append(i)
+    plt.plot(time,result.values())
+    plt.show()
+
+def read_matrix(filepath):
+    
+    file=open(filepath)
+    featuredict=json.loads(file.read())
+    data=np.zeros((len(featuredict['features']),len(featuredict['features'][0])))
+    i=0
+    for time_stamp in featuredict['features']:
+        
+        data[i,:]=time_stamp.values()
+        i+=1;
+    return data
+
+
+def read_list_smile(filepath):
+    list = []
+    file = open(filepath,"r+")
+    loaded_data = json.loads(file.read())
+    
+    for time_stamp in loaded_data['features']:
+        list.append((time_stamp['time_millisec'],time_stamp['smile_cubicSpline']))
+    return list
+
+
+def read_list_average(filepath):
+    file=open(filepath,"r+")
+    loaded_data=json.loads(file.read())
+    return (loaded_data['features'][0])['averageSmileIntensity_100']
+
+
+def smile_count(user_number, session):
+    count={}
+    for i in range(1, user_number+1):
+        basepath = os.path.dirname(__file__)
+        filepath1 = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/user_" + str(i) + "/audio-video-features.json"))
+        filepath2 = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/user_" + str(i) + "/average-features.json"))
+
+        data = read_list_smile(filepath1)
+        ave = read_list_average(filepath2)
+        
+        for j in range(0,len(data)):
+            if(count.has_key(data[j][0])):
+                if(data[j][1]>ave):
+                    count[data[j][0]]=count[data[j][0]]+1
+            else:
+                if(data[j][1]>ave):
+                    count[data[j][0]]=1
+                else:
+                    count[data[j][0]]=0
+    return count
 
 #=======================================================
 # Function to generate the coincident smiles time
@@ -238,4 +297,5 @@ if __name__ == "__main__":
     session_name = "multi_test_2"
 
     #generate_participation_rates(session_name)
-    generate_participation_matrix(session_name)
+    #generate_participation_matrix(session_name)
+    #generate_smile_counts(session_name) TO DO - Not sure how well this one is working yet
