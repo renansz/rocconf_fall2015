@@ -14,6 +14,7 @@ import json
 import pprint
 import numpy as np
 import matplotlib.pyplot as plt
+from textblob import TextBlob
 
 #pretty printer config
 pp = pprint.PrettyPrinter(indent=2)
@@ -204,8 +205,53 @@ def transition_matrix(number_user,list):
 # Function to generate sentiment hits over the time
 # of the session.
 #=======================================================
-def generate_sentiment_time():
-    data = {}
+def generate_sentiment_time(session):
+
+    users = os.listdir("session_data/" + session)
+    users = [user for user in users if 'user' in user]
+
+    for e in users:
+        basepath = os.path.dirname(__file__)
+        filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/formatted-alignment.json"))
+
+        data = sliding_window(filepath_1,3)
+
+        list_data = []
+        for e in data:
+            blob = TextBlob(e['text'])
+            sentiment = blob.sentiment
+
+            dict = {"time":e['time'], "sentiment": sentiment[0]}
+            list_data.append(dict)
+
+        data_to_write = {"time_data":list_data}
+
+        filepath_final = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/sentiment-by-time.json"))
+
+        with open(filepath_final,'w') as final_file:
+            final_file.write(json.dumps(data_to_write))
+
+def sliding_window(filepath, length):
+    chunks = []
+    buffer = []
+    words = None
+
+    with open(filepath,"r+") as the_file:
+        loaded_data = json.loads(the_file.read())
+        words = loaded_data['word']
+
+    # Each time we add in a word to the buffer, we want to check the last 'length' of words
+    for e in words:
+        if(e['speech'] != 'sp'):
+            buffer.append(e['speech'])
+
+            chunk = buffer[-length:]
+            chunk_string = ""
+            for k in chunk:
+                chunk_string += " " + k
+            chunks.append({"text":chunk_string, "time": e['endTime']})
+
+    return chunks
 
 #=======================================================
 # Function to generate lists of words and counts that
@@ -219,8 +265,74 @@ def generate_sentiment_lists():
 # Function to generate the aggregate word counts
 # for the entire session.
 #=======================================================
-def generate_word_counts():
-    data = {}
+def generate_word_counts(session):
+    session_counts = []
+
+    users = os.listdir("session_data/" + session)
+    users = [user for user in users if 'user' in user]
+
+    for e in users:
+        basepath = os.path.dirname(__file__)
+        filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/word-tag-count.json"))
+        session_counts.append(process_user_freq(filepath))
+   
+    processed_counts = aggregate_freq_words(session_counts)
+
+    list_data = []
+
+    for e,v in processed_counts.iteritems():
+        dict = {"text": e, "counts": v}
+        list_data.append(dict)
+
+    data_to_write = {"counts": list_data}
+
+    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/sentiment_counts.json"))
+
+    with open(filepath_final,'w') as final_file:
+        final_file.write(json.dumps(data_to_write))
+
+def process_user_freq(filepath):
+    formatted_data = []
+
+    stopwords = ["the","be","to","of","and","a","in","that",
+                 "have","it","for","not","on","with","he",
+                 "as","do","at","this","but","his","by",
+                 "from","they","we","say","her","she","or",
+                 "an","will","my","all","would","there","their",
+                 "what","so","up","out","if","about","who","get",
+                 "which","go","me","when","make","can",
+                 "time","just","him","know","take","into","your",
+                 "some","could","them","see","other","than",
+                 "then","now","only","come","its","over",
+                 "think","also","back","after","use","how",
+                 "our","first","well","way","even","new",
+                 "because","any","these","give","most",
+                 "is","are","was","does","been","where","why",
+                 "am","being","thing","really","something","however",
+                 "said","got","such","it's","don't","that's","I","You",
+                 "what's","did","too","gotten"]
+
+    with open(filepath,"r+") as the_file:
+        loaded_data = json.loads(the_file.read())
+        counts = loaded_data['counts']
+
+        for e in counts:
+            if str.lower(str(e['text'])) not in stopwords:
+                formatted_data.append(e)
+
+    return formatted_data
+
+def aggregate_freq_words(list):
+    final_data = {}
+
+    for e in list:
+        for j in e:
+            if final_data.has_key(j['text']):
+                final_data[j['text']] += final_data[j['text']] + j['count']
+            else:
+                final_data[j['text']] = j['count']
+
+    return final_data
 
 #=======================================================
 # Function to generate the coincident smile counts
@@ -282,13 +394,6 @@ def smile_count(user_number, session):
                 else:
                     count[data[j][0]]=0
     return count
-
-#=======================================================
-# Function to generate the coincident smiles time
-# series data
-#=======================================================
-def generate_smile_time():
-    data = {}
 
 #=======================================================
 # Main Function
