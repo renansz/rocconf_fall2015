@@ -63,14 +63,6 @@ def load_av_data(session):
     return data
 
 #-------------------------------------------------------
-# Load Rapport Time Series
-#-------------------------------------------------------
-def load_rapport_time(session):
-    data = {}
-
-    return data
-
-#-------------------------------------------------------
 # Loading Sentiment Time Series
 #-------------------------------------------------------
 def load_sentiment_time(session):
