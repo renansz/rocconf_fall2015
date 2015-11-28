@@ -1,12 +1,18 @@
-﻿# Group analysis script for the RocConf HCI 412 Group.
+﻿# Session analysis script for the RocConf HCI 412 Group.
 #
 # Ye (Eric) Wang, Yue (Bella) Wang, Jeffery White
 #
-# Participation Analysis
+# TO RUN: Set the session folder name in the main function and let it rip.
 #
-# Rapport Analysis
+# Participation Analysis - Measuring how many times a user spoke, for how long, and for how much
+#   of the total session time they occupied.
 #
-# Sentiment Analysis
+# Rapport Analysis - Attempting to find more than one persons smile at the same time. This feature
+#   was the least worked on for this project and still could use some bug fixing.
+#
+# Sentiment Analysis - Analysis of the sentiment (positive/negative) of words spoken on a per
+#   user basis, single words and their counts and a three word window analysis over time
+#   to attempt to capture 'context'.
 #
 
 import os
@@ -30,6 +36,8 @@ counter_dict = {}
 
 def generate_participation_rates(session):
     global counter_dict, dictionary, transition
+
+    print "Generating participation rates..."
 
     users = os.listdir("session_data/" + session)
     users = [user for user in users if 'user' in user]
@@ -56,11 +64,49 @@ def generate_participation_rates(session):
             checker = item[1]
         counter += 1
     
-    #COUNTS GOOD - TODO - Generate Length of Speaking from the transition data!
-    # - Can get total time spoken by each user, and length of each speaking 'block'.
-    # - Format output for possible gannt chart too.
-    # - OUTPUT - To JSON
-    pp.pprint(counter_dict)
+    blocks = {}
+    for e in users:
+        blocks[e] = []
+
+    c_user = transition[0][0]
+    c_user_start = 0
+
+    for e in transition:
+        if e[0] != c_user:
+            blocks[c_user].append({"start": round(c_user_start,1), "end":round(e[1],1), "duration": round((e[1] - c_user_start),1)})
+            c_user = e[0]
+            c_user_start = e[1]
+
+    total_duration = 0
+    averages = {}
+
+    for e in users:
+        user_blocks = blocks[e]
+        for k in user_blocks:
+            total_duration = total_duration + k['duration']
+
+    for e in users:
+        duration = 0
+        user_blocks = blocks[e]
+        for k in user_blocks:
+            duration = duration + k['duration']
+
+        averages[e] = {"p_spk": round((duration / total_duration) * 100 , 2), 
+                       "p_nospeak": round(100 - ((duration / total_duration) * 100) , 2), 
+                       "avg_speak": round(duration / counter_dict[e], 2)}
+
+
+    data_to_write = {}
+    data_to_write['spk_counts'] = counter_dict
+    data_to_write['spk_blocks'] = blocks
+    data_to_write['spk_avg'] = averages
+
+    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/p_rates.json"))
+
+    with open(filepath_final,'w') as final_file:
+        final_file.write(json.dumps(data_to_write))
+
+    print "Participation rates generated..."
 
 def addto_sorted_list(filepath, user):
     global dictionary
@@ -235,13 +281,40 @@ def generate_sentiment_time(session):
             dict = {"time":j['time'], "sentiment": sentiment[0]}
             list_data.append(dict)
 
-        data_to_write = {"time_data":list_data}
+        filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/average-features.json"))
+        with open(filepath_2,"r+") as avg:
+            loaded_data = json.loads(avg.read())
+            features = loaded_data['features']
+            max_time = round((features[0]['totalDuration_Milliseconds'] / 1000),1)
+
+        data_to_write = {"time_data": smooth_time_data(max_time, list_data)}
 
         filepath_final = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/sentiment-by-time.json"))
 
         with open(filepath_final,'w') as final_file:
             final_file.write(json.dumps(data_to_write))
+
         print "Sentiment by time for " + e + " generated..."
+
+# Fill in the gaps in the time series data for better display in amCharts
+def smooth_time_data(max, data):
+    final_data = []
+
+    timer = 0.0
+    for e in data:
+        while(timer < e['time']):
+            timer = timer + .5
+            final_data.append({"sentiment":0.0, "time": round(timer,1)})
+
+        rounded = {"sentiment":round(e['sentiment'],2), "time": round(e['time'],1)}
+        timer = timer + .5
+        final_data.append(rounded)
+
+    while(timer < max):
+        timer = timer + .5
+        final_data.append({"sentiment":0.0, "time": round(timer,1)})
+
+    return final_data
 
 def sliding_window(filepath, length):
     chunks = []
@@ -267,11 +340,47 @@ def sliding_window(filepath, length):
 
 #=======================================================
 # Function to generate lists of words and counts that
-# have sentiment. (Non neutrals for the progress
-# bar display.)
+# have sentiment for each user. 
+# (Non neutrals for the progress# bar display.)
 #=======================================================
-def generate_sentiment_lists():
-    data = {}
+def generate_sentiment_lists(session):
+    users = os.listdir("session_data/" + session)
+    users = [user for user in users if 'user' in user]
+
+    for e in users:
+        print "Generating sentiment list for " + e + "..."
+
+        data_to_write = {}
+
+        negatives = []
+        positives = []
+
+        basepath = os.path.dirname(__file__)
+        filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/word-tag-count.json"))
+
+        with open(filepath,"r+") as the_file:
+            loaded_data = json.loads(the_file.read())
+            counts = loaded_data['counts']
+
+            for k in counts:
+                blob = TextBlob(k['text'])
+                sentiment = blob.sentiment
+
+                if sentiment[0] > 0.25:
+                    positives.append({"text":k['text'], "count":k['count'], "value":sentiment[0]})
+                elif sentiment[0] < -0.25:
+                    negatives.append({"text":k['text'], "count":k['count'], "value":sentiment[0]})
+
+
+        data_to_write['pos'] = positives
+        data_to_write['neg'] = negatives
+
+        filepath_final = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/sentiment-counts.json"))
+
+        with open(filepath_final,'w') as final_file:
+            final_file.write(json.dumps(data_to_write))
+
+        print "Sentiment lists for " + e + " generated..."
 
 #=======================================================
 # Function to generate the aggregate word counts
@@ -353,12 +462,38 @@ def aggregate_freq_words(list):
 # Function to generate the coincident smile counts
 #=======================================================
 def generate_smile_counts(session):
-    result = smile_count(3,session)
-    time=[]
-    for i in np.arange(1,len(result)+1,1):
-        time.append(i)
-    plt.plot(time,result.values())
-    plt.show()
+
+    print "Generating smile counts..."
+
+    users = os.listdir("session_data/" + session)
+    users = [user for user in users if 'user' in user]
+
+    result = smile_count(len(users),session)
+
+    data_to_write = {}
+
+    for i in range(2,len(users)):
+        data_to_write[i] = 0
+
+    c_found = False
+    c_found_value = 0
+
+    for e,v in result.iteritems():
+        if(v >= 2 and not c_found):
+            data_to_write[v] = data_to_write[v] + 1
+            c_found_value = v
+            c_found = True
+        elif (v < c_found_value):
+            c_found = False
+            c_found_value = 0
+
+    basepath = os.path.dirname(__file__)
+    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/smile_counts.json"))
+
+    with open(filepath_final,'w') as final_file:
+        final_file.write(json.dumps(data_to_write))
+
+    print "Smile counts generated..."
 
 def read_matrix(filepath):
     
@@ -416,6 +551,9 @@ def smile_count(user_number, session):
 if __name__ == "__main__":
     session_name = "multi_test_2"
 
-    #generate_participation_matrix(session_name)
-    #generate_sentiment_time(session_name)
-    #generate_word_counts(session_name)
+    generate_participation_matrix(session_name)
+    generate_sentiment_time(session_name)
+    generate_word_counts(session_name)
+    generate_sentiment_lists(session_name)
+    generate_participation_rates(session_name)
+    generate_smile_counts(session_name)
