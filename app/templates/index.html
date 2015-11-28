@@ -113,6 +113,7 @@
 
       <!-- secondary-video-panel-5 -->
       <div class="panel panel-material-blue-grey col-md-3 secondary-video-div" id="video-5">
+	  
         <div class="panel-heading panel-blue-grey">
           <h3 class="panel-title text-center"><b>User 5</b></h3>
         </div>
@@ -148,11 +149,12 @@
 
       <!-- left side space -->
       <div class="col-md-3 col-xs-3 text-left" id="left-panel-container">
+	  <button type="button" id="hide-show" class="myButton" >Interaction Info</button>
         <!-- left side panel -->
-        <div class="panel panel-material-blue-grey" id="left-panel-info">
-          <div class="panel-heading panel-blue-grey">
+        <div class="panel panel-material-blue-grey "  id="left-panel-info">
+          <!-- <div class="panel-heading panel-blue-grey">
             <h3 class="panel-title text-center"><b>Interaction Info</b></h3>
-          </div>
+          </div> -->
           <div class="panel-body" id="session-basic-info">
             <div class="row text-left">
                 <h4><strong>User Participation</strong></h4>
@@ -225,10 +227,11 @@
 
       <!-- right side space -->
       <div class="col-md-3 col-xs-3 vcenter" id="wordcloud-placeholder">
+	  <button type="button" id="hide-show2" class="myButton" >Group Visualizations</button>
           <div class="panel panel-material-blue-grey" id="wordcloud-panel">
-              <div class="panel-heading">
+              <!-- <div class="panel-heading">
                   <h3 class="panel-title" align="center"><strong>Group Visualizations</strong></h3>
-              </div>
+              </div> -->
               <div class="panel-body" id="wordcloud-panel">
                   <div class="text-center">
                     <h4><strong>Most Frequent Words</strong></h4>
@@ -312,7 +315,7 @@
     <script type="text/javascript" src="{{ url_for('.static', filename='js/jquery-ui.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('.static', filename='js/wordcloud2.js')}}"></script>
-
+	
     <script type=text/javascript>
       function assert(condition,msg){
         if (!condition){
@@ -322,7 +325,7 @@
       }
     </script>
 
-
+	<script src="{{ url_for('.static',filename='js/hideandshow.js') }}" type="text/javascript"></script>
     <script src="{{ url_for('.static',filename='js/video.min.js') }}" type="text/javascript"></script>
     <script src="{{ url_for('.static',filename='js/rocconf.js') }}" type="text/javascript"></script>
     <script src="{{ url_for('.static',filename='js/rocconf_wordcloud.js') }}" type="text/javascript"></script>
