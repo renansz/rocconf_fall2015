@@ -353,12 +353,14 @@ function set_participation_chart(data, el, size)
         },
         "data": {
             "content": [{
-                "value": data['p_spk']/100,
+                "label":'',
+                "value": Math.round(data['p_spk'] * 100) / 100,
                 "color": "#607d8b"
             },
             {
-                "value": data['p_nospeak']/100,
-                "color": "#cccccc"
+                "label": '',
+                "value": Math.round(data['p_nospeak'] * 100)/100,
+                "color": "#607d8b"
             }]
         },
         "labels": {
@@ -557,3 +559,10 @@ function set_rate_chart(data, el, size)
  * Directed graph
  *****************************************************************************/
 //http://bl.ocks.org/rkirsling/5001347
+
+sigma.parsers.json('static/test_data.json',{
+  container: 'directed_graph',
+  settings: {
+    defaultNodeColor: '#ec5148'
+  }
+});

@@ -7,16 +7,17 @@
 
 body {
   padding-top: 70px;
-  background-color: #eeeeee;
+  background-color: #ffffff;
 }
 
 .video-custom-center{
   margin:0px auto;
 }
 
+/*
 #top-nav-bar{
   background-color: #000;
-}
+}*/
 
 .secondary-video{
   background-color: #fafafa;
@@ -102,7 +103,21 @@ body {
 }
 
 
+/************************** template testing ****************/
+.subpanel_left{
+/*  display: none;*/
+}
 
+.subpanel_right{
+/*  display: none;*/
+}
+
+#directed_graph{
+  width: 240px;
+  height: 400px;
+  margin: 0px;
+  padding: 0px;
+}
 
 
 /* gauge chart */
@@ -132,9 +147,6 @@ body {
 
 svg {
   font: 10px sans-serif;
-}
-
-/* basic info panel */
 #session-basic-info{
   padding-left: 10%;
   padding-right: 10%;
@@ -145,3 +157,6 @@ svg {
 #main-video-charts{
   
 }
+
+
+
