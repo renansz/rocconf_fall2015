@@ -360,7 +360,7 @@ function set_participation_chart(data, el, size)
             {
                 "label": '',
                 "value": Math.round(data['p_nospeak'] * 100)/100,
-                "color": "#607d8b"
+                "color": "#cccccc"
             }]
         },
         "labels": {
