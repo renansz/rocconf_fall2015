@@ -19,12 +19,15 @@ $(document).ready(function () {
 //==============================================================
 
 // Variables for storing information about a session
-var sentiment_counts;
+var session_counts;
 var sentiment_time_data;
 var smile_time_data;
 var loudness_time_data;
 var p_transition_matrix;
 var avg_features;
+var participation_metrics;
+var sentiment_counts;
+var smile_counts;
 
 function load_session_data(session)
 {
@@ -34,10 +37,14 @@ function load_session_data(session)
         type: 'GET',
         success: function (response) {
             sentiment_time_data = response.sentiment_time;
-            sentiment_counts = response.sentiment_counts;
+            session_counts = response.session_counts;
             avg_features = response.avg_features;
             smile_time_data = response.smile_time;
             loudness_time_data = response.loudness_time;
+            p_transition_matrix = response.p_matrix;
+            participation_metrics = response.p_metrics;
+            sentiment_counts = response.sentiment_counts;
+            smile_counts = response.smile_counts;
 
             init_session();
         },
@@ -61,14 +68,16 @@ function init_session()
     {
         user_loc = $('#video-player-' + i).attr('user');
 
+        p_data = participation_metrics['spk_avg'];
+
         if (user_loc == 1)
         {
-            set_participation_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_left", 140)
+            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140)
             set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
         }
         else
         {
-            set_participation_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_left", 80)
+            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80)
             set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
         }
     }
@@ -76,9 +85,9 @@ function init_session()
     // Setting up the word cloud information
     word_cloud_data = [];
 
-    for (element in sentiment_counts)
+    for (element in session_counts)
     {
-        word_cloud_data[element] = [sentiment_counts[element]['text'],sentiment_counts[element]['counts']];
+        word_cloud_data[element] = [session_counts[element]['text'], session_counts[element]['counts']];
     }
 
     sorted_data = word_cloud_data.sort(function Comparator(a, b) {
@@ -111,12 +120,14 @@ function update_session() {
     for (var i = 1; i <= avg_features.length; i++) {
         user_loc = $('#video-player-' + i).attr('user');
 
+        p_data = participation_metrics['spk_avg'];
+
         if (user_loc == 1) {
-            set_participation_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_left", 140)
+            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140)
             set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
         }
         else {
-            set_participation_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_left", 80)
+            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80)
             set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
         }
     }
@@ -342,11 +353,11 @@ function set_participation_chart(data, el, size)
         },
         "data": {
             "content": [{
-                "value": data[0]['speak']/100,
+                "value": data['p_spk']/100,
                 "color": "#607d8b"
             },
             {
-                "value": data[0]['rem']/100,
+                "value": data['p_nospeak']/100,
                 "color": "#cccccc"
             }]
         },
