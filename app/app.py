@@ -195,7 +195,7 @@ def return_sentiment():
 #======================================================= 
 @app.route("/")
 def main_page():
-    return render_template('index.html',)
+    return render_template('index_new.html',)
 
 #=======================================================
 # Start the web service on the local host
