@@ -89,13 +89,34 @@ def load_sentiment_time(session):
 def load_sentiment_counts(session):
     data = {}
 
+    users = os.listdir("session_data/" + session)
+    users = [user for user in users if 'user' in user]
+
+    for e in users:
+        try:
+            filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/sentiment-counts.json"))
+            with open(filepath,"r+") as the_file:
+                loaded_data = json.loads(the_file.read())
+                data[e] = loaded_data
+        except Exception as err:
+            print 'error in load_sentiment_counts'
+            print err
+
+    return data
+
+#-------------------------------------------------------
+# Loading Session Word Counts
+#-------------------------------------------------------
+def load_session_counts(session):
+    data = {}
+
     try:
-        filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/sentiment_counts.json"))
+        filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/session_word_counts.json"))
         with open(filepath,"r+") as the_file:
             loaded_data = json.loads(the_file.read())
             data = loaded_data['counts']
     except Exception as err:
-        print 'error in load_sentiment_counts'
+        print 'error in load_session_counts'
         print err
 
     return data
@@ -134,11 +155,53 @@ def load_avg_features(session):
 #-------------------------------------------------------
 # Load Pariticipation Matrix
 #-------------------------------------------------------
-def load_matrix():
+def load_matrix(session):
     data = {}
+
+    try:
+        filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/p_matrix.json"))
+        with open(filepath,"r+") as the_file:
+            loaded_data = json.loads(the_file.read())
+            data = loaded_data['matrix']
+    except Exception as err:
+        print 'error in load_matrix'
+        print err
 
     return data
 
+#-------------------------------------------------------
+# Load Pariticipation Metrics
+#-------------------------------------------------------
+def load_metrics(session):
+    data = {}
+
+    try:
+        filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/p_rates.json"))
+        with open(filepath,"r+") as the_file:
+            loaded_data = json.loads(the_file.read())
+            data = loaded_data
+    except Exception as err:
+        print 'error in load_sentiment_counts'
+        print err
+
+    return data
+
+#-------------------------------------------------------
+# Load Smile Counts
+#-------------------------------------------------------
+def load_smile_counts(session):
+    data = {}
+
+    try:
+        filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/smile_counts.json"))
+        with open(filepath,"r+") as the_file:
+            loaded_data = json.loads(the_file.read())
+            data = loaded_data
+    except Exception as err:
+        print 'error in load_smile_counts'
+        print err
+
+    return data
 
 #=======================================================
 # AJAX Handler for getting a list of sessions
@@ -168,8 +231,12 @@ def return_sentiment():
     
     session_data = {}
     session_data['sentiment_time'] = load_sentiment_time(directory)
-    session_data['sentiment_counts'] = load_sentiment_counts(directory)
+    session_data['session_counts'] = load_session_counts(directory)
     session_data['avg_features'] = load_avg_features(directory)
+    session_data['p_matrix'] = load_matrix(directory)
+    session_data['p_metrics'] = load_metrics(directory)
+    session_data['smile_counts'] = load_smile_counts(directory)
+    session_data['sentiment_counts'] = load_sentiment_counts(directory)
 
     av_data = load_av_data(directory)
     session_data['smile_time'] = av_data['smile']
