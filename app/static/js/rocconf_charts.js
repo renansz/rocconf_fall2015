@@ -359,7 +359,7 @@ function set_participation_chart(data, el, size)
             },
             {
                 "label": '',
-                "value": Math.round(data['p_nospeak'] * 100)/100,
+                "value": Math.round(data['p_nospeak'] * 100) / 100,
                 "color": "#cccccc"
             }]
         },

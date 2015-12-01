@@ -91,9 +91,24 @@ def generate_participation_rates(session):
         for k in user_blocks:
             duration = duration + k['duration']
 
-        averages[e] = {"p_spk": round((duration / total_duration) * 100 , 2), 
-                       "p_nospeak": round(100 - ((duration / total_duration) * 100) , 2), 
-                       "avg_speak": round(duration / counter_dict[e], 2)}
+        try:
+            p_spk = round((duration / total_duration) * 100 , 2)
+        except:
+            p_spk = 0
+
+        try:
+            p_nospeak = round(100 - ((duration / total_duration) * 100) , 2)
+        except:
+            p_nospeak = 100
+
+        try:
+            avg_speak = round(duration / counter_dict[e], 2)
+        except:
+            avg_speak = 0
+
+        averages[e] = {"p_spk": p_spk, 
+                       "p_nospeak": p_nospeak, 
+                       "avg_speak": avg_speak}
 
 
     data_to_write = {}
@@ -549,11 +564,11 @@ def smile_count(user_number, session):
 # Main Function
 #=======================================================
 if __name__ == "__main__":
-    session_name = "multi_test_2"
+    session_name = "multi_test_4"
 
     generate_participation_matrix(session_name)
     generate_sentiment_time(session_name)
     generate_word_counts(session_name)
     generate_sentiment_lists(session_name)
     generate_participation_rates(session_name)
-    generate_smile_counts(session_name)
+    #generate_smile_counts(session_name)
