@@ -29,6 +29,9 @@ var participation_metrics;
 var sentiment_counts;
 var smile_counts;
 
+/* variables for charts */
+var dg;
+
 function load_session_data(session)
 {
     $.ajax({
@@ -107,7 +110,7 @@ function init_session()
 
     setup_word_cloud(final_cloud);
 
-    draw_directed_graph(p_transition_matrix,participation_metrics);
+    dg = draw_directed_graph(p_transition_matrix,participation_metrics);
 }
 
 //==============================================================
@@ -624,8 +627,12 @@ function draw_directed_graph(matrix,participation){
                     labelThreshold: 0,
                     sideMargin: 0.3,
 
+                    // scaling
+
+
                     // label settings
                     fontStyle: "font-size: 0.85em",
+
                     // edges settings
                     minNodeSize: 5,
                     maxNodeSize: 15,
@@ -634,4 +641,5 @@ function draw_directed_graph(matrix,participation){
                   }
                 });
   s.refresh();
+  return s;
 }
