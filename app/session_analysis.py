@@ -564,7 +564,7 @@ def smile_count(user_number, session):
 # Main Function
 #=======================================================
 if __name__ == "__main__":
-    session_name = "multi_test_4"
+    session_name = "multi_test_5"
 
     generate_participation_matrix(session_name)
     generate_sentiment_time(session_name)

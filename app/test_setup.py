@@ -1,6 +1,18 @@
-﻿import json
+﻿# RocConf HCI Group
+# Jeffery A. White
+#
+# These are some various processing functions we needed setting up the testing enviroment for the
+# user interface.
+#
+# SpeechRecognition - Zhang, A. (2015). Speech Recognition (Version 3.1) [Software]. Available from https://github.com/Uberi/speech_recognition#readme.
+#
+# Really awesome library, only used the Watson part since it seems to have enough throughput to not have to chunk the data (and thus lose context)
+
+import json
 import pprint
 import os.path
+import speech_recognition as sr
+import wave
 
 #pretty printer config
 pp = pprint.PrettyPrinter(indent=2)
@@ -171,7 +183,8 @@ def time_range(value):
 # Cleaning up unnecessary overlaps from a session.
 # - Only really need to use this in testing, cleans
 #   up information captured from another persons
-#   microphone.
+#   microphone if you're recording RocSpeak
+#   sessions from the same location.
 #=======================================================
 def formatted_alignment_cleaner():
     basepath = os.path.dirname(__file__)
@@ -205,7 +218,90 @@ def formatted_alignment_cleaner():
             json.dump(data_to_write, outfile)
 
 #=======================================================
+# Run this on an uncompressed WAV file (if you get them from RocSpeak
+# you'll have to decompress them).
+# Produces a JSON data dump from Watson
+#   - Includes timestamps, words, and confidence measurements.
+# We used this to fill in missing recognition data from
+# RocSpeak.
+#=======================================================
+def speech_recognition():
+    basepath = os.path.dirname(__file__)
+    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_5/user_2/watson-audio.wav"))
+
+    r = sr.Recognizer()
+    with sr.WavFile(filepath) as source:
+        audio = r.record(source) # read the entire WAV file
+
+    # recognize speech using IBM Speech to Text
+    IBM_USERNAME = "0f32685f-d10f-4f6b-81d6-a9d7aec46871" # IBM Speech to Text usernames are strings of the form XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+    IBM_PASSWORD = "q8t0P3GhuKpV" # IBM Speech to Text passwords are mixed-case alphanumeric strings
+    try:
+        data = r.recognize_ibm(audio, username=IBM_USERNAME, password=IBM_PASSWORD, show_all=True)
+        filepath_final = os.path.abspath(os.path.join(basepath, "session_data/multi_test_5/user_2/watson-data.json"))
+        with open(filepath_final,'w') as output_file:
+            json.dump(data,output_file)
+    except sr.UnknownValueError:
+        print("IBM Speech to Text could not understand audio")
+    except sr.RequestError as e:
+        print("Could not request results from IBM Speech to Text service; {0}".format(e))
+
+#=======================================================
+# Creating word counts and the formatted alignment
+# from the watson-data dumps.
+#=======================================================
+def process_watson():
+    basepath = os.path.dirname(__file__)
+    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_5/user_2/watson-data.json"))
+
+    with open(filepath,"r+") as the_file:
+        input_data = json.loads(the_file.read())
+        result_data = input_data['results']
+
+    word_counts = {}
+    words_data = []
+    end_time = 0
+
+    for e in result_data:
+        data = e['alternatives'][0]
+        time_stamps = data['timestamps']
+
+        for j in time_stamps:
+            text = j[0].upper()
+            if word_counts.has_key(text):
+                word_counts[text] = word_counts[text] + 1
+            else:
+                word_counts[text] = 1
+
+            words_data.append({'endTime': j[2],
+                               'speech': text,
+                               'startTime': j[1]})
+            if(j[2] > end_time):
+                end_time = j[2]
+    
+    count_final = []
+    for k,v in word_counts.iteritems():
+        count_final.append({"text":k, "count": v})
+
+    count_output = {"counts":count_final}
+
+    filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_5/user_2/word-tag-count.json"))
+    with open(filepath_2,'w') as outfile:
+        json.dump(count_output, outfile)
+
+    data_to_write = {}
+    data_to_write['endTime'] = end_time
+    data_to_write['startTime'] = 0.0
+    data_to_write['phone'] = []
+    data_to_write['word'] = words_data
+
+    filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_5/user_2/formatted-alignment.json"))
+    with open(filepath_2,'w') as outfile:
+        json.dump(data_to_write, outfile)
+
+
+#=======================================================
 # Main Caller
 #=======================================================
 if __name__ == "__main__":
-    formatted_alignment_cleaner()
+    process_watson()
