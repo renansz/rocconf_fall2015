@@ -577,7 +577,7 @@ function draw_directed_graph(matrix,participation){
   if (N <= 5){
     dg_positions = [[0.5,1],[0.75,0],[1,0.5],[0,0.5],[0.25,0]]
     dg_positions = [[0,0.5],[0.5,0],[0.75,1],[0,0.5],[0.25,0]]
-    dg_positions = [[0,0.25],[0.25,0],[0.35,1],[0,0.25],[0.15,0]]
+    dg_positions = [[0,0.45],[0.25,0],[0.35,1],[0,0.25],[0.15,0]]
   }else{
     for (i=0;i<N;i++)
       dg_positions[i] = [Math.random(),Math.random()]
@@ -593,7 +593,7 @@ function draw_directed_graph(matrix,participation){
       label: 'User '+i+' ['+Math.round(participation.spk_avg['user_'+(i+1)].p_spk)+'%]',
       x: dg_positions[i][0],
       y: dg_positions[i][1],
-      size: participation.spk_avg['user_'+(i+1)].p_spk/100,
+      size: participation.spk_avg['user_'+(i+1)].p_spk,
       color: '#009688'
     });
   }
@@ -624,10 +624,10 @@ function draw_directed_graph(matrix,participation){
                     sideMargin: 0.3,
 
                     // edges settings
-                    minNodeSize: 0.20,
-                    maxNodeSize: 1.0,
-                    minEdgeSize: 0.1,
-                    maxEdgeSize: 0.2
+                    minNodeSize: 1,
+                    maxNodeSize: 10,
+                    minEdgeSize: 1,
+                    maxEdgeSize: 6
                   }
                 });
   s.refresh();
