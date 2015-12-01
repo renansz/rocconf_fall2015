@@ -590,8 +590,8 @@ function draw_directed_graph(matrix,participation){
   for(i=0;i<N;i++){
     dg.nodes.push({
       id: 'n'+i,
-      //label: 'User '+i+' ['+Math.round(participation.spk_avg['user_'+(i+1)].p_spk)+'%]',
-      label: 'User '+i,
+      //label: 'User '+(i+1)+' ['+Math.round(participation.spk_avg['user_'+(i+1)].p_spk)+'%]',
+      label: 'User '+(i+1),
       x: dg_positions[i][0],
       y: dg_positions[i][1],
       size: participation.spk_avg['user_'+(i+1)].p_spk/100,
