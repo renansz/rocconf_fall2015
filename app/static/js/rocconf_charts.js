@@ -577,7 +577,7 @@ function draw_directed_graph(matrix,participation){
   if (N <= 5){
     dg_positions = [[0.5,1],[0.75,0],[1,0.5],[0,0.5],[0.25,0]]
     dg_positions = [[0,0.5],[0.5,0],[0.75,1],[0,0.5],[0.25,0]]
-    dg_positions = [[0,0.45],[0.25,0],[0.35,1],[0,0.25],[0.15,0]]
+    dg_positions = [[0,0.45],[0.30,0],[0.45,0.75],[0,0.25],[0.15,0]]
   }else{
     for (i=0;i<N;i++)
       dg_positions[i] = [Math.random(),Math.random()]
@@ -590,10 +590,11 @@ function draw_directed_graph(matrix,participation){
   for(i=0;i<N;i++){
     dg.nodes.push({
       id: 'n'+i,
-      label: 'User '+i+' ['+Math.round(participation.spk_avg['user_'+(i+1)].p_spk)+'%]',
+      //label: 'User '+i+' ['+Math.round(participation.spk_avg['user_'+(i+1)].p_spk)+'%]',
+      label: 'User '+i,
       x: dg_positions[i][0],
       y: dg_positions[i][1],
-      size: participation.spk_avg['user_'+(i+1)].p_spk,
+      size: participation.spk_avg['user_'+(i+1)].p_spk/100,
       color: '#009688'
     });
   }
@@ -623,11 +624,13 @@ function draw_directed_graph(matrix,participation){
                     labelThreshold: 0,
                     sideMargin: 0.3,
 
+                    // label settings
+                    fontStyle: "font-size: 0.85em",
                     // edges settings
-                    minNodeSize: 1,
-                    maxNodeSize: 10,
+                    minNodeSize: 5,
+                    maxNodeSize: 15,
                     minEdgeSize: 1,
-                    maxEdgeSize: 6
+                    maxEdgeSize: 4
                   }
                 });
   s.refresh();

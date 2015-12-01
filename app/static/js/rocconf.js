@@ -215,6 +215,16 @@ $(document).ready(function(){
   $('#left-panel-info').height(592);
   //$("#left-panel-info").hide();
   //$("#wordcloud-panel").hide();
+
+
+  /* secondary videos sliders */
+  $('.secondary-sliders').hover(function(){
+    $(this).toggleClass('shadow-z-1');
+  
+  });
+
+
+
   /***************** Chart area ********************/
   $('.bottom-side').height($('#chart-area').height());
 
