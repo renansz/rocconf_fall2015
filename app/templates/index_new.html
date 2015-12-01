@@ -1,0 +1,326 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}RocConf{% endblock title %}
+
+{% block content %}
+<nav class="navbar primary navbar-fixed-top" id="top-nav-bar">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">RocConf</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav><!-- /top_menu -->
+  
+  <div class="container">
+  <div class="row" id="video-thumbnails">
+
+    <!-- logo 
+    <div class="col-md-1"><img src="{{ url_for('.static',filename='img/temp_logo.png') }}" height='100px' width='100px' /></div>
+     /logo -->
+
+    <div class="col-md-2 text-right"><br/><img src="{{ url_for('.static',filename='img/left_arrow.png') }}" /></div>
+
+    <div class="col-md-8" id="secondary-videos-list">
+
+      <!-- secondary-video-panel-2 -->
+      <div class="col-md-3 secondary-video-div" id="video-2">
+        <div class="">
+          <h4 class="text-center"><b>User 2</b></h4>
+        </div>
+        <div class="" id="video-player-panel-2"><!-- /panel-body -->
+          <video id="video-player-2" class="video-js vjs-default-skin secondary-video change-user"
+          preload="auto" width="150" height="70" user=2 poster="//placehold.it/180x90"
+          data-setup='{}'>
+            <source src="{{ url_for('.static',filename='video/multi_test_2/user_2/video.webm') }}" type='video/webm'>
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a web browser
+              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+          </video>
+          <div class="row text-center">
+              <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_2_left" style="padding-left: 5px; padding-right:0px;"></div>
+              <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_2_right" style="padding-left: 0px;"></div>
+          </div>
+          <!--<div class="row text-center change-user" id="change-user-2" change_user=2>
+            <a href="#" class="btn btn-material-blue-grey btn-raised text-center" id="change-user-2-button"><i class="mdi-action-autorenew"></i></a>
+          </div>-->
+        </div><!-- panel-body -->
+      </div><!--/secondary-video-panel-2 -->
+
+      <!-- secondary-video-panel-3 -->
+      <div class="col-md-3 secondary-video-div" id="video-3">
+        <div class="">
+          <h4 class="text-center"><b>User 3</b></h4>
+        </div>
+        <div class="" id="video-player-panel-3"><!-- /panel-body -->
+          <video id="video-player-3" class="video-js vjs-default-skin secondary-video change-user"
+          preload="auto" width="150" height="70" user=3 poster="//placehold.it/180x90"
+          data-setup='{}'>
+            <source src="{{ url_for('.static',filename='video/multi_test_2/user_3/video.webm') }}" type='video/webm'>
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a web browser
+              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+          </video>
+          <div class="row text-center">
+              <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_3_left" style="padding-left: 5px; padding-right:0px;"></div>
+              <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_3_right" style="padding-left: 0px;"></div>
+          </div>
+          <!--<div class="row text-center change-user" id="change-user-3" change_user=3>
+            <a href="#" class="btn btn-material-blue-grey btn-raised text-center" id="change-user-3-button"><i class="mdi-action-autorenew"></i></a>
+          </div>-->
+        </div><!-- panel-body -->
+      </div><!--/secondary-video-panel-3 -->
+
+      <!-- secondary-video-panel-4 -->
+      <div class="col-md-3 secondary-video-div" id="video-4">
+        <div class="">
+          <h4 class="text-center"><b>User 4</b></h4>
+        </div>
+        <div class="" id="video-player-panel-4"><!-- /panel-body -->
+          <video id="video-player-4" class="video-js vjs-default-skin secondary-video change-user"
+          preload="auto" width="150" height="70" user=4 poster="//placehold.it/180x90"
+          data-setup='{}'>
+          <!--<source src="{{ url_for('.static',filename='video/multi_test_2/user_2/video.webm') }}" type='video/webm'>-->
+            <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a web browser
+              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+          </video>
+          <div class="row text-center">
+              <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_4_left" style="padding-left: 5px; padding-right:0px;"></div>
+              <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_4_right" style="padding-left: 0px;"></div>
+          </div>
+          <!--<div class="row text-center change-user" id="change-user-4" change_user=4>
+            <a href="#" class="btn btn-material-blue-grey btn-raised text-center" id="change-user-4-button"><i class="mdi-action-autorenew"></i></a>
+          </div>-->
+        </div><!-- panel-body -->
+      </div><!--/secondary-video-panel-4 -->
+
+      <!-- secondary-video-panel-5 -->
+      <div class="col-md-3 secondary-video-div" id="video-5">
+        <div class="">
+          <h4 class="text-center"><b>User 5</b></h4>
+        </div>
+        <div class="" id="video-player-panel-5"><!-- /panel-body -->
+          <video id="video-player-5" class="video-js vjs-default-skin secondary-video change-user"
+          preload="auto" width="150" height="70" user=5 poster="//placehold.it/180x90"
+          data-setup='{}'>
+          <!--<source src="{{ url_for('.static',filename='video/multi_test_2/user_3/video.webm') }}" type='video/webm'>-->
+          <p class="vjs-no-js">
+              To view this video please enable JavaScript, and consider upgrading to a web browser
+              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+          </p>
+          </video>
+          <div class="row text-center">
+              <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_5_left" style="padding-left: 5px; padding-right:0px;"></div>
+              <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_5_right" style="padding-left: 0px;"></div>
+              <!--<img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" /> -->
+          </div>
+          <!--<div class="row text-center change-user" id="change-user-5" change_user=5>
+            <a href="#" class="btn btn-material-blue-grey btn-raised text-center" id="change-user-5-button"><i class="mdi-action-autorenew"></i></a>
+          </div>-->
+        </div><!-- panel-body -->
+      </div><!--/secondary-video-panel-5 -->
+
+    </div><!--/secondary-videos-list -->
+
+    <div class="col-md-2 text-left"><br/><img src="{{ url_for('.static',filename='img/right_arrow.png') }}" /></div>
+  </div><!-- /videos thumbnails-->
+
+  <div class="row" id="main-content">
+    <!-- main content row -->
+    <div class="row-fluid" id="main-content-container">
+
+      <!-- left side space -->
+      <div class="col-md-3 col-xs-3 text-left" id="left-panel-container">
+        <!-- left side panel -->
+        <div class="" id="left-panel-info">
+          <div class="" id="session-basic-info">
+            <div class="row text-left">
+                <h4><strong>User Participation</strong></h4>
+                <p>User 1 spoke <strong>5</strong> times.</p>
+                <p>User 2 spoke <strong>6</strong> times.<i>[Most active]</i></p>
+                <p>User 3 spoke <strong>2</strong> times.</p>
+            </div>
+            <div class="row text-left">
+                <h4><strong>Rapport</strong></h4>
+                <p>Two users smiled X times</p>
+                <p>Three users smiled X times</p>
+                <p><i>at the same time</i></p>
+            </div>
+          </div><!-- /panel-body -->
+        </div>
+        <!-- /left side panel -->
+
+        <!--<div class="thumbnail">
+          <img src="//placehold.it/200x480" />
+        </div>-->
+      </div><!-- /left side -->
+
+      <!-- main video space -->
+      <div class="col-md-6 text-center" id="main-video-container">
+        <div class="row">
+          <!-- main-video-panel -->
+          <div class="text-center" id="video-player-panel-1">
+            <video id="video-player-1" class="video-js vjs-default-skin video-custom-center change-user"
+            preload="auto" width="480" height="360" user=1 poster="//placehold.it/640x480"
+            data-setup='{}'>
+              <source src="{{ url_for('.static',filename='video/multi_test_2/user_1/video.webm') }}" type='video/webm'>
+              <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser
+                that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+              </p>
+            </video>
+            <audio id="main-video-audio">
+              <source src="{{ url_for('.static',filename='video/multi_test_2/multi_audio_1.wav') }}" type='audio/wav'/>
+              <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser
+                that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+              </p>
+            </audio>
+          </div><!-- /main-video-panel-->
+          <div class="row" id="main-video-charts">
+            <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_1_left" style="padding-left: 5px; padding-right:0px;"><h5><b>Participation Rate</b></h5></div>
+            <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_1_right" style="padding-left: 0px;"><b><h5>Speaking Rate</b></h5><img src="{{ url_for('.static',filename='img/fake_gauge.png') }}" /></div>
+          </div>
+
+          <!-- slider -->
+          <div class="row" id="slider-placeholder">
+            <div class="col-xs-2 col-md-2" id="main-video-btns">
+              <h4>
+                <a id="main-video-play-btn" href="#"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
+                <a id="main-video-pause-btn" href="#"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></a>
+              </h4>
+            </div>
+            <div class="col-xs-9 col-md-9" id="main-video-slider">
+            </div>
+            <div class="col-xs-1 col-md-1 text-left" style="margin-left: 0px; padding-left: 0px; left: -25px;">
+              <strong><h4 id="video-time">0:00</h4></strong>
+            </div>
+          </div><!-- /slider -->
+        </div>
+      </div><!-- /main-video-container-->
+
+      <!-- right side space -->
+      <div class="col-md-3 col-xs-3 vcenter" id="wordcloud-placeholder">
+        <div class="" id="wordcloud-panel">
+          <br/>
+          <div id="frequent-words" class="text-center">
+            <canvas id="wordcloud-canvas"></canvas>
+          </div>
+          <!--<img src="{{ url_for('.static',filename='img/fake_wordcloud_480.png') }}" />-->
+          <div id="directed_graph"> </div>
+            <!--<img src="{{ url_for('.static',filename='img/participation_graph.png') }}" /> -->
+        </div>
+      </div><!-- /right side -->
+
+    </div><!-- /main-content-row -->
+
+    <div class="row"><br/></div> <!-- distance to chart area -->
+
+    <!-- charts area -->
+    <div clas="row-fluid" id="bottom-part">
+      <!-- left side -->
+      <div class="col-xs-3 col-md-3" class="bottom-side"></div>
+      <!-- left side -->
+
+        <!-- chart container -->
+        <div class="col-md-6 col-xs-6 text-center shadow-z-1">
+
+
+          <!-- navigation bar -->
+          <div class="navbar navbar-default" id="charts-navigation" style="margin-top:2em;">
+            <div class="container-fluid">
+              <div class="navbar-collapse collapse navbar-responsive-collapse">
+              <ul class="nav navbar-nav">
+                  <li id="load_smile_graph"><a href="javascript:set_smile_chart();">Smile</a></li>
+                  <li id="load_loudness_graph"><a href="javascript:set_loudness_chart();">Loudness</a></li>
+                  <li id="load_sentiment_graph"><a href="javascript:set_sentiment_chart();">Sentiment</a></li>                  
+              </ul>
+              </div>
+            </div>
+          </div>
+          <!-- /navigation bar -->
+
+
+
+          <!-- charts area -->
+          <div class="" id="chart-area" style="height:20em;"></div>
+          <!-- /charts area -->
+
+        </div>
+        <!-- /chart container -->
+
+
+      <!-- right side -->
+      <div class="col-xs-3 col-md-3" class="bottom-side"></div>
+      <!-- right side -->
+    </div><!-- /charts area -->
+  </div> <!-- /main-content -->
+
+</div>
+
+{% endblock content %}
+
+{% block metas %} 
+  {{super()}}
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+{% endblock metas %} 
+
+
+{% block styles %} 
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/video-js.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/material.min.css') }}">
+  <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/material-fullpalette.min.css') }}">-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+{% endblock styles %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for('.static', filename='js/jquery-1.11.3.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('.static', filename='js/jquery-ui.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('.static', filename='js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('.static', filename='js/wordcloud2.js')}}"></script>
+
+    <script type=text/javascript>
+      function assert(condition,msg){
+        if (!condition){
+          alert(msg);
+          throw Error("Assertion failed");
+        }
+      }
+    </script>
+
+
+    <script src="{{ url_for('.static',filename='js/video.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='js/rocconf.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='js/rocconf_wordcloud.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='amcharts/amcharts.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='amcharts/serial.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='amcharts/pie.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='amcharts/themes/patterns.js') }}" type="text/javascript"></script>
+
+    <script src="{{ url_for('.static',filename='js/d3.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='js/d3pie.min.js') }}" type="text/javascript"></script>
+
+    <script src="{{ url_for('.static',filename='js/sigma.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='js/sigma.parsers.json.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('.static',filename='js/rocconf_charts.js') }}" type="text/javascript"></script>
+
+{% endblock scripts %}

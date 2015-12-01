@@ -106,6 +106,8 @@ function init_session()
     }
 
     setup_word_cloud(final_cloud);
+
+    draw_directed_graph(p_transition_matrix,participation_metrics);
 }
 
 //==============================================================
@@ -560,9 +562,73 @@ function set_rate_chart(data, el, size)
  *****************************************************************************/
 //http://bl.ocks.org/rkirsling/5001347
 
-sigma.parsers.json('static/test_data.json',{
-  container: 'directed_graph',
-  settings: {
-    defaultNodeColor: '#ec5148'
+function draw_directed_graph(matrix,participation){
+  var i,
+      j,
+      s,
+      N = matrix.length,
+      dg = {
+          nodes: [],
+          edges: []
+      };
+
+  // generate locations (so that it is not random and mesed up
+  var dg_positions;
+  if (N <= 5){
+    dg_positions = [[0.5,1],[0.75,0],[1,0.5],[0,0.5],[0.25,0]]
+    dg_positions = [[0,0.5],[0.5,0],[0.75,1],[0,0.5],[0.25,0]]
+    dg_positions = [[0,0.25],[0.25,0],[0.35,1],[0,0.25],[0.15,0]]
+  }else{
+    for (i=0;i<N;i++)
+      dg_positions[i] = [Math.random(),Math.random()]
   }
-});
+
+  // generate the graph with matrix data
+
+
+  // make nodes
+  for(i=0;i<N;i++){
+    dg.nodes.push({
+      id: 'n'+i,
+      label: 'User '+i+' ['+Math.round(participation.spk_avg['user_'+(i+1)].p_spk)+'%]',
+      x: dg_positions[i][0],
+      y: dg_positions[i][1],
+      size: participation.spk_avg['user_'+(i+1)].p_spk/100,
+      color: '#009688'
+    });
+  }
+
+
+
+  // make edges 
+  for (i=0;i<N;i++){
+    for(j=0;j<N;j++){
+      dg.edges.push({
+        id: 'e'+i+','+j,
+        type: "arrow",
+        source: 'n'+i,
+        target: 'n'+j,
+        size: matrix[i][j]*10,
+        color: '#000'
+      });
+    }
+  }
+
+
+  //create directed graph object
+  s = new sigma({
+                  graph: dg,
+                  container: 'directed_graph',
+                  settings:{
+                    labelThreshold: 0,
+                    sideMargin: 0.3,
+
+                    // edges settings
+                    minNodeSize: 0.20,
+                    maxNodeSize: 1.0,
+                    minEdgeSize: 0.1,
+                    maxEdgeSize: 0.2
+                  }
+                });
+  s.refresh();
+}

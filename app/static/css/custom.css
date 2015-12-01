@@ -114,7 +114,7 @@ body {
 
 #directed_graph{
   width: 240px;
-  height: 400px;
+  height: 300px;
   margin: 0px;
   padding: 0px;
 }
@@ -147,6 +147,8 @@ body {
 
 svg {
   font: 10px sans-serif;
+}
+
 #session-basic-info{
   padding-left: 10%;
   padding-right: 10%;

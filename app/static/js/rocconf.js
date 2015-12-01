@@ -213,8 +213,8 @@ $(document).ready(function(){
   /* more height fixes for demo day */
   $('#wordlcoud-panel').height(592);
   $('#left-panel-info').height(592);
-  $("#left-panel-info").hide();
-  $("#wordcloud-panel").hide();
+  //$("#left-panel-info").hide();
+  //$("#wordcloud-panel").hide();
   /***************** Chart area ********************/
   $('.bottom-side').height($('#chart-area').height());
 
