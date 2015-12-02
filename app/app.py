@@ -26,7 +26,7 @@ basepath = os.path.dirname(__file__)
 #     very large file so to optimize we'll get them
 #     at the same time.
 #   - Second optimization here is to only load
-#     this in 250ms (quarter seconds)
+#     this in 1 second
 #     intervals (it is in 10ms base)
 #-------------------------------------------------------
 def load_av_data(session):
@@ -57,8 +57,20 @@ def load_av_data(session):
             print 'error in load_sentiment_time'
             print err
 
+    group_smile_data = []
+
+    filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/group_smile_intensity.json"))
+    with open(filepath,"r+") as the_file:
+        loaded_data = json.loads(the_file.read())
+        data_to_process = loaded_data['features']
+
+        for j in data_to_process:
+            if (j['time_millisec'] % 1000 == 0):
+                group_smile_data.append({"time": j['time_millisec'] / 1000, "intensity": j['intensity']})
+
     data['smile'] = smile_data
     data['loudness'] = loudness_data
+    data['group_intensity'] = group_smile_data
 
     return data
 
@@ -122,37 +134,6 @@ def load_session_counts(session):
     return data
 
 #-------------------------------------------------------
-# Loading Average Features
-#-------------------------------------------------------
-def load_avg_features(session):
-    data = {}
-
-    users = os.listdir("session_data/" + session)
-    users = [user for user in users if 'user' in user]
-
-    length = 0
-
-    for e in users:
-        try:
-            filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/average-features.json"))
-            with open(filepath,"r+") as the_file:
-                loaded_data = json.loads(the_file.read())
-                features = loaded_data['features'][0]
-
-                p_speaking = round((features['totalVoicedTime_Milliseconds'] / features['totalDuration_Milliseconds']) * 100, 2)
-
-                data[e] = [{"speak": p_speaking, "rem": 100 - p_speaking, "rate": features['speakingRate_WPM']}]
-
-                length = length + 1
-        except Exception as err:
-            print 'error in load_percentages'
-            print err
-
-    data['length'] = length
-
-    return data
-
-#-------------------------------------------------------
 # Load Pariticipation Matrix
 #-------------------------------------------------------
 def load_matrix(session):
@@ -189,7 +170,7 @@ def load_metrics(session):
 #-------------------------------------------------------
 # Load Smile Counts
 #-------------------------------------------------------
-def load_smile_counts(session):
+def load_smile_group(session):
     data = {}
 
     try:
@@ -232,10 +213,9 @@ def return_sentiment():
     session_data = {}
     session_data['sentiment_time'] = load_sentiment_time(directory)
     session_data['session_counts'] = load_session_counts(directory)
-    session_data['avg_features'] = load_avg_features(directory)
     session_data['p_matrix'] = load_matrix(directory)
     session_data['p_metrics'] = load_metrics(directory)
-    session_data['smile_counts'] = load_smile_counts(directory)
+    session_data['smile_group'] = load_smile_group(directory)
     session_data['sentiment_counts'] = load_sentiment_counts(directory)
 
     av_data = load_av_data(directory)

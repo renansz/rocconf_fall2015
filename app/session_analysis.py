@@ -489,6 +489,46 @@ def aggregate_freq_words(list):
     return final_data
 
 #=======================================================
+# Function to generate normalized data of the
+# entire groups smile intensity.
+#=======================================================
+def generate_group_smile(session):
+    print "Generating group smile intensity..."
+
+    basepath = os.path.dirname(__file__)
+
+    users = os.listdir("session_data/" + session)
+    users = [user for user in users if 'user' in user]
+
+    smile_totals = {}
+
+    for e in users:
+        filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/audio-video-features.json"))
+        with open(filepath,"r+") as the_file:
+            loaded_data = json.loads(the_file.read())
+            data_to_process = loaded_data['features']
+
+        for k in data_to_process:
+            if (smile_totals.has_key(k['time_millisec'])):
+                smile_totals[k['time_millisec']] = smile_totals[k['time_millisec']] + k['smile_cubicSpline']
+            else:
+                smile_totals[k['time_millisec']] = k['smile_cubicSpline']
+
+    final_intensity = []
+
+    #Normalize over the number of users
+    for k,v in smile_totals.iteritems():
+        final_intensity.append({"time_millisec": k, "intensity": round(v / len(users),2)})
+
+    data_to_write = {"features":sorted(final_intensity, key=lambda k: k['time_millisec'])}
+    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/group_smile_intensity.json"))
+
+    with open(filepath_final,'w') as final_file:
+        final_file.write(json.dumps(data_to_write))
+
+    print "Group smile intensity generated."
+
+#=======================================================
 # Function to generate the coincident smile counts
 #=======================================================
 def generate_smile_counts(session):
@@ -579,11 +619,12 @@ def smile_count(user_number, session):
 # Main Function
 #=======================================================
 if __name__ == "__main__":
-    session_name = "multi_test_2"
+    session_name = "multi_test_7"
 
-    #generate_participation_matrix(session_name)
-    #generate_sentiment_time(session_name)
-    #generate_word_counts(session_name)
-    #generate_sentiment_lists(session_name)
+    generate_participation_matrix(session_name)
+    generate_sentiment_time(session_name)
+    generate_word_counts(session_name)
+    generate_sentiment_lists(session_name)
     generate_participation_rates(session_name)
+    generate_group_smile(session_name)
     #generate_smile_counts(session_name)
