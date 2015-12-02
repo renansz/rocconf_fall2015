@@ -111,6 +111,10 @@ function init_session()
     setup_word_cloud(final_cloud);
 
     dg = draw_directed_graph(p_transition_matrix,participation_metrics);
+	var user_part_count = participation_metrics['spk_counts'];
+	//console.log(user_part_count);	
+	
+	set_user_participation_chart(user_part_count);
 }
 
 //==============================================================
@@ -272,6 +276,68 @@ function set_loudness_chart()
 
     chart.write("chart-area");
 }
+
+//==============================================================
+// Setup the user participation graph at left panel
+//==============================================================
+function set_user_participation_chart(data)
+{
+	var graph=[];
+	for (var key in data) {
+		var temp = key.replace(/_/gi,"");
+		var temp2=temp.replace(/u/gi,"U");
+		var item={"user": temp2,"count":data[key]};
+		graph.push(item);
+	}
+	console.log(graph);
+	
+	xp= [{
+    "country": "USA",
+    "visits": 3
+  }, {
+    "country": "China",
+    "visits": 6
+  },  ];
+  console.log(xp);
+	var chart = AmCharts.makeChart( "chartdiv", {
+  "type": "serial",
+  "theme": "light",
+  "dataProvider": graph,
+  "valueAxes": [ {
+    "gridColor": "#FFFFFF",
+    "gridAlpha": 0.2,
+    "dashLength": 0
+  } ],
+  "gridAboveGraphs": true,
+  "startDuration": 1,
+  "graphs": [ {
+    "balloonText": "[[category]]: <b>[[value]]</b>",
+    "fillAlphas": 0.8,
+    "lineAlpha": 0.2,
+    "type": "column",
+    "valueField": "count"
+  } ],
+  "chartCursor": {
+    "categoryBalloonEnabled": false,
+    "cursorAlpha": 0,
+    "zoomable": false
+  },
+  "categoryField": "user",
+  "categoryAxis": {
+    "gridPosition": "start",
+    "gridAlpha": 0,
+    "tickPosition": "start",
+    "tickLength": 20
+  },
+  "export": {
+    "enabled": true
+  }
+
+} );
+
+}
+
+
 
 //==============================================================
 // Setup the sentiment graph

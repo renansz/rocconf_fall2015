@@ -56,6 +56,11 @@ body {
   padding-right:5px;
   height: 592px;
 }
+/* #chartdiv {
+	width		: 100%;
+	height		: 500px;
+	font-size	: 11px;
+} */	
 
 /* secondary boxes */
 .secondary-video-div>.panel-body{
