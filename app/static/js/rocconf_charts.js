@@ -292,10 +292,10 @@ function set_user_participation_chart(data)
 	for (var key in data) {
 		var temp = key.replace(/_/gi,"");
 		var temp2=temp.replace(/u/gi,"U");
-		var item={"user": temp2,"count":data[key]};
+		var item={"user": temp2,"count":data[key],"color":user_colors[Number(temp2.substring(4,5))-1]};
 		graph.push(item);
 	}
-	console.log(graph);
+	/*console.log(graph);
 	
 	xp= [{
     "country": "USA",
@@ -304,7 +304,7 @@ function set_user_participation_chart(data)
     "country": "China",
     "visits": 6
   },  ];
-  console.log(xp);
+  console.log(xp);*/
 	var chart = AmCharts.makeChart( "chartdiv", {
   "type": "serial",
   "theme": "light",
@@ -321,7 +321,8 @@ function set_user_participation_chart(data)
     "fillAlphas": 0.8,
     "lineAlpha": 0.2,
     "type": "column",
-    "valueField": "count"
+    "valueField": "count",
+    "fillColorsField": "color"
   } ],
   "chartCursor": {
     "categoryBalloonEnabled": false,
