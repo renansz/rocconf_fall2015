@@ -720,7 +720,7 @@ function draw_directed_graph(matrix,participation){
 function draw_directed_graph2(matrix,part){
   // set up SVG for D3
   var width  = 250,
-      height = 250,
+      height = 200,
       colors = d3.scale.category10();
 
    var svg = d3.select('div#directed_graph') 
@@ -873,7 +873,7 @@ function draw_directed_graph2(matrix,part){
 
     // update existing nodes (reflexive & selected visual states)
     circle.selectAll('circle')
-      .style('fill', function(d) { return (d === selected_node) ? d3.rgb(colors(d.id)).brighter().toString() : colors(d.id); })
+      .style('fill', function(d) { return user_colors[d.id-1]})
       .classed('reflexive', function(d) { return d.reflexive; });
 
     // add new nodes
@@ -899,13 +899,12 @@ function draw_directed_graph2(matrix,part){
       .on('mousedown', function(d) {
         if(d3.event.ctrlKey) return;
 
-        // select node
+        /* select node
         mousedown_node = d;
         if(mousedown_node === selected_node) selected_node = null;
         else selected_node = mousedown_node;
         selected_link = null;
 
-        /*
         // reposition drag line
         drag_line
           .style('marker-end', 'url(#end-arrow)')

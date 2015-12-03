@@ -206,3 +206,7 @@ svg {
   text-anchor: middle;
   font-weight: bold;
 }
+#transition_title{
+  margin-bottom:0px;
+  padding-bottom:0px;
+}
