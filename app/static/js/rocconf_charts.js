@@ -113,12 +113,13 @@ function init_session()
 
     setup_word_cloud(final_cloud);
 
-    //dg = draw_directed_graph(p_transition_matrix,participation_metrics);
     dg = draw_directed_graph2(p_transition_matrix,participation_metrics);
-	var user_part_count = participation_metrics['spk_counts'];
-	//console.log(user_part_count);	
 	
+	var user_part_count = participation_metrics['spk_counts'];
 	set_user_participation_chart(user_part_count);
+	
+	var user_avg_spk_time = participation_metrics['spk_avg'];
+	set_user_avg_spk(user_avg_spk_time);
 }
 
 //==============================================================
@@ -367,7 +368,80 @@ function set_user_participation_chart(data)
 
 }
 
+//==============================================================
+// Setup the user avg speak time graph at left panel
+//==============================================================
+function set_user_avg_spk(data)
+{
+	var graph=[];
+	for (var key in data) {
+		var item;
+		var temp = key.replace(/_/gi,"");
+		var temp2=temp.replace(/u/gi,"U");
+		//console.log(data[key]['avg_speak']);
+		/* for (var innerkey in data[key]){
+			item={"user": temp2,"count": data[key][innerkey]}
+		} */
+		item={"user": temp2,"count":data[key]['avg_speak'],"color":user_colors[Number(temp2.substring(4,5))-1]};
+		graph.push(item);
+	}
+	/*console.log(graph);
+	
+	xp= [{
+    "country": "USA",
+    "visits": 3
+  }, {
+    "country": "China",
+    "visits": 6
+  },  ];
+  console.log(xp);*/
+	var chart = AmCharts.makeChart( "avgspeaktime", {
+  "type": "serial",
+  "theme": "light",
+  "dataProvider": graph,
+  "valueAxes": [ {
+    "gridColor": "#FFFFFF",
+    "gridAlpha": 0.2,
+    "dashLength": 0
+  } ],
+  "gridAboveGraphs": true,
+  "startDuration": 1,
+  "graphs": [ {
+    "balloonText": "[[category]]: <b>[[value]]</b>",
+    "fillAlphas": 0.8,
+    "lineAlpha": 0.2,
+    "type": "column",
+    "valueField": "count",
+    "fillColorsField": "color"
+  } ],
+  "chartCursor": {
+    "categoryBalloonEnabled": false,
+    "cursorAlpha": 0,
+    "zoomable": false
+  },
+  "categoryField": "user",
+  "categoryAxis": {
+    "gridPosition": "start",
+    "gridAlpha": 0,
+    "tickPosition": "start",
+    "tickLength": 20
+  },
+  "export": {
+    "enabled": true
+  }
 
+} );
+
+}
+
+//==============================================================
+// Setup the sentiment word list
+//==============================================================
+
+function set_sentiment_word()
+{
+	
+}
 
 //==============================================================
 // Setup the sentiment graph
