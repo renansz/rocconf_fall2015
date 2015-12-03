@@ -71,6 +71,7 @@ def load_av_data(session):
     data['smile'] = smile_data
     data['loudness'] = loudness_data
     data['group_intensity'] = group_smile_data
+    data['length'] = len(users)
 
     return data
 
@@ -162,7 +163,7 @@ def load_metrics(session):
             loaded_data = json.loads(the_file.read())
             data = loaded_data
     except Exception as err:
-        print 'error in load_sentiment_counts'
+        print 'error in load_participation_metrics'
         print err
 
     return data
@@ -170,7 +171,7 @@ def load_metrics(session):
 #-------------------------------------------------------
 # Load Smile Counts
 #-------------------------------------------------------
-def load_smile_group(session):
+def load_smile_counts(session):
     data = {}
 
     try:
@@ -215,12 +216,13 @@ def return_sentiment():
     session_data['session_counts'] = load_session_counts(directory)
     session_data['p_matrix'] = load_matrix(directory)
     session_data['p_metrics'] = load_metrics(directory)
-    session_data['smile_group'] = load_smile_group(directory)
     session_data['sentiment_counts'] = load_sentiment_counts(directory)
 
     av_data = load_av_data(directory)
     session_data['smile_time'] = av_data['smile']
     session_data['loudness_time'] = av_data['loudness']
+    session_data['avg_smile'] = av_data['group_intensity']
+    session_data['users'] = av_data['length']
     
     #creating response object
     response = jsonify(session_data) 

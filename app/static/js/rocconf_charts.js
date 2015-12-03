@@ -27,7 +27,8 @@ var p_transition_matrix;
 var avg_features;
 var participation_metrics;
 var sentiment_counts;
-var smile_counts;
+var average_intensity;
+var num_users;
 
 /* variables for charts */
 var dg;
@@ -47,7 +48,8 @@ function load_session_data(session)
             p_transition_matrix = response.p_matrix;
             participation_metrics = response.p_metrics;
             sentiment_counts = response.sentiment_counts;
-            smile_counts = response.smile_counts;
+            average_intensity = response.avg_smile;
+            num_users = response.length;
 
             init_session();
         },
@@ -67,7 +69,7 @@ function init_session()
 
     set_smile_chart();
 
-    for (var i = 1; i <= avg_features.length; i++)
+    for (var i = 1; i <= num_users; i++)
     {
         user_loc = $('#video-player-' + i).attr('user');
 
@@ -126,7 +128,7 @@ function update_session() {
 
     set_smile_chart();
 
-    for (var i = 1; i <= avg_features.length; i++) {
+    for (var i = 1; i <= num_users; i++) {
         user_loc = $('#video-player-' + i).attr('user');
 
         p_data = participation_metrics['spk_avg'];
@@ -151,7 +153,7 @@ function set_smile_chart()
     //Which user is in slot #1?
     user_num = 0;
 
-    for (var i = 1; i <= avg_features.length; i++)
+    for (var i = 1; i <= num_users; i++)
     {
         user_loc = $('#video-player-' + i).attr('user');
         if(user_loc == 1)
@@ -219,7 +221,7 @@ function set_loudness_chart()
     //Which user is in slot #1?
     user_num = 0;
 
-    for (var i = 1; i <= avg_features.length; i++) {
+    for (var i = 1; i <= num_users; i++) {
         user_loc = $('#video-player-' + i).attr('user');
         if (user_loc == 1) {
             user_num = i;
@@ -347,7 +349,7 @@ function set_sentiment_chart()
     //Which user is in slot #1?
     user_num = 0;
 
-    for (var i = 1; i <= avg_features.length; i++) {
+    for (var i = 1; i <= num_users; i++) {
         user_loc = $('#video-player-' + i).attr('user');
         if (user_loc == 1) {
             user_num = i;
