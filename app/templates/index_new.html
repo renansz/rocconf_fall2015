@@ -244,8 +244,10 @@
           <!--<img src="{{ url_for('.static',filename='img/fake_wordcloud_480.png') }}" />-->
           <br/>
           <hr/>
-          <div class="text-left"><h4><strong>Speaking Transitions</strong></h4></div>
-          <div id="directed_graph"> </div>
+          <div class="text-left" id="transition_graph">
+            <h4 id="transition_title"><strong>Speaking Transitions</strong></h4>
+            <div id="directed_graph"></div>
+          </div>
             <!--<img src="{{ url_for('.static',filename='img/participation_graph.png') }}" /> -->
         </div>
       </div><!-- /right side -->
@@ -257,7 +259,7 @@
     <div class="row" style="margin-top:1em;margin-bottom:1em;"></div>
 
     <!-- charts area -->
-    <div clas="row-fluid" id="bottom-part">
+    <div clas="row" id="bottom-part">
       <!-- left side -->
       <div class="col-xs-3 col-md-3" class="bottom-side"></div>
       <!-- left side -->
@@ -265,29 +267,28 @@
         <!-- chart container -->
         <div class="col-md-6 col-xs-6 text-center shadow-z-1" style="margin-bottom:10em;">
 
-
-          <!-- navigation bar -->
-          <div class="navbar navbar-default" id="charts-navigation" style="margin-top:2em;">
-            <div class="container-fluid">
-              <div class="navbar-collapse collapse navbar-responsive-collapse">
-              <ul class="nav navbar-nav">
-                  <li id="load_smile_graph"><a href="javascript:set_smile_chart();">Smile</a></li>
-                  <li id="load_loudness_graph"><a href="javascript:set_loudness_chart();">Loudness</a></li>
-                  <li id="load_sentiment_graph"><a href="javascript:set_sentiment_chart();">Sentiment</a></li>                  
-              </ul>
-              </div>
+        <!-- navigation bar -->
+        <div class="navbar navbar-default" id="charts-navigation" style="margin-top:2em;">
+        <div class="container">
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav">
+                <li id="load_smile_graph"><a href="javascript:set_smile_chart();">Smile</a></li>
+                <li id="load_loudness_graph"><a href="javascript:set_loudness_chart();">Loudness</a></li>
+                <li id="load_sentiment_graph"><a href="javascript:set_sentiment_chart();">Sentiment</a></li>                  
+            </ul>
             </div>
-          </div>
-          <!-- /navigation bar -->
-
-
-
-          <!-- charts area -->
-          <div class="" id="chart-area" style="height:20em;"></div>
-          <!-- /charts area -->
-
         </div>
-        <!-- /chart container -->
+        </div>
+        <!-- /navigation bar -->
+
+
+
+        <!-- charts area -->
+        <div class="row" id="chart-area" style="height:20em;"></div>
+        <!-- /charts area -->
+
+    </div>
+    <!-- /chart container -->
 
 
       <!-- right side -->
