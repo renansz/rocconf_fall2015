@@ -78,13 +78,14 @@ function init_session()
 
         if (user_loc == 1)
         {
-            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140)
-            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140,i)
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 140,i);
+            $('.chart-filled').css('fill',user_colors[0])
         }
         else
         {
-            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80)
-            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80,i)
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 140,i);
         }
     }
 
@@ -136,12 +137,21 @@ function update_session() {
         p_data = participation_metrics['spk_avg'];
 
         if (user_loc == 1) {
-            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140)
-            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140,i)
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 140,i);
+            $('.chart-filled').css('fill',user_colors[i-1])
         }
         else {
-            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80)
-            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80,i)
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 140,i);
+        }
+
+        // set panel header color
+        console.log('user loc: '+user_loc+' , user: '+i);
+        if (user_loc==1){
+            $('#main-video-container').css('background-image',"url('static/img/color"+i+".png')");
+        }else{
+            $('#video-'+user_loc).css('background-image',"url('static/img/color"+i+".png')");
         }
     }
 }
@@ -413,13 +423,16 @@ function set_sentiment_chart()
 //==============================================================
 // Time on the Floor Microchart - For user at Location
 //==============================================================
-function set_participation_chart(data, el, size)
+function set_participation_chart(data, el, size, user_id)
 {
+
+    console.log(JSON.stringify(data)+'|'+el+'|'+size+'|'+user_id+'|'+user_colors[user_id-1]);
     //first clear the element
     if (el == 'subpanel_1_left')
         $('#' + el).html('<h5><strong>Participation Rate</strong></h5>');
     else
         $('#' + el).empty();
+
 
     var pie = new d3pie(el, {
         "size": {
@@ -431,7 +444,7 @@ function set_participation_chart(data, el, size)
             "content": [{
                 "label":'',
                 "value": Math.round(data['p_spk'] * 100) / 100,
-                "color": "#607d8b"
+                "color": user_colors[user_id - 1]
             },
             {
                 "label": '',
@@ -447,12 +460,12 @@ function set_participation_chart(data, el, size)
                 "format": "value"
             },
             "percentage": {
-                "color": "#e1e1e1",
+                "color": "#000",
                 "font": "verdana",
                 "decimalPlaces": 1
             },
             "value": {
-                "color": "#e1e1e1",
+                "color": "#000",
                 "font": "verdana"
             },
             "truncation": {
@@ -473,7 +486,7 @@ function set_participation_chart(data, el, size)
 // Speaking Rate Microchart - For user at Location
 //==============================================================
 
-function set_rate_chart(data, el, size)
+function set_rate_chart(data, el, size, user_id)
 {
     if (el == 'subpanel_1_right')
         $('#' + el).html('<h5><strong>Speaking Rate</strong></h5>');

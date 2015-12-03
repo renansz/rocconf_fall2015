@@ -161,11 +161,9 @@ svg {
 /*  background-image: url('../img/color1.png'); */
   background-size: 100% 10%;
   background-repeat: repeat-x;
+  padding-top: 20px;
 }
 
-.secondary-video-header{
-  height: 20px;
-}
 
 #main-video-container{
 /*  background-image: url('../img/color1.png'); */
