@@ -75,15 +75,17 @@ function init_session()
 
         p_data = participation_metrics['spk_avg'];
 
+        alert(JSON.stringify(p_data));
+
         if (user_loc == 1)
         {
             set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140)
-            set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
         }
         else
         {
             set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80)
-            set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
         }
     }
 
@@ -135,11 +137,11 @@ function update_session() {
 
         if (user_loc == 1) {
             set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140)
-            set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
         }
         else {
             set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80)
-            set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
         }
     }
 }
@@ -484,7 +486,7 @@ function set_rate_chart(data, el, size)
     percent, radius, sectionIndx, svg, totalPercent, width;
 
     //percent = position;
-    percent = data[0]['rate'] / 150;
+    percent = data['spk_rate'] / 220;
 
     numSections = 1;
     sectionPerc = 1 / numSections / 2;

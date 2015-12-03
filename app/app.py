@@ -222,7 +222,7 @@ def return_sentiment():
     session_data['smile_time'] = av_data['smile']
     session_data['loudness_time'] = av_data['loudness']
     session_data['avg_smile'] = av_data['group_intensity']
-    session_data['users'] = av_data['length']
+    session_data['length'] = av_data['length']
     
     #creating response object
     response = jsonify(session_data) 
