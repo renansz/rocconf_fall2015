@@ -53,6 +53,11 @@ def generate_participation_rates(session):
     
     checker = ""
     counter = 0
+
+    word_count_dict = {}
+    for e in users:
+        word_count_dict[e] = 0
+
     for item in sorteddictionary:
         if(counter == 0):
             checker = item[1]
@@ -63,6 +68,7 @@ def generate_participation_rates(session):
             counter_dict[checker] = counter_dict[checker] + 1
             checker = item[1]
         counter += 1
+        word_count_dict[checker] = word_count_dict[checker] + 1
     
     blocks = {}
     for e in users:
@@ -71,7 +77,7 @@ def generate_participation_rates(session):
     c_user = transition[0][0]
     c_user_start = 0
 
-    for e in transition:
+    for e in transition:        
         if e[0] != c_user:
             blocks[c_user].append({"start": round(c_user_start,1), "end":round(e[1],1), "duration": round((e[1] - c_user_start),1)})
             c_user = e[0]
@@ -87,6 +93,7 @@ def generate_participation_rates(session):
 
     for e in users:
         duration = 0
+        word_counts = word_count_dict[e]
         user_blocks = blocks[e]
         for k in user_blocks:
             duration = duration + k['duration']
@@ -106,9 +113,17 @@ def generate_participation_rates(session):
         except:
             avg_speak = 0
 
+        minutes = duration / 60
+
+        try:
+            spk_rate = round(word_counts / minutes, 2)
+        except:
+            spk_rate = 0
+
         averages[e] = {"p_spk": p_spk, 
                        "p_nospeak": p_nospeak, 
-                       "avg_speak": avg_speak}
+                       "avg_speak": avg_speak,
+                       "spk_rate": spk_rate}
 
 
     data_to_write = {}
@@ -474,6 +489,46 @@ def aggregate_freq_words(list):
     return final_data
 
 #=======================================================
+# Function to generate normalized data of the
+# entire groups smile intensity.
+#=======================================================
+def generate_group_smile(session):
+    print "Generating group smile intensity..."
+
+    basepath = os.path.dirname(__file__)
+
+    users = os.listdir("session_data/" + session)
+    users = [user for user in users if 'user' in user]
+
+    smile_totals = {}
+
+    for e in users:
+        filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + e + "/audio-video-features.json"))
+        with open(filepath,"r+") as the_file:
+            loaded_data = json.loads(the_file.read())
+            data_to_process = loaded_data['features']
+
+        for k in data_to_process:
+            if (smile_totals.has_key(k['time_millisec'])):
+                smile_totals[k['time_millisec']] = smile_totals[k['time_millisec']] + k['smile_cubicSpline']
+            else:
+                smile_totals[k['time_millisec']] = k['smile_cubicSpline']
+
+    final_intensity = []
+
+    #Normalize over the number of users
+    for k,v in smile_totals.iteritems():
+        final_intensity.append({"time_millisec": k, "intensity": round(v / len(users),2)})
+
+    data_to_write = {"features":sorted(final_intensity, key=lambda k: k['time_millisec'])}
+    filepath_final = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/group_smile_intensity.json"))
+
+    with open(filepath_final,'w') as final_file:
+        final_file.write(json.dumps(data_to_write))
+
+    print "Group smile intensity generated."
+
+#=======================================================
 # Function to generate the coincident smile counts
 #=======================================================
 def generate_smile_counts(session):
@@ -564,11 +619,12 @@ def smile_count(user_number, session):
 # Main Function
 #=======================================================
 if __name__ == "__main__":
-    session_name = "multi_test_5"
+    session_name = "multi_test_7"
 
     generate_participation_matrix(session_name)
     generate_sentiment_time(session_name)
     generate_word_counts(session_name)
     generate_sentiment_lists(session_name)
     generate_participation_rates(session_name)
+    generate_group_smile(session_name)
     #generate_smile_counts(session_name)

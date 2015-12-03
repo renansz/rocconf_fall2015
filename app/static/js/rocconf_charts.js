@@ -28,7 +28,8 @@ var p_transition_matrix;
 var avg_features;
 var participation_metrics;
 var sentiment_counts;
-var smile_counts;
+var average_intensity;
+var num_users;
 
 /* variables for charts */
 var dg;
@@ -48,7 +49,8 @@ function load_session_data(session)
             p_transition_matrix = response.p_matrix;
             participation_metrics = response.p_metrics;
             sentiment_counts = response.sentiment_counts;
-            smile_counts = response.smile_counts;
+            average_intensity = response.avg_smile;
+            num_users = response.length;
 
             init_session();
         },
@@ -68,21 +70,23 @@ function init_session()
 
     set_smile_chart();
 
-    for (var i = 1; i <= avg_features.length; i++)
+    for (var i = 1; i <= num_users; i++)
     {
         user_loc = $('#video-player-' + i).attr('user');
 
         p_data = participation_metrics['spk_avg'];
 
+        alert(JSON.stringify(p_data));
+
         if (user_loc == 1)
         {
             set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140)
-            set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
         }
         else
         {
             set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80)
-            set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
         }
     }
 
@@ -128,18 +132,18 @@ function update_session() {
 
     set_smile_chart();
 
-    for (var i = 1; i <= avg_features.length; i++) {
+    for (var i = 1; i <= num_users; i++) {
         user_loc = $('#video-player-' + i).attr('user');
 
         p_data = participation_metrics['spk_avg'];
 
         if (user_loc == 1) {
             set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140)
-            set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
         }
         else {
             set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80)
-            set_rate_chart(avg_features['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
         }
     }
 }
@@ -153,7 +157,7 @@ function set_smile_chart()
     //Which user is in slot #1?
     user_num = 0;
 
-    for (var i = 1; i <= avg_features.length; i++)
+    for (var i = 1; i <= num_users; i++)
     {
         user_loc = $('#video-player-' + i).attr('user');
         if(user_loc == 1)
@@ -221,7 +225,7 @@ function set_loudness_chart()
     //Which user is in slot #1?
     user_num = 0;
 
-    for (var i = 1; i <= avg_features.length; i++) {
+    for (var i = 1; i <= num_users; i++) {
         user_loc = $('#video-player-' + i).attr('user');
         if (user_loc == 1) {
             user_num = i;
@@ -349,7 +353,7 @@ function set_sentiment_chart()
     //Which user is in slot #1?
     user_num = 0;
 
-    for (var i = 1; i <= avg_features.length; i++) {
+    for (var i = 1; i <= num_users; i++) {
         user_loc = $('#video-player-' + i).attr('user');
         if (user_loc == 1) {
             user_num = i;
@@ -484,7 +488,7 @@ function set_rate_chart(data, el, size)
     percent, radius, sectionIndx, svg, totalPercent, width;
 
     //percent = position;
-    percent = data[0]['rate'] / 150;
+    percent = data['spk_rate'] / 220;
 
     numSections = 1;
     sectionPerc = 1 / numSections / 2;

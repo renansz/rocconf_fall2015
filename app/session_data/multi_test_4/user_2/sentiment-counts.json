@@ -1,0 +1,1 @@
+{"neg": [{"count": 1, "text": "BAD", "value": -0.6999999999999998}, {"count": 1, "text": "MEAN", "value": -0.3125}], "pos": [{"count": 1, "text": "GOOD", "value": 0.7}, {"count": 1, "text": "MORE", "value": 0.5}]}

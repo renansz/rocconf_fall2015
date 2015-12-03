@@ -171,11 +171,13 @@ def print_test():
 # Time Check Helper
 #=======================================================
 def time_range(value):
-    user1_timing = [(11.1,14),(14.3,33),(50,72.5),(95,110),(114.5,115),(119,120)]
-    user2_timing = [(2,11),(14.1,14.3),(43,43.3),(45,50),(81,94),(110,114),(115.5,120)]
-    user3_timing = [(33.5,45),(74.5,81),(94,94.5),(119.5,120)]    
+    user1_timing = [(2.5,5.5),(14.5,27.5),(54,56.5),(71.1,75.5),(104,104.2),(111.1,116)]
+    user2_timing = [(57,71),(118.1,118.3)]
+    user3_timing = [(40.5,51.5),(91.5,103.5),(116,117.2)]  
+    user4_timing = [(6.5,14.2),(29.5,40),(78.5,91),(105,111),(114.5,115.8),(117.7,118.1)]
+    user5_timing = []     
 
-    for e in user3_timing:
+    for e in user4_timing:
         if (value >= e[0] and value <= e[1]):
             return True
 
@@ -188,7 +190,7 @@ def time_range(value):
 #=======================================================
 def formatted_alignment_cleaner():
     basepath = os.path.dirname(__file__)
-    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_3/formatted-alignment.json"))
+    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_4/formatted-alignment.json"))
 
     with open(filepath,"r+") as the_file:
         data_to_fix = json.loads(the_file.read())
@@ -213,7 +215,7 @@ def formatted_alignment_cleaner():
         data_to_write['phone'] = phonetics_data
         data_to_write['word'] = words_data
 
-        filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_2/user_3/formatted-alignment-test.json"))
+        filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_3/user_4/formatted-alignment-test.json"))
         with open(filepath_2,'w') as outfile:
             json.dump(data_to_write, outfile)
 
@@ -227,7 +229,7 @@ def formatted_alignment_cleaner():
 #=======================================================
 def speech_recognition():
     basepath = os.path.dirname(__file__)
-    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_5/user_2/watson-audio.wav"))
+    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_7/user_2/watson-audio.wav"))
 
     r = sr.Recognizer()
     with sr.WavFile(filepath) as source:
@@ -238,7 +240,7 @@ def speech_recognition():
     IBM_PASSWORD = "q8t0P3GhuKpV" # IBM Speech to Text passwords are mixed-case alphanumeric strings
     try:
         data = r.recognize_ibm(audio, username=IBM_USERNAME, password=IBM_PASSWORD, show_all=True)
-        filepath_final = os.path.abspath(os.path.join(basepath, "session_data/multi_test_5/user_2/watson-data.json"))
+        filepath_final = os.path.abspath(os.path.join(basepath, "session_data/multi_test_7/user_2/watson-data.json"))
         with open(filepath_final,'w') as output_file:
             json.dump(data,output_file)
     except sr.UnknownValueError:
@@ -250,9 +252,9 @@ def speech_recognition():
 # Creating word counts and the formatted alignment
 # from the watson-data dumps.
 #=======================================================
-def process_watson():
+def process_watson(session,user):
     basepath = os.path.dirname(__file__)
-    filepath = os.path.abspath(os.path.join(basepath, "session_data/multi_test_5/user_2/watson-data.json"))
+    filepath = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + user + "/watson-data.json"))
 
     with open(filepath,"r+") as the_file:
         input_data = json.loads(the_file.read())
@@ -285,7 +287,7 @@ def process_watson():
 
     count_output = {"counts":count_final}
 
-    filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_5/user_2/word-tag-count.json"))
+    filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + user + "/word-tag-count.json"))
     with open(filepath_2,'w') as outfile:
         json.dump(count_output, outfile)
 
@@ -295,7 +297,7 @@ def process_watson():
     data_to_write['phone'] = []
     data_to_write['word'] = words_data
 
-    filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/multi_test_5/user_2/formatted-alignment.json"))
+    filepath_2 = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/" + user + "/formatted-alignment.json"))
     with open(filepath_2,'w') as outfile:
         json.dump(data_to_write, outfile)
 
@@ -304,4 +306,4 @@ def process_watson():
 # Main Caller
 #=======================================================
 if __name__ == "__main__":
-    process_watson()
+    formatted_alignment_cleaner()
