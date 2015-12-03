@@ -117,14 +117,6 @@ body {
 /*  display: none;*/
 }
 
-#directed_graph{
-  width: 240px;
-  height: 300px;
-  margin: 0px;
-  padding: 0px;
-}
-
-
 /* gauge chart */
 /* TODO -- fix here */
 
@@ -163,4 +155,54 @@ svg {
 /* main video charts */
 #main-video-charts{
   
+}
+
+.secondary-video-div {
+/*  background-image: url('../img/color1.png'); */
+  background-size: 100% 10%;
+  background-repeat: repeat-x;
+}
+
+.secondary-video-header{
+  height: 20px;
+}
+
+#main-video-container{
+/*  background-image: url('../img/color1.png'); */
+  background-size: 100% 5%;
+  background-repeat: repeat-x;
+}
+
+.main-video-header{
+  height: 20px;
+}
+
+
+
+/* directed graph */
+#directed_graph svg path.link {
+  fill: none;
+  stroke: #000;
+  stroke-width: 4px;
+  cursor: default;
+}
+
+#directed_graph svg circle.node {
+  stroke-width: 1.5px;
+  cursor: pointer;
+}
+
+#directed_graph svg circle.node.reflexive {
+  stroke: #000 !important;
+  stroke-width: 2.5px;
+}
+
+#directed_graph svg text {
+  font: 12px sans-serif;
+  pointer-events: none;
+}
+
+#directed_graph svg text.id {
+  text-anchor: middle;
+  font-weight: bold;
 }

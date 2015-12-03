@@ -215,6 +215,8 @@ $(document).ready(function(){
   $('#left-panel-info').height(592);
   //$("#left-panel-info").hide();
   //$("#wordcloud-panel").hide();
+  $('.secondary-video-div').height(105);
+  $('.secondary-subpanel').hide();
 
 
   /* secondary videos sliders */
@@ -224,6 +226,13 @@ $(document).ready(function(){
   });
 
 
+  /* panel headers colors */
+  for (i=1;i<=5;i++){
+    if (i==1)
+      $('#main-video-container').css('background-image',"url('static/img/color"+i+".png')");
+    else
+      $('#video-'+i).css('background-image',"url('static/img/color"+i+".png')");
+  }
 
   /***************** Chart area ********************/
   $('.bottom-side').height($('#chart-area').height());
