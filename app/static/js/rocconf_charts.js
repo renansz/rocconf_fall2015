@@ -122,7 +122,7 @@ function init_session()
 }
 
 //==============================================================
-// Initialize a Session after Loading
+// Updating Charts after Video Swap
 //==============================================================
 function update_session() {
 
@@ -167,8 +167,13 @@ function set_smile_chart()
     
     user = "user_" + user_num;
 
-    data = smile_time_data[user];
+    //This users smile data
+    smile_data = smile_time_data[user];
 
+    //The groups average smile data
+    group_data = average_intensity;
+
+    // Setup the navigation display
     document.getElementById("load_smile_graph").className = "active";
     document.getElementById("load_loudness_graph").className = "";
     document.getElementById("load_sentiment_graph").className = "";
