@@ -167,11 +167,27 @@ function set_smile_chart()
     
     user = "user_" + user_num;
 
-    //This users smile data
+    // Merge the data into an amCharts data set.
     smile_data = smile_time_data[user];
-
-    //The groups average smile data
     group_data = average_intensity;
+
+    data_to_graph = [];
+
+    for (var i = 0; i < smile_data.length; i++)
+    {
+        data_to_graph.push({ "time": smile_data[i].time, "intensity": smile_data[i].intensity, "avg_intensity": group_data[i].intensity });
+    }
+
+    data_set = new AmCharts.DataSet();
+    data_set.fieldMappings = [{
+        fromField: "intensity",
+        toField: "intensity"
+    }, {
+        fromField: "avg_intensity",
+        toField: "avg_intensity"
+    }];
+    data_set.dataProvider = data_to_graph;
+    data_set.categoryField = "time";
 
     // Setup the navigation display
     document.getElementById("load_smile_graph").className = "active";
@@ -180,42 +196,46 @@ function set_smile_chart()
 
     var chart;
     var graph;
+    var graph2;
 
-    chart = new AmCharts.AmSerialChart();
-    chart.dataProvider = data;
+    chart = new AmCharts.AmStockChart();
+    chart.pathToImages = "static/amcharts/images/";
+    chart.dataSet = [data_set];
     chart.categoryField = "time";
 
-    // X Axis
-    var categoryAxis = chart.categoryAxis;
-    categoryAxis.minPeriod = "ss";
-    categoryAxis.dashLength = 3;
-    categoryAxis.minorGridEnabled = false;
-    categoryAxis.minorGridAlpha = 0.1;
-    categoryAxis.labelsEnabled = true;
+    var stockPanel = new AmCharts.StockPanel();    
 
     // Y Axis
     var valueAxis = new AmCharts.ValueAxis();
-    valueAxis.axisAlpha = 1;
-    valueAxis.inside = true;
-    valueAxis.dashLength = 3;
     valueAxis.maximum = 100;
-    chart.addValueAxis(valueAxis);
+    stockPanel.addValueAxis(valueAxis);
 
-    graph = new AmCharts.AmGraph();
-    graph.type = "smoothedLine"; // this line makes the graph smoothed line.
-    graph.lineColor = "#637bb6"; 
-
+    // This is the users smile graph.
+    graph = new AmCharts.StockGraph();
+    graph.type = "smoothedLine"; 
+    graph.lineColor = user_colors[user_num - 1]; 
     graph.lineThickness = 2;
+    graph.fillAlphas = 0.1;
+    graph.valueAxis = valueAxis;
     graph.valueField = "intensity";
-    chart.addGraph(graph);
+    graph.periodValue = "Average";
+    graph.useDataSetColors = false;
+    stockPanel.addStockGraph(graph)
 
-    var chartCursor = new AmCharts.ChartCursor();
-    chartCursor.cursorAlpha = 0;
-    chartCursor.cursorPosition = "mouse";
-    chartCursor.categoryBalloonDateFormat = "fff";
-    chart.addChartCursor(chartCursor);
+    // This is the group average graph.
+    graph2 = new AmCharts.StockGraph();
+    graph2.type = "smoothedLine";
+    graph2.lineColor = "#637bb6";
+    graph2.lineThickness = 2;
+    graph2.fillAlphas = 0.1;
+    graph.valueAxis = valueAxis;
+    graph2.valueField = "avg_intensity";
+    graph2.periodValue = "Average";
+    graph2.useDataSetColors = false;
+    stockPanel.addStockGraph(graph2)
 
-    chart.creditsPosition = "bottom-right";
+    chart.panels = [stockPanel];
+    chart.creditsPosition = "top-right";
 
     chart.write("chart-area");
 }
