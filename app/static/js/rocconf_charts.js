@@ -76,8 +76,6 @@ function init_session()
 
         p_data = participation_metrics['spk_avg'];
 
-        alert(JSON.stringify(p_data));
-
         if (user_loc == 1)
         {
             set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140)
