@@ -208,12 +208,12 @@
             </div>
           </div><!-- /slider -->
         </div>
-        <div class="row" id="detail-button" style="margin-bottom:2em;margin-top:2em;">
+<!--        <div class="row" id="detail-button" style="margin-bottom:2em;margin-top:2em;">
             <button class="btn-block btn-material-blue-grey btn-raised text-center" style="padding-left:2em;padding-right:2em;">
                 <span class="glyphicon glyphicon-plus-sign" id="detail-button-icon"></span> 
                 <span id="detail-button-text">Detail Charts for this Participant</span>
             </button>
-        </div>
+        </div>-->
       </div><!-- /main-video-container-->
 
       <!-- right side space -->
@@ -242,7 +242,9 @@
 
     </div><!-- /main-content-row -->
 
-    <div class="row" style="margin-top:1em;margin-bottom:1em;"></div>
+    <div class="row text-right" style="margin-top:1em;margin-bottom:1em;">
+        <div class="col-md-6"><a href="#" id="graph-details">More details</a></div>
+    </div>
 
     <!-- charts area -->
     <div clas="row" id="bottom-part">
@@ -251,7 +253,7 @@
       <!-- left side -->
 
         <!-- chart container -->
-        <div class="col-md-6 col-xs-6 text-center shadow-z-1" style="margin-bottom:10em;">
+        <div class="col-md-6 col-xs-6 text-center shadow-z-1" id="charts-bottom" style="margin-bottom:10em;">
 
         <!-- navigation bar -->
         <div class="navbar navbar-default" id="charts-navigation" style="margin-top:2em;">
@@ -271,7 +273,7 @@
 
 
         <!-- charts area -->
-        <div class="row" id="chart-area" style="height:20em;"></div>
+        <div class="row text-center" id="chart-area" style="height:20em;"></div>
         <!-- /charts area -->
 
     </div>

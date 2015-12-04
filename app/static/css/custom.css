@@ -14,10 +14,10 @@ body {
   margin:0px auto;
 }
 
-/*
+
 #top-nav-bar{
   background-color: #000;
-}*/
+}
 
 .secondary-video{
   background-color: #fafafa;
@@ -40,10 +40,14 @@ body {
 #chart-area {
   height: 400px;
   width: 100%;
+  padding-left:15px;
+  padding-right: 15px;
+  margin:0px;
 }
 
 #charts-navigation{
-  background-color: #607D8B;
+  background-color: #000;
+/*  background-color: #607D8B;*/
 }
 .hidden-left-and-right-panel { display: none; }
 

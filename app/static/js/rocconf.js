@@ -244,6 +244,11 @@ $(document).ready(function(){
     $('#left-panel-info').toggle("slow");
   });
 
+  /********** hide and show bottom charts ***********/
+  $("a#graph-details").click(function(){
+    $('#charts-bottom').slideToggle("slow");
+  });
+
   /***************** Chart area ********************/
   $('.bottom-side').height($('#chart-area').height());
 
