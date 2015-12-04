@@ -234,6 +234,16 @@ $(document).ready(function(){
       $('#video-'+i).css('background-image',"url('static/img/color"+i+".png')");
   }
 
+
+  /*********** hide and show side panels ************/
+  $("#right-detail-button-icon").click(function(){
+    $('#wordcloud-panel').toggle("slow");
+  });
+
+  $("#left-detail-button-icon").click(function(){
+    $('#left-panel-info').toggle("slow");
+  });
+
   /***************** Chart area ********************/
   $('.bottom-side').height($('#chart-area').height());
 
