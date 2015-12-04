@@ -121,6 +121,7 @@ function init_session()
 	
 	var user_avg_spk_time = participation_metrics['spk_avg'];
 	set_user_avg_spk(user_avg_spk_time);
+	console.log(sentiment_counts);
 }
 
 //==============================================================
@@ -204,6 +205,7 @@ function set_smile_chart()
     document.getElementById("load_smile_graph").className = "active";
     document.getElementById("load_loudness_graph").className = "";
     document.getElementById("load_sentiment_graph").className = "";
+	document.getElementById("word_list").className = "";
 
     var chart;
     var graph;
@@ -274,6 +276,7 @@ function set_loudness_chart()
     document.getElementById("load_smile_graph").className = "";
     document.getElementById("load_loudness_graph").className = "active";
     document.getElementById("load_sentiment_graph").className = "";
+	document.getElementById("word_list").className = "";
 
     var chart;
     var graph;
@@ -450,7 +453,45 @@ function set_user_avg_spk(data)
 
 function set_sentiment_word()
 {
+	user_num = 0;
+
+    for (var i = 1; i <= num_users; i++) {
+        user_loc = $('#video-player-' + i).attr('user');
+        if (user_loc == 1) {
+            user_num = i;
+            break;
+        }
+    }
+	user = "user_" + user_num;
+    data = sentiment_counts[user];
 	
+	document.getElementById("load_smile_graph").className = "";
+    document.getElementById("load_loudness_graph").className = "";
+	document.getElementById("load_sentiment_graph").className = "";
+    document.getElementById("word_list").className = "active";
+	
+	
+	
+	$('#chart-area').html("<div id=\"list1\" class='alert alert-info' role='alert'  style='float: left; width: 48%;'><h5><b>Negative Words</b></h5></div><div class='alert alert-info' id='list2' role='alert' style='float: right; width: 48%;'><h5><b>Positive Words</b></h5></div>");
+	
+	//console.log(data);
+	for (var i in data['neg']){		
+		var temp = data['neg'][i];
+		var word = data['neg'][i]['text'];
+		//console.log(word);
+		$('#list1').append(word+"<br/>");		
+	}
+	
+	for (var i in data['pos']){		
+		var temp = data['pos'][i];
+		var word = data['pos'][i]['text'];
+		//console.log(word);
+		$('#list2').append(word+"<br/>");		
+	}
+	
+	
+	
+	//$('chart-area').remove();
 }
 
 //==============================================================
@@ -475,6 +516,7 @@ function set_sentiment_chart()
     document.getElementById("load_smile_graph").className = "";
     document.getElementById("load_loudness_graph").className = "";
     document.getElementById("load_sentiment_graph").className = "active";
+	document.getElementById("word_list").className = "";
 
     var chart;
     var graph;
