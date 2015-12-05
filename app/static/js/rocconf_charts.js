@@ -68,7 +68,9 @@ function init_session()
 
     var size = undefined;
 
-    set_smile_chart();
+    //set_smile_chart();
+    //set_sentiment_word();
+    set_sentiment_chart()
 
     for (var i = 1; i <= num_users; i++)
     {
