@@ -38,8 +38,6 @@
 
       <!-- secondary-video-panel-2 -->
       <div class="col-md-3 secondary-video-div shadow-z-1" id="video-2">
-        <div id='video-2-header' class="secondary-video-header" user=2>
-        </div>
         <div class="" id="video-player-panel-2"><!-- /panel-body -->
           <video id="video-player-2" class="video-js vjs-default-skin secondary-video change-user"
           preload="auto" width="150" height="70" user=2 poster="//placehold.it/180x90"
@@ -62,8 +60,6 @@
 
       <!-- secondary-video-panel-3 -->
       <div class="col-md-3 secondary-video-div shadow-z-1" id="video-3">
-        <div id='video-3-header' class="secondary-video-header" user=3>
-        </div>
         <div class="" id="video-player-panel-3"><!-- /panel-body -->
           <video id="video-player-3" class="video-js vjs-default-skin secondary-video change-user"
           preload="auto" width="150" height="70" user=3 poster="//placehold.it/180x90"
@@ -86,8 +82,6 @@
 
       <!-- secondary-video-panel-4 -->
       <div class="col-md-3 secondary-video-div shadow-z-1" id="video-4">
-        <div id='video-4-header' class="secondary-video-header" user=4>
-        </div>
         <div class="" id="video-player-panel-4"><!-- /panel-body -->
           <video id="video-player-4" class="video-js vjs-default-skin secondary-video change-user"
           preload="auto" width="150" height="70" user=4 poster="//placehold.it/180x90"
@@ -110,8 +104,6 @@
 
       <!-- secondary-video-panel-5 -->
       <div class="col-md-3 secondary-video-div shadow-z-1" id="video-5">
-        <div id='video-5-header' class="secondary-video-header" user=5>
-        </div>
         <div class="" id="video-player-panel-5"><!-- /panel-body -->
           <video id="video-player-5" class="video-js vjs-default-skin secondary-video change-user"
           preload="auto" width="150" height="70" user=5 poster="//placehold.it/180x90"
@@ -144,11 +136,9 @@
     <div class="row-fluid" id="main-content-container">
 
       <!-- left side space -->
-      <div class="col-md-3 col-xs-3 text-left" id="left-panel-container">
+      <div class="col-md-3 col-xs-3 text-right" id="left-panel-container">
         <div class="row" id="left-button">
-            <button class="btn-raised btn-material-blue-grey btn-raised text-right">
-                <span class="glyphicon glyphicon-plus-sign" id="left-detail-button-icon"></span>
-            </button>
+            <h4><span class="glyphicon glyphicon-plus-sign" id="left-detail-button-icon"></span></h4>
         </div>
         <br/>
         <!-- left side panel -->
@@ -163,10 +153,8 @@
                 <p>User 3 spoke <strong>2</strong> times.</p> -->
             </div>
             <div class="row text-left">
-                <h4><strong>Rapport</strong></h4>
-                <p>Two users smiled X times</p>
-                <p>Three users smiled X times</p>
-                <p><i>at the same time</i></p>
+                <h4><strong>Average Speak Time(s)</strong></h4>
+                <div id="avgspeaktime" style="width: 240px; height: 300px;"></div>
             </div>
           </div><!-- /panel-body -->
         </div>
@@ -220,20 +208,18 @@
             </div>
           </div><!-- /slider -->
         </div>
-        <div class="row" id="detail-button" style="margin-bottom:2em;margin-top:2em;">
+<!--        <div class="row" id="detail-button" style="margin-bottom:2em;margin-top:2em;">
             <button class="btn-block btn-material-blue-grey btn-raised text-center" style="padding-left:2em;padding-right:2em;">
                 <span class="glyphicon glyphicon-plus-sign" id="detail-button-icon"></span> 
                 <span id="detail-button-text">Detail Charts for this Participant</span>
             </button>
-        </div>
+        </div>-->
       </div><!-- /main-video-container-->
 
       <!-- right side space -->
       <div class="col-md-3 col-xs-3 vcenter" id="wordcloud-placeholder">
         <div class="row" id="right-button">
-            <button class="btn-raised btn-material-blue-grey btn-raised text-left">
-                <span class="glyphicon glyphicon-plus-sign" id="right-detail-button-icon"></span>
-            </button>
+            <h4><span class="glyphicon glyphicon-plus-sign" id="right-detail-button-icon"></span></h4>
         </div>
         <div class="" id="wordcloud-panel">
           <br/>
@@ -256,7 +242,9 @@
 
     </div><!-- /main-content-row -->
 
-    <div class="row" style="margin-top:1em;margin-bottom:1em;"></div>
+    <div class="row text-right" style="margin-top:1em;margin-bottom:1em;">
+        <div class="col-md-6"><a href="#" id="graph-details">More details</a></div>
+    </div>
 
     <!-- charts area -->
     <div clas="row" id="bottom-part">
@@ -265,7 +253,7 @@
       <!-- left side -->
 
         <!-- chart container -->
-        <div class="col-md-6 col-xs-6 text-center shadow-z-1" style="margin-bottom:10em;">
+        <div class="col-md-6 col-xs-6 text-center shadow-z-1" id="charts-bottom" style="margin-bottom:10em;">
 
         <!-- navigation bar -->
         <div class="navbar navbar-default" id="charts-navigation" style="margin-top:2em;">
@@ -274,7 +262,8 @@
             <ul class="nav navbar-nav">
                 <li id="load_smile_graph"><a href="javascript:set_smile_chart();">Smile</a></li>
                 <li id="load_loudness_graph"><a href="javascript:set_loudness_chart();">Loudness</a></li>
-                <li id="load_sentiment_graph"><a href="javascript:set_sentiment_chart();">Sentiment</a></li>                  
+                <li id="load_sentiment_graph" class="active"><a href="javascript:set_sentiment_chart();">Sentiment</a></li>
+				<li id="word_list"><a href="javascript:set_sentiment_word();">Sentiment Word List</a></li>
             </ul>
             </div>
         </div>

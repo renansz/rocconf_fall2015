@@ -68,7 +68,9 @@ function init_session()
 
     var size = undefined;
 
-    set_smile_chart();
+    //set_smile_chart();
+    //set_sentiment_word();
+    set_sentiment_chart()
 
     for (var i = 1; i <= num_users; i++)
     {
@@ -78,13 +80,14 @@ function init_session()
 
         if (user_loc == 1)
         {
-            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140)
-            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140,i)
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 140,i);
+            $('.chart-filled').css('fill',user_colors[0])
         }
         else
         {
-            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80)
-            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80,i)
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 140,i);
         }
     }
 
@@ -113,12 +116,14 @@ function init_session()
 
     setup_word_cloud(final_cloud);
 
-    //dg = draw_directed_graph(p_transition_matrix,participation_metrics);
     dg = draw_directed_graph2(p_transition_matrix,participation_metrics);
-	var user_part_count = participation_metrics['spk_counts'];
-	//console.log(user_part_count);	
 	
+	var user_part_count = participation_metrics['spk_counts'];
 	set_user_participation_chart(user_part_count);
+	
+	var user_avg_spk_time = participation_metrics['spk_avg'];
+	set_user_avg_spk(user_avg_spk_time);
+	console.log(sentiment_counts);
 }
 
 //==============================================================
@@ -136,12 +141,21 @@ function update_session() {
         p_data = participation_metrics['spk_avg'];
 
         if (user_loc == 1) {
-            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140)
-            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 140,i)
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 140,i);
+            $('.chart-filled').css('fill',user_colors[i-1])
         }
         else {
-            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80)
-            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 80);
+            set_participation_chart(p_data['user_' + i], "subpanel_" + user_loc + "_left", 80,i)
+            set_rate_chart(p_data['user_' + i], "subpanel_" + user_loc + "_right", 140,i);
+        }
+
+        // set panel header color
+        console.log('user loc: '+user_loc+' , user: '+i);
+        if (user_loc==1){
+            $('#main-video-container').css('background-image',"url('static/img/color"+i+".png')");
+        }else{
+            $('#video-'+user_loc).css('background-image',"url('static/img/color"+i+".png')");
         }
     }
 }
@@ -196,7 +210,27 @@ function set_smile_chart()
     data_set.dataProvider = data_to_graph;
     data_set.categoryField = "time";
 
-    smile_chart.dataSets = [data_set];
+    // Setup the navigation display
+    document.getElementById("load_smile_graph").className = "active";
+    document.getElementById("load_loudness_graph").className = "";
+    document.getElementById("load_sentiment_graph").className = "";
+	document.getElementById("word_list").className = "";
+
+    var chart;
+    var graph;
+    var graph2;
+
+    chart = new AmCharts.AmStockChart();
+    chart.pathToImages = "static/amcharts/images/";
+    chart.dataSet = [data_set];
+    chart.categoryField = "time";
+
+    var stockPanel = new AmCharts.StockPanel();    
+
+    // Y Axis
+    var valueAxis = new AmCharts.ValueAxis();
+    valueAxis.maximum = 100;
+    stockPanel.addValueAxis(valueAxis);
 
     var stock_panel = new AmCharts.StockPanel();
     stock_panel.id = "serialVisualFeaturesChartPanel";
@@ -370,6 +404,7 @@ function set_loudness_chart()
     document.getElementById("load_smile_graph").className = "";
     document.getElementById("load_loudness_graph").className = "active";
     document.getElementById("load_sentiment_graph").className = "";
+	document.getElementById("word_list").className = "";
 
     var chart;
     var graph;
@@ -474,7 +509,118 @@ function set_user_participation_chart(data)
 
 }
 
+//==============================================================
+// Setup the user avg speak time graph at left panel
+//==============================================================
+function set_user_avg_spk(data)
+{
+	var graph=[];
+	for (var key in data) {
+		var item;
+		var temp = key.replace(/_/gi,"");
+		var temp2=temp.replace(/u/gi,"U");
+		//console.log(data[key]['avg_speak']);
+		/* for (var innerkey in data[key]){
+			item={"user": temp2,"count": data[key][innerkey]}
+		} */
+		item={"user": temp2,"count":data[key]['avg_speak'],"color":user_colors[Number(temp2.substring(4,5))-1]};
+		graph.push(item);
+	}
+	/*console.log(graph);
+	
+	xp= [{
+    "country": "USA",
+    "visits": 3
+  }, {
+    "country": "China",
+    "visits": 6
+  },  ];
+  console.log(xp);*/
+	var chart = AmCharts.makeChart( "avgspeaktime", {
+  "type": "serial",
+  "theme": "light",
+  "dataProvider": graph,
+  "valueAxes": [ {
+    "gridColor": "#FFFFFF",
+    "gridAlpha": 0.2,
+    "dashLength": 0
+  } ],
+  "gridAboveGraphs": true,
+  "startDuration": 1,
+  "graphs": [ {
+    "balloonText": "[[category]]: <b>[[value]]</b>",
+    "fillAlphas": 0.8,
+    "lineAlpha": 0.2,
+    "type": "column",
+    "valueField": "count",
+    "fillColorsField": "color"
+  } ],
+  "chartCursor": {
+    "categoryBalloonEnabled": false,
+    "cursorAlpha": 0,
+    "zoomable": false
+  },
+  "categoryField": "user",
+  "categoryAxis": {
+    "gridPosition": "start",
+    "gridAlpha": 0,
+    "tickPosition": "start",
+    "tickLength": 20
+  },
+  "export": {
+    "enabled": true
+  }
 
+} );
+
+}
+
+//==============================================================
+// Setup the sentiment word list
+//==============================================================
+
+function set_sentiment_word()
+{
+	user_num = 0;
+
+    for (var i = 1; i <= num_users; i++) {
+        user_loc = $('#video-player-' + i).attr('user');
+        if (user_loc == 1) {
+            user_num = i;
+            break;
+        }
+    }
+	user = "user_" + user_num;
+    data = sentiment_counts[user];
+	
+	document.getElementById("load_smile_graph").className = "";
+    document.getElementById("load_loudness_graph").className = "";
+	document.getElementById("load_sentiment_graph").className = "";
+    document.getElementById("word_list").className = "active";
+	
+	
+	
+	$('#chart-area').html("<div id=\"list1\" class='alert alert-info' role='alert'  style='float: left; width: 48%;'><h5><b>Negative Words</b></h5></div><div class='alert alert-info' id='list2' role='alert' style='float: right; width: 48%;'><h5><b>Positive Words</b></h5></div>");
+	
+	//console.log(data);
+	for (var i in data['neg']){		
+		var temp = data['neg'][i];
+		var word = data['neg'][i]['text'];
+		//console.log(word);
+		$('#list1').append(word+"<br/>");		
+	}
+	
+	for (var i in data['pos']){		
+		var temp = data['pos'][i];
+		var word = data['pos'][i]['text'];
+		//console.log(word);
+		$('#list2').append(word+"<br/>");		
+	}
+	
+	
+	
+	//$('chart-area').remove();
+}
 
 //==============================================================
 // Setup the sentiment graph
@@ -498,6 +644,7 @@ function set_sentiment_chart()
     document.getElementById("load_smile_graph").className = "";
     document.getElementById("load_loudness_graph").className = "";
     document.getElementById("load_sentiment_graph").className = "active";
+	document.getElementById("word_list").className = "";
 
     var chart;
     var graph;
@@ -545,13 +692,16 @@ function set_sentiment_chart()
 //==============================================================
 // Time on the Floor Microchart - For user at Location
 //==============================================================
-function set_participation_chart(data, el, size)
+function set_participation_chart(data, el, size, user_id)
 {
+
+    console.log(JSON.stringify(data)+'|'+el+'|'+size+'|'+user_id+'|'+user_colors[user_id-1]);
     //first clear the element
     if (el == 'subpanel_1_left')
         $('#' + el).html('<h5><strong>Participation Rate</strong></h5>');
     else
         $('#' + el).empty();
+
 
     var pie = new d3pie(el, {
         "size": {
@@ -563,7 +713,7 @@ function set_participation_chart(data, el, size)
             "content": [{
                 "label":'',
                 "value": Math.round(data['p_spk'] * 100) / 100,
-                "color": "#607d8b"
+                "color": user_colors[user_id - 1]
             },
             {
                 "label": '',
@@ -579,12 +729,12 @@ function set_participation_chart(data, el, size)
                 "format": "value"
             },
             "percentage": {
-                "color": "#e1e1e1",
+                "color": "#000",
                 "font": "verdana",
                 "decimalPlaces": 1
             },
             "value": {
-                "color": "#e1e1e1",
+                "color": "#000",
                 "font": "verdana"
             },
             "truncation": {
@@ -603,9 +753,10 @@ function set_participation_chart(data, el, size)
 
 //==============================================================
 // Speaking Rate Microchart - For user at Location
+// based on this example -- http://bl.ocks.org/ameyms/9184728
 //==============================================================
 
-function set_rate_chart(data, el, size)
+function set_rate_chart(data, el, size, user_id)
 {
     if (el == 'subpanel_1_right')
         $('#' + el).html('<h5><strong>Speaking Rate</strong></h5>');
@@ -765,8 +916,8 @@ function set_rate_chart(data, el, size)
 
 /******************************************************************************
  * Directed graph
+Based on this example -- http://bl.ocks.org/rkirsling/5001347
  *****************************************************************************/
-//http://bl.ocks.org/rkirsling/5001347
 
 function draw_directed_graph(matrix,participation){
   var i,
@@ -1029,18 +1180,6 @@ function draw_directed_graph2(matrix,part){
       .on('mousedown', function(d) {
         if(d3.event.ctrlKey) return;
 
-        /* select node
-        mousedown_node = d;
-        if(mousedown_node === selected_node) selected_node = null;
-        else selected_node = mousedown_node;
-        selected_link = null;
-
-        // reposition drag line
-        drag_line
-          .style('marker-end', 'url(#end-arrow)')
-          .classed('hidden', false)
-          .attr('d', 'M' + mousedown_node.x + ',' + mousedown_node.y + 'L' + mousedown_node.x + ',' + mousedown_node.y);
-        */
         restart();
       })
       .on('mouseup', function(d) {
@@ -1058,35 +1197,6 @@ function draw_directed_graph2(matrix,part){
         // unenlarge target node
         d3.select(this).attr('transform', '');
 
-        // add link to graph (update if exists)
-        // NB: links are strictly source < target; arrows separately specified by booleans
-    /*    var source, target, direction;
-        if(mousedown_node.id < mouseup_node.id) {
-          source = mousedown_node;
-          target = mouseup_node;
-          direction = 'right';
-        } else {
-          source = mouseup_node;
-          target = mousedown_node;
-          direction = 'left';
-        }
-
-        var link;
-        link = links.filter(function(l) {
-          return (l.source === source && l.target === target);
-        })[0];
-
-        if(link) {
-          link[direction] = true;
-        } else {
-          link = {source: source, target: target, left: false, right: false};
-          link[direction] = true;
-          links.push(link);
-        }
-
-        // select new link
-        selected_link = link;
-        selected_node = null;*/
         restart();
       });
 
