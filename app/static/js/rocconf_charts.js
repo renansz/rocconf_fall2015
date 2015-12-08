@@ -151,7 +151,6 @@ function update_session() {
 //==============================================================
 function set_smile_chart()
 {
-
     //Which user is in slot #1?
     user_num = 0;
 
@@ -167,77 +166,185 @@ function set_smile_chart()
     
     user = "user_" + user_num;
 
-    // Merge the data into an amCharts data set.
-    smile_data = smile_time_data[user];
-    group_data = average_intensity;
-
-    data_to_graph = [];
-
-    for (var i = 0; i < smile_data.length; i++)
-    {
-        data_to_graph.push({ "time": smile_data[i].time, "intensity": smile_data[i].intensity, "avg_intensity": group_data[i].intensity });
-    }
-
-    data_set = new AmCharts.DataSet();
-    data_set.fieldMappings = [{
-        fromField: "intensity",
-        toField: "intensity"
-    }, {
-        fromField: "avg_intensity",
-        toField: "avg_intensity"
-    }];
-    data_set.dataProvider = data_to_graph;
-    data_set.categoryField = "time";
-
-    // Setup the navigation display
     document.getElementById("load_smile_graph").className = "active";
     document.getElementById("load_loudness_graph").className = "";
     document.getElementById("load_sentiment_graph").className = "";
 
-    var chart;
-    var graph;
-    var graph2;
+    // Merge the data into an amCharts data set.
+    smile_data = smile_time_data[user];
+    group_data = average_intensity;
 
-    chart = new AmCharts.AmStockChart();
-    chart.pathToImages = "static/amcharts/images/";
-    chart.dataSet = [data_set];
-    chart.categoryField = "time";
+    
+    data_to_graph = [];
 
-    var stockPanel = new AmCharts.StockPanel();    
+    for (var i = 0; i < smile_data.length; i++)
+    {
+        data_to_graph.push({ time: smile_data[i].time, intensity: smile_data[i].intensity, avg_intensity: group_data[i].intensity });
+    }
 
-    // Y Axis
-    var valueAxis = new AmCharts.ValueAxis();
-    valueAxis.maximum = 100;
-    stockPanel.addValueAxis(valueAxis);
+    smile_chart = new AmCharts.AmStockChart();
+    smile_chart.pathToImages = "static/amcharts/images/";
 
-    // This is the users smile graph.
-    graph = new AmCharts.StockGraph();
-    graph.type = "smoothedLine"; 
-    graph.lineColor = user_colors[user_num - 1]; 
-    graph.lineThickness = 2;
-    graph.fillAlphas = 0.1;
-    graph.valueAxis = valueAxis;
-    graph.valueField = "intensity";
-    graph.periodValue = "Average";
-    graph.useDataSetColors = false;
-    stockPanel.addStockGraph(graph)
+    data_set = new AmCharts.DataSet();
+    data_set.fieldMappings = [{
+        fromField: "intensity",
+        toField: "smile",
+    }, {
+        fromField: "avg_intensity",
+        toField: "avg_smile"
+    }];
+    data_set.dataProvider = data_to_graph;
+    data_set.categoryField = "time";
 
-    // This is the group average graph.
-    graph2 = new AmCharts.StockGraph();
+    smile_chart.dataSets = [data_set];
+
+    var stock_panel = new AmCharts.StockPanel();
+    stock_panel.id = "serialVisualFeaturesChartPanel";
+    stock_panel.sequencedAnimation = false;
+    stock_panel.startDuration = 0.5;
+    stock_panel.numberFormatter = {
+        "precision": 1,
+        "decimalSeparator": '.',
+        "thousandsSeparator": ','
+    };
+
+    var value_axis = new AmCharts.ValueAxis();
+    value_axis.maximum = 100; 
+    stock_panel.addValueAxis(value_axis);
+
+    // Graph of the users smile
+    var graph1 = new AmCharts.StockGraph();
+    graph1.title = "Smile Intensity";
+    graph1.type = "smoothedLine";
+    graph1.valueAxis = value_axis;
+    graph1.valueField = "smile";
+    graph1.balloonText = "";
+    graph1.fillAlphas = 0.1;
+    graph1.lineColor = user_colors[user_num - 1];
+    graph1.lineThickness = 2;
+    graph1.periodValue = "Average";
+    graph1.useDataSetColors = false;
+    stock_panel.addStockGraph(graph1);
+
+    // Graph of the average smile intensity
+    var graph2 = new AmCharts.StockGraph();
+    graph2.id = "graph2";
+    graph2.title = "Average Intensity";
     graph2.type = "smoothedLine";
+    graph2.valueAxis = value_axis;
+    graph2.valueField = "avg_smile";
+    graph2.balloonText = "";
+    graph2.fillAlphas = 0.1;
     graph2.lineColor = "#637bb6";
     graph2.lineThickness = 2;
-    graph2.fillAlphas = 0.1;
-    graph.valueAxis = valueAxis;
-    graph2.valueField = "avg_intensity";
     graph2.periodValue = "Average";
     graph2.useDataSetColors = false;
-    stockPanel.addStockGraph(graph2)
+    stock_panel.addStockGraph(graph2);
 
-    chart.panels = [stockPanel];
-    chart.creditsPosition = "top-right";
+    var stockLegend1 = new AmCharts.StockLegend();
+    stock_panel.stockLegend = stockLegend1;
 
-    chart.write("chart-area");
+    // Adjust category axis
+    var categoryAxis = stock_panel.categoryAxis;
+    categoryAxis.boldPeriodBeginning = false;
+    categoryAxis.parseDates = true;
+
+    var chartCursor = new AmCharts.ChartCursor();
+    chartCursor.animationDuration = 0;
+    stock_panel.chartCursor = chartCursor;
+
+    // set panels to the chart
+    smile_chart.panels = [stock_panel];
+
+    /*
+    var sbsettings = new AmCharts.ChartScrollbarSettings();
+    sbsettings.enabled = false;
+    smile_chart.chartScrollbarSettings = sbsettings;
+    */
+    
+    var cursorSettings = new AmCharts.ChartCursorSettings();
+    //cursorSettings.categoryBalloonEnabled = false;
+    cursorSettings.graphBulletSize = 1.2;
+    cursorSettings.valueBalloonsEnabled = true;
+    cursorSettings.categoryBalloonAlpha = 0;
+    cursorSettings.categoryBalloonColor = "transparent";
+    cursorSettings.categoryBalloonDateFormats = [{
+        period: 'fff',
+        format: 'J:NN:SS.QQQ'
+    }, {
+        period: 'ss',
+        format: 'J:NN:SS'
+    }, {
+        period: 'mm',
+        format: 'J:NN:SS'
+    }, {
+        period: 'hh',
+        format: 'J:NN:SS'
+    }, {
+        period: 'DD',
+        format: 'J:NN:SS'
+    }, {
+        period: 'WW',
+        format: 'J:NN:SS'
+    }, {
+        period: 'MM',
+        format: 'J:NN:SS'
+    }, {
+        period: 'YYYY',
+        format: 'J:NN:SS'
+    }];
+    smile_chart.chartCursorSettings = cursorSettings;
+
+    var legendSettings = new AmCharts.LegendSettings();
+    legendSettings.color = "#878586";
+    legendSettings.divId = "serialVisualFeaturesLegenddiv";
+    legendSettings.fontSize = 16;
+    legendSettings.marginLeft = 14;
+    legendSettings.marginTop = 10;
+    legendSettings.rollOverGraphAlpha = 0.2;
+    legendSettings.switchType = "v";
+    smile_chart.legendSettings = legendSettings;
+
+    var valueAxesSettings = new AmCharts.ValueAxesSettings();
+    valueAxesSettings.color = "#9c9c9c";
+    smile_chart.valueAxesSettings = valueAxesSettings;
+
+    var categoryAxesSettings = new AmCharts.CategoryAxesSettings();
+    categoryAxesSettings.color = "#878586";
+    categoryAxesSettings.gridAlpha = 0;
+    //categoryAxesSettings.minPeriod = "ss";
+    categoryAxesSettings.minPeriod = "10fff";
+    //categoryAxesSettings.groupToPeriods = ["fff", "10fff","100fff","500fff","ss", "10ss", "30ss"];
+    categoryAxesSettings.groupToPeriods = ["10fff", "100fff", "500fff", "ss", "10ss"];
+    categoryAxesSettings.dateFormats = [{
+        period: 'fff',
+        format: 'NN:SS.QQQ'
+    }, {
+        period: 'ss',
+        format: 'NN:SS'
+    }, {
+        period: 'mm',
+        format: 'NN:SS'
+    }, {
+        period: 'hh',
+        format: 'NN:SS'
+    }, {
+        period: 'DD',
+        format: 'NN:SS'
+    }, {
+        period: 'WW',
+        format: 'NN:SS'
+    }, {
+        period: 'MM',
+        format: 'NN:SS'
+    }, {
+        period: 'YYYY',
+        format: 'NN:SS'
+    }];
+    
+    smile_chart.categoryAxesSettings = categoryAxesSettings;
+
+    smile_chart.write('chart-area');
 }
 
 //==============================================================
@@ -289,7 +396,7 @@ function set_loudness_chart()
 
     graph = new AmCharts.AmGraph();
     graph.type = "smoothedLine"; // this line makes the graph smoothed line.
-    graph.lineColor = "#637bb6";
+    graph.lineColor = user_colors[user_num - 1];
 
     graph.lineThickness = 2;
     graph.valueField = "intensity";

@@ -26,7 +26,7 @@ basepath = os.path.dirname(__file__)
 #     very large file so to optimize we'll get them
 #     at the same time.
 #   - Second optimization here is to only load
-#     this in .5 second
+#     this in .25 second
 #     intervals (it is in 10ms base)
 #-------------------------------------------------------
 def load_av_data(session):
@@ -48,9 +48,9 @@ def load_av_data(session):
                 data_to_process = loaded_data['features']
 
                 for j in data_to_process:
-                    if (j['time_millisec'] % 500 == 0):
-                        user_smile_data.append({"time": j['time_millisec'] / 1000, "intensity": j['smile_cubicSpline']})
-                        user_loudness_data.append({"time": j['time_millisec'] / 1000, "intensity": j['soundIntensity_DB']})
+                    if (j['time_millisec'] % 250 == 0):                        
+                        user_loudness_data.append({"time": j['time_millisec'], "intensity": j['soundIntensity_DB']})
+                        user_smile_data.append({"time": j['time_millisec'] , "intensity": j['smile_cubicSpline']})
             smile_data[e] = user_smile_data
             loudness_data[e] = user_loudness_data
         except Exception as err:
@@ -65,8 +65,8 @@ def load_av_data(session):
         data_to_process = loaded_data['features']
 
         for j in data_to_process:
-            if (j['time_millisec'] % 500 == 0):
-                group_smile_data.append({"time": j['time_millisec'] / 1000, "intensity": j['intensity']})
+            if (j['time_millisec'] % 250 == 0): 
+                group_smile_data.append({"time": j['time_millisec'], "intensity": j['intensity']})
 
     data['smile'] = smile_data
     data['loudness'] = loudness_data
