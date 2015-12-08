@@ -566,7 +566,7 @@ def generate_smile_counts(session):
     print "Smile counts generated..."
 
 
-    def read_list_smile(filepath):
+def read_list_smile(filepath):
     list=[]
     file=open(filepath,"r+")
     loaded_data=json.loads(file.read())
@@ -608,8 +608,8 @@ def smile_count(user_number, session):
         filepath1 = os.path.abspath(os.path.join(basepath, "session_data/" + session + "/user_" + str(i) + "/audio-video-features.json"))
 
         data_millisec=read_list_smile(filepath1)
-        data_second=convert_list_smile(filepath1))
-        threadhold=getthreadhold(filepath1))
+        data_second=convert_list_smile(filepath1)
+        threadhold=getthreadhold(filepath1)
 
         for items in data_second:
             if(count.has_key(items[0])):

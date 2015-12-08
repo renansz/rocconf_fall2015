@@ -68,9 +68,7 @@ function init_session()
 
     var size = undefined;
 
-    //set_smile_chart();
-    //set_sentiment_word();
-    set_sentiment_chart()
+    set_smile_chart();
 
     for (var i = 1; i <= num_users; i++)
     {
@@ -180,9 +178,11 @@ function set_smile_chart()
     
     user = "user_" + user_num;
 
+    // Setup the navigation display
     document.getElementById("load_smile_graph").className = "active";
     document.getElementById("load_loudness_graph").className = "";
     document.getElementById("load_sentiment_graph").className = "";
+    document.getElementById("word_list").className = "";
 
     // Merge the data into an amCharts data set.
     smile_data = smile_time_data[user];
@@ -196,9 +196,6 @@ function set_smile_chart()
         data_to_graph.push({ time: smile_data[i].time, intensity: smile_data[i].intensity, avg_intensity: group_data[i].intensity });
     }
 
-    smile_chart = new AmCharts.AmStockChart();
-    smile_chart.pathToImages = "static/amcharts/images/";
-
     data_set = new AmCharts.DataSet();
     data_set.fieldMappings = [{
         fromField: "intensity",
@@ -210,29 +207,12 @@ function set_smile_chart()
     data_set.dataProvider = data_to_graph;
     data_set.categoryField = "time";
 
-    // Setup the navigation display
-    document.getElementById("load_smile_graph").className = "active";
-    document.getElementById("load_loudness_graph").className = "";
-    document.getElementById("load_sentiment_graph").className = "";
-	document.getElementById("word_list").className = "";
-
-    var chart;
-    var graph;
-    var graph2;
-
-    chart = new AmCharts.AmStockChart();
+    var chart = new AmCharts.AmStockChart();
     chart.pathToImages = "static/amcharts/images/";
-    chart.dataSet = [data_set];
-    chart.categoryField = "time";
-
-    var stockPanel = new AmCharts.StockPanel();    
-
-    // Y Axis
-    var valueAxis = new AmCharts.ValueAxis();
-    valueAxis.maximum = 100;
-    stockPanel.addValueAxis(valueAxis);
+    chart.dataSets = [data_set];
 
     var stock_panel = new AmCharts.StockPanel();
+    stock_panel.fontFamily = "Lato";
     stock_panel.id = "serialVisualFeaturesChartPanel";
     stock_panel.sequencedAnimation = false;
     stock_panel.startDuration = 0.5;
@@ -288,7 +268,7 @@ function set_smile_chart()
     stock_panel.chartCursor = chartCursor;
 
     // set panels to the chart
-    smile_chart.panels = [stock_panel];
+    chart.panels = [stock_panel];
 
     /*
     var sbsettings = new AmCharts.ChartScrollbarSettings();
@@ -304,30 +284,30 @@ function set_smile_chart()
     cursorSettings.categoryBalloonColor = "transparent";
     cursorSettings.categoryBalloonDateFormats = [{
         period: 'fff',
-        format: 'J:NN:SS.QQQ'
+        format: 'NN:SS.QQQ'
     }, {
         period: 'ss',
-        format: 'J:NN:SS'
+        format: 'NN:SS'
     }, {
         period: 'mm',
-        format: 'J:NN:SS'
+        format: 'NN:SS'
     }, {
         period: 'hh',
-        format: 'J:NN:SS'
+        format: 'NN:SS'
     }, {
         period: 'DD',
-        format: 'J:NN:SS'
+        format: 'NN:SS'
     }, {
         period: 'WW',
-        format: 'J:NN:SS'
+        format: 'NN:SS'
     }, {
         period: 'MM',
-        format: 'J:NN:SS'
+        format: 'NN:SS'
     }, {
         period: 'YYYY',
-        format: 'J:NN:SS'
+        format: 'NN:SS'
     }];
-    smile_chart.chartCursorSettings = cursorSettings;
+    chart.chartCursorSettings = cursorSettings;
 
     var legendSettings = new AmCharts.LegendSettings();
     legendSettings.color = "#878586";
@@ -337,11 +317,11 @@ function set_smile_chart()
     legendSettings.marginTop = 10;
     legendSettings.rollOverGraphAlpha = 0.2;
     legendSettings.switchType = "v";
-    smile_chart.legendSettings = legendSettings;
+    chart.legendSettings = legendSettings;
 
     var valueAxesSettings = new AmCharts.ValueAxesSettings();
     valueAxesSettings.color = "#9c9c9c";
-    smile_chart.valueAxesSettings = valueAxesSettings;
+    chart.valueAxesSettings = valueAxesSettings;
 
     var categoryAxesSettings = new AmCharts.CategoryAxesSettings();
     categoryAxesSettings.color = "#878586";
@@ -376,9 +356,9 @@ function set_smile_chart()
         format: 'NN:SS'
     }];
     
-    smile_chart.categoryAxesSettings = categoryAxesSettings;
+    chart.categoryAxesSettings = categoryAxesSettings;
 
-    smile_chart.write('chart-area');
+    chart.write('chart-area');
 }
 
 //==============================================================
