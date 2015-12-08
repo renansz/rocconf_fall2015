@@ -627,6 +627,7 @@ function set_participation_chart(data, el, size, user_id)
 
 //==============================================================
 // Speaking Rate Microchart - For user at Location
+// based on this example -- http://bl.ocks.org/ameyms/9184728
 //==============================================================
 
 function set_rate_chart(data, el, size, user_id)
@@ -789,8 +790,8 @@ function set_rate_chart(data, el, size, user_id)
 
 /******************************************************************************
  * Directed graph
+Based on this example -- http://bl.ocks.org/rkirsling/5001347
  *****************************************************************************/
-//http://bl.ocks.org/rkirsling/5001347
 
 function draw_directed_graph(matrix,participation){
   var i,
@@ -1053,18 +1054,6 @@ function draw_directed_graph2(matrix,part){
       .on('mousedown', function(d) {
         if(d3.event.ctrlKey) return;
 
-        /* select node
-        mousedown_node = d;
-        if(mousedown_node === selected_node) selected_node = null;
-        else selected_node = mousedown_node;
-        selected_link = null;
-
-        // reposition drag line
-        drag_line
-          .style('marker-end', 'url(#end-arrow)')
-          .classed('hidden', false)
-          .attr('d', 'M' + mousedown_node.x + ',' + mousedown_node.y + 'L' + mousedown_node.x + ',' + mousedown_node.y);
-        */
         restart();
       })
       .on('mouseup', function(d) {
@@ -1082,35 +1071,6 @@ function draw_directed_graph2(matrix,part){
         // unenlarge target node
         d3.select(this).attr('transform', '');
 
-        // add link to graph (update if exists)
-        // NB: links are strictly source < target; arrows separately specified by booleans
-    /*    var source, target, direction;
-        if(mousedown_node.id < mouseup_node.id) {
-          source = mousedown_node;
-          target = mouseup_node;
-          direction = 'right';
-        } else {
-          source = mouseup_node;
-          target = mousedown_node;
-          direction = 'left';
-        }
-
-        var link;
-        link = links.filter(function(l) {
-          return (l.source === source && l.target === target);
-        })[0];
-
-        if(link) {
-          link[direction] = true;
-        } else {
-          link = {source: source, target: target, left: false, right: false};
-          link[direction] = true;
-          links.push(link);
-        }
-
-        // select new link
-        selected_link = link;
-        selected_node = null;*/
         restart();
       });
 
