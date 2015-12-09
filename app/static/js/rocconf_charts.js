@@ -486,9 +486,9 @@ function set_user_participation_chart(data)
   "categoryAxis": {
     "gridPosition": "start",
     "gridAlpha": 0,
-    "tickPosition": "start",
-    "labelsEnabled": false,
-    "tickLength": 20
+    "labelsEnabled": false
+/*    "tickPosition": "start",
+    "tickLength": 20*/
   },
   "export": {
     "enabled": true
@@ -553,9 +553,9 @@ function set_user_avg_spk(data)
   "categoryAxis": {
     "gridPosition": "start",
     "gridAlpha": 0,
-    "tickPosition": "start",
-    "labelsEnabled": false,
-    "tickLength": 20
+    /*"tickPosition": "start",
+    "tickLength": 20*/
+    "labelsEnabled": false
   },
   "export": {
     "enabled": true

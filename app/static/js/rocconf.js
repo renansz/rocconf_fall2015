@@ -265,6 +265,11 @@ $(document).ready(function(){
   $('.bottom-side').height($('#chart-area').height());
 
 
+  /*********** Participation graphs area ***********/
+  $('#chartdiv').height(230);
+  $('#avgspeaktime').height(230);
+
+
   /*************** Change User Buttons *************/
   var changing_video_main = undefined;
   var changing_video_sec = undefined;
