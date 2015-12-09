@@ -1,5 +1,5 @@
 ﻿#!/usr/bin/env python
-from flask import Flask, session, Response, jsonify
+from flask import Flask, session, Response, jsonify, redirect
 from flask_bootstrap import Bootstrap
 from flask import render_template
 from flask import request
@@ -234,9 +234,19 @@ def return_sentiment():
 #=======================================================
 # Page Handler for the landing page
 #======================================================= 
+@app.route("/<session_id>")
+def main_page(session_id='multi_test_2'):
+    user_count = 0
+
+    users = os.listdir("session_data/" + session_id)
+    user_count = len([user for user in users if 'user' in user])
+
+    return render_template('index_new.html',session_id=session_id,user_count=user_count,)
+
+# placeholder page -- start with the session that we tested the most
 @app.route("/")
-def main_page():
-    return render_template('index_new.html',)
+def index():
+    return redirect("http://renansz.com:5050/multi_test_2")
 
 #=======================================================
 # Start the web service on the local host

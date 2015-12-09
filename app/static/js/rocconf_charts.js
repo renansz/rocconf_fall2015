@@ -11,8 +11,12 @@ $(document).ready(function () {
         $(this).tab('show')
     });
 
-    load_session_data("multi_test_2")
-
+    var session_id = $(window).attr('location').pathname.split('/').reverse()[0]
+    if (typeof(session_id) != "undefined"){
+        load_session_data(session_id)
+    }else{
+        load_session_data("multi_test_2")
+    }
 });
 
 //==============================================================
@@ -36,6 +40,7 @@ var dg;
 
 function load_session_data(session)
 {
+
     $.ajax({
         url: '/load_data',
         data: { 'session': session },
@@ -89,6 +94,16 @@ function init_session()
         }
     }
 
+    // directed graph
+    dg = draw_directed_graph2(p_transition_matrix,participation_metrics);
+	
+    // participation graphs
+	var user_part_count = participation_metrics['spk_counts'];
+	set_user_participation_chart(user_part_count);
+
+	var user_avg_spk_time = participation_metrics['spk_avg'];
+    set_user_avg_spk(user_avg_spk_time);
+
     // Setting up the word cloud information
     word_cloud_data = [];
 
@@ -114,13 +129,6 @@ function init_session()
 
     setup_word_cloud(final_cloud);
 
-    dg = draw_directed_graph2(p_transition_matrix,participation_metrics);
-	
-	var user_part_count = participation_metrics['spk_counts'];
-	set_user_participation_chart(user_part_count);
-	
-	var user_avg_spk_time = participation_metrics['spk_avg'];
-	set_user_avg_spk(user_avg_spk_time);
 	console.log(sentiment_counts);
 }
 
@@ -479,6 +487,7 @@ function set_user_participation_chart(data)
     "gridPosition": "start",
     "gridAlpha": 0,
     "tickPosition": "start",
+    "labelsEnabled": false,
     "tickLength": 20
   },
   "export": {
@@ -545,6 +554,7 @@ function set_user_avg_spk(data)
     "gridPosition": "start",
     "gridAlpha": 0,
     "tickPosition": "start",
+    "labelsEnabled": false,
     "tickLength": 20
   },
   "export": {
@@ -683,6 +693,12 @@ function set_participation_chart(data, el, size, user_id)
         $('#' + el).empty();
 
 
+    var p_spk = Math.round(data['p_spk'] * 100) / 100;
+    var p_nospeak = Math.round(data['p_nospeak'] * 100) / 100;
+
+    if (p_spk == 0) p_spk = 0.0001;
+    if (p_nospeak == 0) p_nospeak = 0.0001;
+
     var pie = new d3pie(el, {
         "size": {
             "canvasHeight": size,
@@ -692,12 +708,12 @@ function set_participation_chart(data, el, size, user_id)
         "data": {
             "content": [{
                 "label":'',
-                "value": Math.round(data['p_spk'] * 100) / 100,
+                "value": p_spk,
                 "color": user_colors[user_id - 1]
             },
             {
                 "label": '',
-                "value": Math.round(data['p_nospeak'] * 100) / 100,
+                "value": p_nospeak,
                 "color": "#cccccc"
             }]
         },
@@ -981,7 +997,7 @@ function draw_directed_graph(matrix,participation){
 function draw_directed_graph2(matrix,part){
   // set up SVG for D3
   var width  = 250,
-      height = 200,
+      height = 350,
       colors = d3.scale.category10();
 
    var svg = d3.select('div#directed_graph') 

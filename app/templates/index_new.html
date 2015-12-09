@@ -13,11 +13,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">RocConf</a>
+          <a class="navbar-brand" >RocConf</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a >Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -25,12 +25,9 @@
       </div>
     </nav><!-- /top_menu -->
   
+  <div id="user_count" style="display: none;">{{ user_count }}</div>
   <div class="container">
   <div class="row" id="video-thumbnails">
-
-    <!-- logo 
-    <div class="col-md-1"><img src="{{ url_for('.static',filename='img/temp_logo.png') }}" height='100px' width='100px' /></div>
-     /logo -->
 
     <div class="col-md-2 text-right"><br/><img class="secondary-sliders" src="{{ url_for('.static',filename='img/left_arrow.png') }}" /></div>
 
@@ -42,7 +39,9 @@
           <video id="video-player-2" class="video-js vjs-default-skin secondary-video change-user"
           preload="auto" width="150" height="70" user=2 poster="//placehold.it/180x90"
           data-setup='{}'>
-            <source src="{{ url_for('.static',filename='video/multi_test_2/user_2/video.webm') }}" type='video/webm'>
+            {% if user_count >=2 %}
+            <source src="{{ url_for('.static',filename='video/'+session_id+'/user_2/video.webm') }}" type='video/webm'>
+            {% endif %}
             <p class="vjs-no-js">
               To view this video please enable JavaScript, and consider upgrading to a web browser
               that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -52,9 +51,6 @@
               <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_2_left" style="padding-left: 5px; padding-right:0px;"></div>
               <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_2_right" style="padding-left: 0px;"></div>
           </div>
-          <!--<div class="row text-center change-user" id="change-user-2" change_user=2>
-            <a href="#" class="btn btn-material-blue-grey btn-raised text-center" id="change-user-2-button"><i class="mdi-action-autorenew"></i></a>
-          </div>-->
         </div><!-- panel-body -->
       </div><!--/secondary-video-panel-2 -->
 
@@ -64,7 +60,9 @@
           <video id="video-player-3" class="video-js vjs-default-skin secondary-video change-user"
           preload="auto" width="150" height="70" user=3 poster="//placehold.it/180x90"
           data-setup='{}'>
-            <source src="{{ url_for('.static',filename='video/multi_test_2/user_3/video.webm') }}" type='video/webm'>
+            {% if user_count >=3 %}
+            <source src="{{ url_for('.static',filename='video/'+session_id+'/user_3/video.webm') }}" type='video/webm'>
+            {% endif %}
             <p class="vjs-no-js">
               To view this video please enable JavaScript, and consider upgrading to a web browser
               that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -74,9 +72,6 @@
               <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_3_left" style="padding-left: 5px; padding-right:0px;"></div>
               <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_3_right" style="padding-left: 0px;"></div>
           </div>
-          <!--<div class="row text-center change-user" id="change-user-3" change_user=3>
-            <a href="#" class="btn btn-material-blue-grey btn-raised text-center" id="change-user-3-button"><i class="mdi-action-autorenew"></i></a>
-          </div>-->
         </div><!-- panel-body -->
       </div><!--/secondary-video-panel-3 -->
 
@@ -86,7 +81,9 @@
           <video id="video-player-4" class="video-js vjs-default-skin secondary-video change-user"
           preload="auto" width="150" height="70" user=4 poster="//placehold.it/180x90"
           data-setup='{}'>
-          <!--<source src="{{ url_for('.static',filename='video/multi_test_2/user_2/video.webm') }}" type='video/webm'>-->
+            {% if user_count >=4 %}
+            <source src="{{ url_for('.static',filename='video/'+session_id+'/user_4/video.webm') }}" type='video/webm'>
+            {% endif %}
             <p class="vjs-no-js">
               To view this video please enable JavaScript, and consider upgrading to a web browser
               that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -96,9 +93,6 @@
               <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_4_left" style="padding-left: 5px; padding-right:0px;"></div>
               <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_4_right" style="padding-left: 0px;"></div>
           </div>
-          <!--<div class="row text-center change-user" id="change-user-4" change_user=4>
-            <a href="#" class="btn btn-material-blue-grey btn-raised text-center" id="change-user-4-button"><i class="mdi-action-autorenew"></i></a>
-          </div>-->
         </div><!-- panel-body -->
       </div><!--/secondary-video-panel-4 -->
 
@@ -108,20 +102,19 @@
           <video id="video-player-5" class="video-js vjs-default-skin secondary-video change-user"
           preload="auto" width="150" height="70" user=5 poster="//placehold.it/180x90"
           data-setup='{}'>
-          <!--<source src="{{ url_for('.static',filename='video/multi_test_2/user_3/video.webm') }}" type='video/webm'>-->
-          <p class="vjs-no-js">
-              To view this video please enable JavaScript, and consider upgrading to a web browser
-              that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-          </p>
+            {% if user_count >=5 %}
+            <source src="{{ url_for('.static',filename='video/'+session_id+'/user_5/video.webm') }}" type='video/webm'>
+            {% endif %}
+            <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser
+                that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
           </video>
           <div class="row text-center secondary-subpanel">
               <div class="text-center col-xs-6 col-md-6 subpanel_left" id="subpanel_5_left" style="padding-left: 5px; padding-right:0px;"></div>
               <div class="text-center col-xs-6 col-md-6 subpanel_right" id="subpanel_5_right" style="padding-left: 0px;"></div>
               <!--<img height="50px" width="50px" src="{{ url_for('.static', filename='img/positive_chart.png') }}" /> -->
           </div>
-          <!--<div class="row text-center change-user" id="change-user-5" change_user=5>
-            <a href="#" class="btn btn-material-blue-grey btn-raised text-center" id="change-user-5-button"><i class="mdi-action-autorenew"></i></a>
-          </div>-->
         </div><!-- panel-body -->
       </div><!--/secondary-video-panel-5 -->
 
@@ -138,7 +131,7 @@
       <!-- left side space -->
       <div class="col-md-3 col-xs-3 text-right" id="left-panel-container">
         <div class="row" id="left-button">
-            <h4><span class="glyphicon glyphicon-plus-sign" id="left-detail-button-icon"></span></h4>
+            <h4><span class="glyphicon glyphicon-chevron-right" id="left-detail-button-icon"></span></h4>
         </div>
         <br/>
         <!-- left side panel -->
@@ -147,10 +140,6 @@
             <div class="row text-left">
 			<h4><strong>User Participation Count</strong>
 			  <div id="chartdiv" style="width: 240px; height: 300px;"></div>
-                <!-- <h4><strong>User Participation</strong></h4>
-                <p>User 1 spoke <strong>5</strong> times.</p>
-                <p>User 2 spoke <strong>6</strong> times.<i>[Most active]</i></p>
-                <p>User 3 spoke <strong>2</strong> times.</p> -->
             </div>
             <div class="row text-left">
                 <h4><strong>Average Speak Time(s)</strong></h4>
@@ -160,9 +149,6 @@
         </div>
         <!-- /left side panel -->
 
-        <!--<div class="thumbnail">
-          <img src="//placehold.it/200x480" />
-        </div>-->
       </div><!-- /left side -->
 
       <!-- main video space -->
@@ -174,13 +160,14 @@
             <video id="video-player-1" class="video-js vjs-default-skin video-custom-center change-user"
             preload="auto" width="480" height="360" user=1 poster="//placehold.it/640x480"
             data-setup='{}'>
-              <source src="{{ url_for('.static',filename='video/multi_test_2/user_1/video.webm') }}" type='video/webm'>
+              <source src="{{ url_for('.static',filename='video/'+session_id+'/user_1/video.webm') }}" type='video/webm'>
               <p class="vjs-no-js">
                 To view this video please enable JavaScript, and consider upgrading to a web browser
                 that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
               </p>
             </video>
             <audio id="main-video-audio">
+              <!--<source src="{{ url_for('.static',filename='video/'+session_id+'/multi_audio_1.wav') }}" type='audio/wav'/>-->
               <source src="{{ url_for('.static',filename='video/multi_test_2/multi_audio_1.wav') }}" type='audio/wav'/>
               <p class="vjs-no-js">
                 To view this video please enable JavaScript, and consider upgrading to a web browser
@@ -197,8 +184,8 @@
           <div class="row" id="slider-placeholder">
             <div class="col-xs-2 col-md-2" id="main-video-btns">
               <h4>
-                <a id="main-video-play-btn" href="#"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
-                <a id="main-video-pause-btn" href="#"><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></a>
+                <a id="main-video-play-btn"  ><span class="glyphicon glyphicon-play" aria-hidden="true"></span></a>
+                <a id="main-video-pause-btn" ><span class="glyphicon glyphicon-pause" aria-hidden="true"></span></a>
               </h4>
             </div>
             <div class="col-xs-9 col-md-9" id="main-video-slider">
@@ -208,23 +195,17 @@
             </div>
           </div><!-- /slider -->
         </div>
-<!--        <div class="row" id="detail-button" style="margin-bottom:2em;margin-top:2em;">
-            <button class="btn-block btn-material-blue-grey btn-raised text-center" style="padding-left:2em;padding-right:2em;">
-                <span class="glyphicon glyphicon-plus-sign" id="detail-button-icon"></span> 
-                <span id="detail-button-text">Detail Charts for this Participant</span>
-            </button>
-        </div>-->
       </div><!-- /main-video-container-->
 
       <!-- right side space -->
       <div class="col-md-3 col-xs-3 vcenter" id="wordcloud-placeholder">
         <div class="row" id="right-button">
-            <h4><span class="glyphicon glyphicon-plus-sign" id="right-detail-button-icon"></span></h4>
+            <h4><span class="glyphicon glyphicon-chevron-left" id="right-detail-button-icon"></span></h4>
         </div>
         <div class="" id="wordcloud-panel">
           <br/>
           <div id="frequent-words" class="text-center">
-            <div class="text-left"><h4><strong>Frquent Words</strong></h4></div>
+            <div class="text-left"><h4><strong>Frequent Words</strong></h4></div>
             <canvas id="wordcloud-canvas"></canvas>
           </div>
           <!--<img src="{{ url_for('.static',filename='img/fake_wordcloud_480.png') }}" />-->
@@ -243,7 +224,7 @@
     </div><!-- /main-content-row -->
 
     <div class="row text-right" style="margin-top:1em;margin-bottom:1em;">
-        <div class="col-md-6"><a href="#" id="graph-details">More details</a></div>
+        <div class="col-md-6"><a id="graph-details">More details</a></div>
     </div>
 
     <!-- charts area -->
